@@ -289,7 +289,7 @@ img {
 
 /* Price Check & Become Seller Buttons */
 .header-action-buttons-bm {
-    display: flex;
+    display: none !important; /* Hidden temporarily, change to flex to enable */
     align-items: center;
     gap: 10px;
 }
