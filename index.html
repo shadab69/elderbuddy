@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elder-o-Buddy | Building Materials & Construction Services Online</title>
+    <meta name="description" content="Buy cement, TMT steel, paints, plumbing, tiles, and electrical fittings online at India's leading building materials marketplace.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+    <!-- Light E-commerce Header (Elder-o-Buddy Style) -->
+    <header class="app-header-light">
+        <!-- Main Top Header Row -->
+        <div class="container main-header-row">
+            <!-- Elder-o-Buddy Logo -->
+            <a href="#/" class="logo-area-bm">
+                <span class="logo-orange">Elder-o-</span> <span class="logo-dark">Buddy</span>
+                <sup class="logo-tm">®</sup>
+            </a>
+            
+            <!-- Shop by Categories Button -->
+            <div class="category-select-bm">
+                <button class="btn-category-bm" id="btn-category-toggle">
+                    <span>Shop by Categories</span>
+                    <i data-lucide="chevron-down" class="chevron"></i>
+                </button>
+                <div class="category-dropdown-bm" id="category-menu">
+                    <!-- Loaded dynamically from js/components.js -->
+                </div>
+            </div>
+
+            <!-- Central Search Bar -->
+            <form class="search-form-bm" id="search-form">
+                <input type="text" placeholder="Search entire store here..." id="search-input" autocomplete="off" required>
+                <button type="submit" class="btn-search-bm">
+                    <i data-lucide="search"></i>
+                </button>
+            </form>
+
+            <!-- Price Check and Seller Buttons -->
+            <div class="header-action-buttons-bm">
+                <a href="#/admin" class="btn-price-check">
+                    <span class="check-box-icon">✓</span> Price Check
+                </a>
+                <button class="btn-become-seller" id="btn-seller-portal">
+                    Become a Seller
+                </button>
+            </div>
+
+            <!-- Cart Section -->
+            <div class="cart-trigger-bm" id="btn-cart-toggle">
+                <i data-lucide="shopping-cart" class="cart-icon"></i>
+                <span>Cart</span>
+                <span class="cart-badge-bm" id="cart-badge-count">0</span>
+            </div>
+        </div>
+
+        <!-- Middle Menu Row -->
+        <nav class="middle-menu-nav">
+            <div class="container menu-nav-container">
+                <a href="#/products?category=cement" class="menu-link">Cement Exchange</a>
+                <a href="#/" class="menu-link" id="menu-link-brands">Brands</a>
+                <a href="#/" class="menu-link" id="menu-link-buying-guide">Buying Guide</a>
+                <a href="#/products" class="menu-link">Best Selling</a>
+                <a href="#" class="menu-link" id="menu-link-estimator">Material Calculator</a>
+            </div>
+        </nav>
+
+        <!-- Delivery Alert Bar (Black) -->
+        <div class="delivery-bar-bm">
+            <div class="container delivery-container">
+                <i data-lucide="truck" class="truck-icon"></i>
+                <span>We deliver across Delhi only</span>
+            </div>
+        </div>
+
+        <!-- Quick Jump Links Row -->
+        <div class="quick-links-bar">
+            <div class="container quick-links-container">
+                <span class="quick-label">Go Quickly To :</span>
+                <div class="quick-tags">
+                    <a href="#/products?category=cement" class="quick-tag-link">Cement</a>
+                    <span class="divider">,</span>
+                    <a href="#/products?category=steel" class="quick-tag-link">TMT Steels</a>
+                    <span class="divider">,</span>
+                    <a href="#/products?category=paints" class="quick-tag-link">Paints</a>
+                    <span class="divider">,</span>
+                    <a href="#/products?category=plumbing" class="quick-tag-link">Plumbing</a>
+                    <span class="divider">,</span>
+                    <a href="#/products?category=tiles" class="quick-tag-link">Tiles</a>
+                    <span class="divider">,</span>
+                    <a href="#/products?category=electrical" class="quick-tag-link">Lighting & Fixtures</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Side Shopping Cart Drawer -->
+    <div class="cart-drawer-overlay" id="cart-overlay"></div>
+    <aside class="cart-drawer" id="cart-drawer">
+        <div class="cart-drawer-header">
+            <h3>Shopping Cart (<span id="cart-header-count">0</span>)</h3>
+            <button class="btn-close-drawer" id="btn-close-cart">
+                <i data-lucide="x"></i>
+            </button>
+        </div>
+        <div class="cart-drawer-body" id="cart-drawer-items">
+            <!-- Rendered dynamically -->
+        </div>
+        <div class="cart-drawer-footer">
+            <div class="cart-summary-row">
+                <span>Subtotal</span>
+                <span class="cart-subtotal-val" id="cart-subtotal">₹0.00</span>
+            </div>
+            <div class="cart-summary-row gst-row">
+                <span>GST (Estimated 18%)</span>
+                <span id="cart-gst">₹0.00</span>
+            </div>
+            <div class="cart-summary-row total-row">
+                <span>Total (Incl. Taxes)</span>
+                <span class="cart-total-val" id="cart-total">₹0.00</span>
+            </div>
+            <div class="cart-actions-btn-group">
+                <button class="btn-checkout" id="btn-to-checkout">Proceed to Checkout</button>
+                <button class="btn-clear-cart-all" id="btn-clear-cart">Clear Cart</button>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content Root for Router Views -->
+    <main id="app-root">
+        <!-- Rendered dynamically (HomeView, ProductListView, ProductDetailView, AdminView, CheckoutView) -->
+    </main>
+
+    <!-- Project Estimation Calculator Modal -->
+    <div class="modal-overlay" id="calc-modal-overlay">
+        <div class="modal-card calc-modal">
+            <div class="modal-header">
+                <h3><i data-lucide="calculator"></i> Construction Material Estimator</h3>
+                <button class="btn-close-modal" id="btn-close-calc">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p class="modal-intro">Estimate the required cement, sand, and bricks for your construction wall. You can directly add these materials to your cart after calculation.</p>
+                <div class="calc-grid">
+                    <div class="calc-inputs">
+                        <div class="input-group">
+                            <label for="calc-length">Wall Length (Feet)</label>
+                            <input type="number" id="calc-length" value="10" min="1">
+                        </div>
+                        <div class="input-group">
+                            <label for="calc-height">Wall Height (Feet)</label>
+                            <input type="number" id="calc-height" value="10" min="1">
+                        </div>
+                        <div class="input-group">
+                            <label for="calc-thickness">Wall Thickness (Inches)</label>
+                            <select id="calc-thickness">
+                                <option value="4.5">4.5 Inches (Single Brick)</option>
+                                <option value="9" selected>9 Inches (Double Brick)</option>
+                            </select>
+                        </div>
+                        <button class="btn-primary w-full" id="btn-run-calculation">Calculate Requirements</button>
+                    </div>
+                    <div class="calc-results" id="calc-results-pane">
+                        <h4>Estimated Materials</h4>
+                        <div class="results-list">
+                            <div class="result-item">
+                                <div class="item-label">
+                                    <i data-lucide="bricks"></i>
+                                    <span>Bricks Needed</span>
+                                </div>
+                                <span class="result-val" id="res-bricks">0 pcs</span>
+                            </div>
+                            <div class="result-item">
+                                <div class="item-label">
+                                    <i data-lucide="package"></i>
+                                    <span>Cement Bags (50kg)</span>
+                                </div>
+                                <span class="result-val" id="res-cement">0 bags</span>
+                            </div>
+                            <div class="result-item">
+                                <div class="item-label">
+                                    <i data-lucide="waves"></i>
+                                    <span>Sand Required</span>
+                                </div>
+                                <span class="result-val" id="res-sand">0.0 tons</span>
+                            </div>
+                        </div>
+                        <button class="btn-secondary w-full disabled" id="btn-add-calc-to-cart" disabled>
+                            Add Estimated Items to Cart
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Inquiry Modal for Services -->
+    <div class="modal-overlay" id="inquiry-modal-overlay">
+        <div class="modal-card inquiry-modal">
+            <div class="modal-header">
+                <h3><i data-lucide="file-text"></i> Construction Services Quote Request</h3>
+                <button class="btn-close-modal" id="btn-close-inquiry">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+            <form id="inquiry-form">
+                <div class="modal-body">
+                    <p class="modal-intro">Tell us about your project requirements and our engineering team will get back to you with custom pricing and delivery timelines.</p>
+                    <div class="input-group">
+                        <label for="inq-service">Select Service Type</label>
+                        <select id="inq-service" required>
+                            <option value="" disabled selected>-- Select a Service --</option>
+                            <option value="sourcing">Bulk Sourcing & Delivery</option>
+                            <option value="estimation">Architectural Layout & Estimation</option>
+                            <option value="structural">Structural Design & Engineering</option>
+                            <option value="execution">Turnkey Construction Execution</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <div class="input-group">
+                            <label for="inq-name">Your Full Name</label>
+                            <input type="text" id="inq-name" placeholder="John Doe" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="inq-phone">Contact Number</label>
+                            <input type="tel" id="inq-phone" placeholder="9876543210" required>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label for="inq-email">Email Address</label>
+                        <input type="email" id="inq-email" placeholder="john@example.com" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="inq-location">Project Location (City & Pincode)</label>
+                        <input type="text" id="inq-location" placeholder="Hyderabad, 500001" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="inq-details">Project Description & Specifications</label>
+                        <textarea id="inq-details" rows="4" placeholder="Mention size of plot, materials required, custom steel grades, or brick types..." required></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-cancel" id="btn-cancel-inquiry">Cancel</button>
+                    <button type="submit" class="btn-primary">Submit Sourcing Request</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- App Footer -->
+    <footer class="app-footer">
+        <div class="container footer-grid">
+            <div class="footer-brand-col">
+                <a href="#/" class="logo-area footer-logo">
+                    <div class="logo-icon">
+                        <i data-lucide="hard-hat"></i>
+                    </div>
+                    <span class="logo-text">Elder-o-<span>Buddy</span></span>
+                </a>
+                <p class="footer-desc">India\'s leading e-store for direct-from-manufacturer building materials. Delivering cement, TMT bars, sand, brick, and plumbing items directly to construction sites.</p>
+                <div class="social-links">
+                    <a href="#" class="social-icon"><i data-lucide="facebook"></i></a>
+                    <a href="#" class="social-icon"><i data-lucide="twitter"></i></a>
+                    <a href="#" class="social-icon"><i data-lucide="instagram"></i></a>
+                    <a href="#" class="social-icon"><i data-lucide="linkedin"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-links-col">
+                <h4>Core Categories</h4>
+                <ul>
+                    <li><a href="#/products?category=cement">Cement & Concrete</a></li>
+                    <li><a href="#/products?category=steel">TMT Steel Bars</a></li>
+                    <li><a href="#/products?category=bricks">Bricks & Blocks</a></li>
+                    <li><a href="#/products?category=tiles">Tiles & Flooring</a></li>
+                    <li><a href="#/products?category=plumbing">Plumbing & Pipes</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-links-col">
+                <h4>Services</h4>
+                <ul>
+                    <li><a href="#" id="foot-link-estimator">Material Estimator</a></li>
+                    <li><a href="#" class="service-inq-trigger">Bulk Site Sourcing</a></li>
+                    <li><a href="#" class="service-inq-trigger">Architectural Planning</a></li>
+                    <li><a href="#" class="service-inq-trigger">Custom Fabrication</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-links-col">
+                <h4>Contact Us</h4>
+                <ul class="contact-info-list">
+                    <li>
+                        <i data-lucide="map-pin"></i>
+                        <span>Elder-o-Buddy Hub, Madhapur, Hyderabad, Telangana, 500081</span>
+                    </li>
+                    <li>
+                        <i data-lucide="phone"></i>
+                        <span>+91 98765 43210</span>
+                    </li>
+                    <li>
+                        <i data-lucide="mail"></i>
+                        <span>support@Elder-o-Buddy.in</span>
+                    </li>
+                    <li>
+                        <i data-lucide="clock"></i>
+                        <span>Mon - Sat: 9:00 AM - 7:00 PM</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container footer-bottom-inner">
+                <p>&copy; 2026 Elder-o-Buddy Marketplace Private Limited. All rights reserved.</p>
+                <div class="bottom-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms & Conditions</a>
+                    <a href="#">Refund Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- App Scripts -->
+    <script src="js/data.js"></script>
+    <script src="js/components.js"></script>
+    <script src="js/views.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

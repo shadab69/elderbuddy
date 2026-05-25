@@ -1,0 +1,10 @@
+{
+  "name": "builderpro-marketplace",
+  "version": "1.0.0",
+  "description": "E-commerce portal for construction materials",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx live-server"
+  },
+  "dependencies": {}
+}
