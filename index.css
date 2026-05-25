@@ -2789,6 +2789,9 @@ body.dark-theme .product-detail-gallery {
 
 /* Mobile responsive app header grid */
 @media (max-width: 900px) {
+    .app-header-light {
+        position: relative;
+    }
     .main-header-row {
         height: auto;
         display: grid;
