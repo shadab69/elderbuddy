@@ -211,7 +211,7 @@ function renderHomeView(root) {
                 <div class="section-header">
                     <h2>Construction Services & Sourcing</h2>
                 </div>
-                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;">
+                <div class="services-grid-bm">
                     <div class="category-card" style="align-items: flex-start; text-align: left; padding: 30px;">
                         <div class="category-card-icon"><i data-lucide="truck"></i></div>
                         <h3 style="margin-bottom:10px;">Bulk Site Sourcing</h3>
