@@ -16,14 +16,10 @@ function renderHomeView(root) {
             <section class="hero-carousel-container">
                 <div class="carousel-track" id="hero-carousel-track">
                     <!-- Slide 1 -->
-                    <div class="carousel-slide active" onclick="location.hash='#/products'" style="cursor: pointer;">
-                        <div class="slide-blur-bg" style="background-image: url('assets/banner1.png');"></div>
-                        <div class="slide-main-img" style="background-image: url('assets/banner1.png');"></div>
+                    <div class="carousel-slide active" onclick="location.hash='#/products'" style="cursor: pointer; background-image: url('assets/banner1.png');">
                     </div>
                     <!-- Slide 2 -->
-                    <div class="carousel-slide" onclick="location.hash='#/products'" style="cursor: pointer;">
-                        <div class="slide-blur-bg" style="background-image: url('assets/promo_bricks.png');"></div>
-                        <div class="slide-main-img" style="background-image: url('assets/promo_bricks.png');"></div>
+                    <div class="carousel-slide" onclick="location.hash='#/products'" style="cursor: pointer; background-image: url('assets/promo_bricks.png');">
                     </div>
                     <!-- Slide 3 -->
                     <div class="carousel-slide" onclick="location.hash='#/products'" style="cursor: pointer;">
