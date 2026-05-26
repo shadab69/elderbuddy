@@ -187,9 +187,12 @@ img {
 }
 
 .logo-tm {
-    font-size: 0.65rem;
+    font-size: 1.95rem;
     color: #f97316;
     vertical-align: super;
+}
+.logo-blk{
+    color: #0d0d0e;
 }
 
 /* Category Select Dropdown (BuildersMART style) */

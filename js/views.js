@@ -36,7 +36,7 @@ function renderHomeView(root) {
                 </div>
             </section>
 
-            <!-- Brands Slider Section (BuildersMART style) -->
+            <!-- Brands Slider Section (ElderOBuddy style) -->
             <section class="home-section">
                 <div class="section-header">
                     <h2>Brands</h2>
@@ -58,7 +58,7 @@ function renderHomeView(root) {
                 </div>
             </section>
 
-            <!-- Hot Deals Slider Section (BuildersMART style) -->
+            <!-- Hot Deals Slider Section (ElderOBuddy style) -->
             <section class="home-section">
                 <div class="section-header">
                     <h2>Hot Deals</h2>
@@ -74,7 +74,7 @@ function renderHomeView(root) {
 
 
 
-            <!-- Offers For You Slider Section (BuildersMART style) -->
+            <!-- Offers For You Slider Section (ElderOBuddy style) -->
             <section class="home-section">
                 <div class="section-header">
                     <h2>Offers For You</h2>
@@ -88,7 +88,7 @@ function renderHomeView(root) {
                 </div>
             </section>
 
-            <!-- Trending Offers Slider Section (BuildersMART style) -->
+            <!-- Trending Offers Slider Section (ElderOBuddy style) -->
             <section class="home-section">
                 <div class="section-header">
                     <h2>Trending Offers</h2>
@@ -102,7 +102,7 @@ function renderHomeView(root) {
                 </div>
             </section>
 
-            <!-- Buying Guide Slider Section (BuildersMART style) -->
+            <!-- Buying Guide Slider Section (ElderOBuddy style) -->
             <section class="home-section">
                 <div class="section-header" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
                     <h2>Buying Guide</h2>
@@ -132,7 +132,7 @@ function renderHomeView(root) {
                 </div>
             </section>
 
-            <!-- What Client Say Testimonial Section (BuildersMART style) -->
+            <!-- What Client Say Testimonial Section (ElderOBuddy style) -->
             <section class="home-section text-center">
                 <div class="section-header" style="justify-content: center; border-bottom: none; margin-bottom: 20px;">
                     <h2 style="text-align: center; width: 100%;">What Client Say</h2>
@@ -142,17 +142,17 @@ function renderHomeView(root) {
                     <div class="client-testimonials-track" id="client-testimonials-track">
                         <div class="testimonial-card-bm">
                             <span class="testimonial-quote-bm">”</span>
-                            <p class="testimonial-text-bm">"Buildersmart is an EXCELLENT platform for all types of Building Material and Construction products like Cement ,TMT,Electricals, Plumbing etc., It helps us to procure building materials during construction period at best price."</p>
+                            <p class="testimonial-text-bm">"ElderOBuddy is an EXCELLENT platform for all types of Building Material and Construction products like Cement ,TMT,Electricals, Plumbing etc., It helps us to procure building materials during construction period at best price."</p>
                             <div class="testimonial-divider-bm"></div>
                         </div>
                         <div class="testimonial-card-bm">
                             <span class="testimonial-quote-bm">”</span>
-                            <p class="testimonial-text-bm">Portals like BuildersMart which I am using are being used by many more people like me. This has helped us to get all construction needs under one roof.</p>
+                            <p class="testimonial-text-bm">Portals like ElderOBuddy which I am using are being used by many more people like me. This has helped us to get all construction needs under one roof.</p>
                             <div class="testimonial-divider-bm"></div>
                         </div>
                         <div class="testimonial-card-bm">
                             <span class="testimonial-quote-bm">”</span>
-                            <p class="testimonial-text-bm">Buildersmart.in has shown the path to the future of buying construction materials. Although it is a new concept, it will go a long way in the years to come, easy to purchase for everyone. They provide support throughout, from getting the best quotes to material delivery at the sites.</p>
+                            <p class="testimonial-text-bm">ElderOBuddy.in has shown the path to the future of buying construction materials. Although it is a new concept, it will go a long way in the years to come, easy to purchase for everyone. They provide support throughout, from getting the best quotes to material delivery at the sites.</p>
                             <div class="testimonial-divider-bm"></div>
                         </div>
                     </div>
