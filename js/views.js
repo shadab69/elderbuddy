@@ -16,13 +16,19 @@ function renderHomeView(root) {
             <section class="hero-carousel-container">
                 <div class="carousel-track" id="hero-carousel-track">
                     <!-- Slide 1 -->
-                    <div class="carousel-slide active" style="background-image: url('assets/banner1.png'); cursor: pointer;" onclick="location.hash='#/products'">
+                    <div class="carousel-slide active" onclick="location.hash='#/products'" style="cursor: pointer;">
+                        <div class="slide-blur-bg" style="background-image: url('assets/banner1.png');"></div>
+                        <div class="slide-main-img" style="background-image: url('assets/banner1.png');"></div>
                     </div>
                     <!-- Slide 2 -->
-                    <div class="carousel-slide" style="background-image: url('assets/promo_bricks.png'); cursor: pointer;" onclick="location.hash='#/products'">
+                    <div class="carousel-slide" onclick="location.hash='#/products'" style="cursor: pointer;">
+                        <div class="slide-blur-bg" style="background-image: url('assets/promo_bricks.png');"></div>
+                        <div class="slide-main-img" style="background-image: url('assets/promo_bricks.png');"></div>
                     </div>
                     <!-- Slide 3 -->
-                    <div class="carousel-slide" style="background-image: url('assets/new_hero_banner.png'); cursor: pointer;" onclick="location.hash='#/products'">
+                    <div class="carousel-slide" onclick="location.hash='#/products'" style="cursor: pointer;">
+                        <div class="slide-blur-bg" style="background-image: url('assets/new_hero_banner.png');"></div>
+                        <div class="slide-main-img" style="background-image: url('assets/new_hero_banner.png');"></div>
                     </div>
                 </div>
                 <!-- Carousel Controls -->

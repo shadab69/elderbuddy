@@ -976,9 +976,6 @@ body.dark-theme .btn-secondary {
     left: 0;
     width: 100%;
     height: 100%;
-    background-size: cover; /* Preserves aspect ratio and scales image to fill the slide container without stretching */
-    background-position: center;
-    background-repeat: no-repeat;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -986,6 +983,32 @@ body.dark-theme .btn-secondary {
     visibility: hidden;
     transition: opacity 0.8s ease-in-out, visibility 0.8s ease-in-out;
     z-index: 1;
+    overflow: hidden;
+}
+
+.slide-blur-bg {
+    position: absolute;
+    top: -10%;
+    left: -10%;
+    width: 120%;
+    height: 120%;
+    background-size: cover;
+    background-position: center;
+    filter: blur(15px);
+    opacity: 0.45;
+    z-index: 1;
+}
+
+.slide-main-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: 2;
 }
 
 .carousel-slide.active {
