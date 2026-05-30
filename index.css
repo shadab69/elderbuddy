@@ -179,7 +179,7 @@ img {
 }
 
 .logo-orange {
-    color: #f97316;
+    color: #131312;
 }
 
 .logo-dark {
@@ -187,12 +187,12 @@ img {
 }
 
 .logo-tm {
-    font-size: 1.95rem;
+    font-size: 2.95rem;
     color: #f97316;
     vertical-align: super;
 }
 .logo-blk{
-    color: #0d0d0e;
+    color: #f97316;
 }
 
 /* Category Select Dropdown (BuildersMART style) */
@@ -204,7 +204,7 @@ img {
     display: flex;
     align-items: center;
     gap: 8px;
-    background: #a13d06; /* Brownish-Orange */
+    background: #f97316; /* Brownish-Orange */
     color: #ffffff;
     padding: 10px 16px;
     border-radius: var(--radius-sm);
