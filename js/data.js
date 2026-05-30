@@ -710,13 +710,23 @@ function getProductById(id) {
 
 function addProduct(product) {
     const products = getProducts();
+    
+    let imgHtml = product.imageSrc;
+    if (imgHtml && imgHtml.trim() !== '') {
+        imgHtml = imgHtml.trim();
+        if (!imgHtml.startsWith('<svg') && !imgHtml.startsWith('<img')) {
+            imgHtml = `<img src="${imgHtml}" alt="${product.name}">`;
+        }
+    } else {
+        imgHtml = SVG_TEMPLATES[product.category] ? SVG_TEMPLATES[product.category]() : SVG_TEMPLATES.cement();
+    }
+
     const newProduct = {
         ...product,
         id: 'p_' + Date.now(),
         rating: 5.0,
         ratingCount: 1,
-        // Match icon dynamically if not set
-        imageSrc: SVG_TEMPLATES[product.category] ? SVG_TEMPLATES[product.category]() : SVG_TEMPLATES.cement()
+        imageSrc: imgHtml
     };
     products.unshift(newProduct); // Add new item at the top
     saveProducts(products);
@@ -727,12 +737,23 @@ function updateProduct(id, updatedProduct) {
     const products = getProducts();
     const index = products.findIndex(p => p.id === id);
     if (index !== -1) {
-        // Keep read-only rating info
         const original = products[index];
+        
+        let imgHtml = updatedProduct.imageSrc;
+        if (imgHtml && imgHtml.trim() !== '') {
+            imgHtml = imgHtml.trim();
+            if (!imgHtml.startsWith('<svg') && !imgHtml.startsWith('<img')) {
+                imgHtml = `<img src="${imgHtml}" alt="${updatedProduct.name}">`;
+            }
+        } else {
+            // Keep original if it's already an img tag, otherwise use category template
+            imgHtml = original.imageSrc.startsWith('<img') ? original.imageSrc : (SVG_TEMPLATES[updatedProduct.category] ? SVG_TEMPLATES[updatedProduct.category]() : original.imageSrc);
+        }
+
         products[index] = {
             ...original,
             ...updatedProduct,
-            imageSrc: SVG_TEMPLATES[updatedProduct.category] ? SVG_TEMPLATES[updatedProduct.category]() : original.imageSrc
+            imageSrc: imgHtml
         };
         saveProducts(products);
         return products[index];

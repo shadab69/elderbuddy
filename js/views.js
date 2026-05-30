@@ -1171,6 +1171,11 @@ function renderAdminView(root, activeTab = 'products') {
                             <label for="prod-desc">Detailed Description</label>
                             <textarea id="prod-desc" rows="3" placeholder="Explain technical benefits, standard ratings, cement grade, compression test results..." required></textarea>
                         </div>
+                        <div class="input-group" style="margin-top:12px;">
+                            <label for="prod-image-url">Image URL or Local Path (Optional)</label>
+                            <input type="text" id="prod-image-url" placeholder="e.g. assets/my_product.png or https://example.com/image.jpg">
+                            <span style="font-size:0.7rem; color:var(--text-muted); display:block; margin-top:2px;">Leave empty to use the default category icon.</span>
+                        </div>
                         
                         <!-- Mini dynamic specs layout -->
                         <div style="border:1px solid var(--border-color); padding:10px; border-radius:6px; background:var(--bg-surface-alt); margin-top:15px;">
@@ -1428,10 +1433,19 @@ function renderAdminView(root, activeTab = 'products') {
                 document.getElementById('prod-desc').value = orig.description;
                 document.getElementById('prod-spec-grade').value = orig.specs.Grade || orig.specs.Material || 'Grade A';
                 document.getElementById('prod-spec-size').value = orig.specs.Weight || orig.specs.Size || 'Standard';
+                
+                // Extract src from <img src="..."> if custom, otherwise leave blank
+                if (orig.imageSrc && orig.imageSrc.startsWith('<img')) {
+                    const match = orig.imageSrc.match(/src="([^"]+)"/);
+                    document.getElementById('prod-image-url').value = match ? match[1] : orig.imageSrc;
+                } else {
+                    document.getElementById('prod-image-url').value = '';
+                }
             }
         } else {
             title.textContent = 'Add New Construction Material';
             editIdEl.value = '';
+            document.getElementById('prod-image-url').value = '';
         }
     }
 
@@ -1455,6 +1469,7 @@ function renderAdminView(root, activeTab = 'products') {
             price: parseFloat(document.getElementById('prod-price').value),
             unit: document.getElementById('prod-unit').value,
             description: document.getElementById('prod-desc').value,
+            imageSrc: document.getElementById('prod-image-url').value,
             specs: {
                 'Grade/Class': document.getElementById('prod-spec-grade').value,
                 'Specification': document.getElementById('prod-spec-size').value
