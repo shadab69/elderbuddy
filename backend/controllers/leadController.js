@@ -11,6 +11,9 @@ exports.getLeads = async (req, res) => {
 
 exports.createLead = async (req, res) => {
     try {
+        if (!req.body.id) {
+            req.body.id = 'INQ_' + Math.floor(100000 + Math.random() * 900000);
+        }
         const lead = await Lead.create(req.body);
         res.status(201).json(lead);
     } catch (e) {

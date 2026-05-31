@@ -759,18 +759,87 @@ function getProductById(id) {
 }
 
 async function addProduct(product) {
-    const res = await axios.post('/api/products', product);
-    return res.data;
+    try {
+        const res = await axios.post('/api/products', product);
+        const localProds = JSON.parse(localStorage.getItem(DATA_KEYS.PRODUCTS)) || [];
+        localProds.unshift(res.data);
+        localStorage.setItem(DATA_KEYS.PRODUCTS, JSON.stringify(localProds));
+        return res.data;
+    } catch (e) {
+        console.warn('[Backend] Failed to add product, updating localStorage fallback.', e);
+        const products = getProducts();
+        let imgHtml = product.imageSrc;
+        if (imgHtml && imgHtml.trim() !== '') {
+            imgHtml = imgHtml.trim();
+            if (!imgHtml.startsWith('<svg') && !imgHtml.startsWith('<img')) {
+                imgHtml = `<img src="${imgHtml}" alt="${product.name}">`;
+            }
+        } else {
+            imgHtml = SVG_TEMPLATES[product.category] ? SVG_TEMPLATES[product.category]() : SVG_TEMPLATES.cement();
+        }
+        const newProduct = {
+            ...product,
+            id: 'p_' + Date.now(),
+            rating: 5.0,
+            ratingCount: 1,
+            imageSrc: imgHtml
+        };
+        products.unshift(newProduct);
+        localStorage.setItem(DATA_KEYS.PRODUCTS, JSON.stringify(products));
+        return newProduct;
+    }
 }
 
 async function updateProduct(id, updatedProduct) {
-    const res = await axios.put(`/api/products/${id}`, updatedProduct);
-    return res.data;
+    try {
+        const res = await axios.put(`/api/products/${id}`, updatedProduct);
+        const localProds = JSON.parse(localStorage.getItem(DATA_KEYS.PRODUCTS)) || [];
+        const idx = localProds.findIndex(p => p.id === id);
+        if (idx !== -1) {
+            localProds[idx] = { ...localProds[idx], ...res.data };
+            localStorage.setItem(DATA_KEYS.PRODUCTS, JSON.stringify(localProds));
+        }
+        return res.data;
+    } catch (e) {
+        console.warn('[Backend] Failed to update product, updating localStorage fallback.', e);
+        const products = getProducts();
+        const index = products.findIndex(p => p.id === id);
+        if (index !== -1) {
+            const original = products[index];
+            let imgHtml = updatedProduct.imageSrc;
+            if (imgHtml && imgHtml.trim() !== '') {
+                imgHtml = imgHtml.trim();
+                if (!imgHtml.startsWith('<svg') && !imgHtml.startsWith('<img')) {
+                    imgHtml = `<img src="${imgHtml}" alt="${updatedProduct.name}">`;
+                }
+            } else {
+                imgHtml = original.imageSrc.startsWith('<img') ? original.imageSrc : (SVG_TEMPLATES[updatedProduct.category] ? SVG_TEMPLATES[updatedProduct.category]() : original.imageSrc);
+            }
+            products[index] = {
+                ...original,
+                ...updatedProduct,
+                imageSrc: imgHtml
+            };
+            localStorage.setItem(DATA_KEYS.PRODUCTS, JSON.stringify(products));
+            return products[index];
+        }
+        return null;
+    }
 }
 
 async function deleteProduct(id) {
-    const res = await axios.delete(`/api/products/${id}`);
-    return res.data;
+    try {
+        const res = await axios.delete(`/api/products/${id}`);
+        let localProds = JSON.parse(localStorage.getItem(DATA_KEYS.PRODUCTS)) || [];
+        localProds = localProds.filter(p => p.id !== id);
+        localStorage.setItem(DATA_KEYS.PRODUCTS, JSON.stringify(localProds));
+        return res.data;
+    } catch (e) {
+        console.warn('[Backend] Failed to delete product, updating localStorage fallback.', e);
+        let products = getProducts();
+        products = products.filter(p => p.id !== id);
+        localStorage.setItem(DATA_KEYS.PRODUCTS, JSON.stringify(products));
+    }
 }
 
 // Category details & CRUD operations
@@ -787,13 +856,44 @@ function saveCategories(categories) {
 }
 
 async function addCategory(category) {
-    const res = await axios.post('/api/categories', category);
-    return res.data;
+    try {
+        const res = await axios.post('/api/categories', category);
+        const localCats = JSON.parse(localStorage.getItem(DATA_KEYS.CATEGORIES)) || [];
+        localCats.push(res.data);
+        localStorage.setItem(DATA_KEYS.CATEGORIES, JSON.stringify(localCats));
+        return res.data;
+    } catch (e) {
+        console.warn('[Backend] Failed to add category, updating localStorage fallback.', e);
+        const categories = getCategories();
+        const id = category.name.toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-');
+        const newCat = {
+            id: id,
+            name: category.name,
+            icon: category.icon || 'boxes',
+            desc: category.desc || ''
+        };
+        if (!categories.find(c => c.id === id)) {
+            categories.push(newCat);
+            localStorage.setItem(DATA_KEYS.CATEGORIES, JSON.stringify(categories));
+            return newCat;
+        }
+        return null;
+    }
 }
 
 async function deleteCategory(id) {
-    const res = await axios.delete(`/api/categories/${id}`);
-    return res.data;
+    try {
+        const res = await axios.delete(`/api/categories/${id}`);
+        let localCats = JSON.parse(localStorage.getItem(DATA_KEYS.CATEGORIES)) || [];
+        localCats = localCats.filter(c => c.id !== id);
+        localStorage.setItem(DATA_KEYS.CATEGORIES, JSON.stringify(localCats));
+        return res.data;
+    } catch (e) {
+        console.warn('[Backend] Failed to delete category, updating localStorage fallback.', e);
+        let categories = getCategories();
+        categories = categories.filter(c => c.id !== id);
+        localStorage.setItem(DATA_KEYS.CATEGORIES, JSON.stringify(categories));
+    }
 }
 
 // Measurement Units CRUD operations
@@ -810,13 +910,42 @@ function saveUnits(units) {
 }
 
 async function addUnit(unit) {
-    const res = await axios.post('/api/units', unit);
-    return res.data;
+    try {
+        const res = await axios.post('/api/units', unit);
+        const localUnits = JSON.parse(localStorage.getItem(DATA_KEYS.UNITS)) || [];
+        localUnits.push(res.data);
+        localStorage.setItem(DATA_KEYS.UNITS, JSON.stringify(localUnits));
+        return res.data;
+    } catch (e) {
+        console.warn('[Backend] Failed to add unit, updating localStorage fallback.', e);
+        const units = getUnits();
+        const id = unit.name.replace(/[^a-zA-Z0-9]/g, '');
+        const newUnit = {
+            id: id,
+            name: unit.name
+        };
+        if (!units.find(u => u.id === id)) {
+            units.push(newUnit);
+            localStorage.setItem(DATA_KEYS.UNITS, JSON.stringify(units));
+            return newUnit;
+        }
+        return null;
+    }
 }
 
 async function deleteUnit(id) {
-    const res = await axios.delete(`/api/units/${id}`);
-    return res.data;
+    try {
+        const res = await axios.delete(`/api/units/${id}`);
+        let localUnits = JSON.parse(localStorage.getItem(DATA_KEYS.UNITS)) || [];
+        localUnits = localUnits.filter(u => u.id !== id);
+        localStorage.setItem(DATA_KEYS.UNITS, JSON.stringify(localUnits));
+        return res.data;
+    } catch (e) {
+        console.warn('[Backend] Failed to delete unit, updating localStorage fallback.', e);
+        let units = getUnits();
+        units = units.filter(u => u.id !== id);
+        localStorage.setItem(DATA_KEYS.UNITS, JSON.stringify(units));
+    }
 }
 
 // Order operations
@@ -829,8 +958,24 @@ function getOrders() {
 }
 
 async function saveOrder(order) {
-    const res = await axios.post('/api/orders', order);
-    return res.data;
+    try {
+        const res = await axios.post('/api/orders', order);
+        const localOrders = JSON.parse(localStorage.getItem(DATA_KEYS.ORDERS)) || [];
+        localOrders.unshift(res.data);
+        localStorage.setItem(DATA_KEYS.ORDERS, JSON.stringify(localOrders));
+        return res.data;
+    } catch (e) {
+        console.warn('[Backend] Failed to save order on server, writing to localStorage fallback.', e);
+        const orders = getOrders();
+        const newOrder = {
+            ...order,
+            id: 'ORD_' + Math.floor(100000 + Math.random() * 900000),
+            date: new Date().toISOString()
+        };
+        orders.unshift(newOrder);
+        localStorage.setItem(DATA_KEYS.ORDERS, JSON.stringify(orders));
+        return newOrder;
+    }
 }
 
 // Inquiry Sourcing Lead operations
@@ -843,8 +988,25 @@ function getInquiries() {
 }
 
 async function saveInquiry(inquiry) {
-    const res = await axios.post('/api/leads', inquiry);
-    return res.data;
+    try {
+        const res = await axios.post('/api/leads', inquiry);
+        const localInquiries = JSON.parse(localStorage.getItem(DATA_KEYS.INQUIRIES)) || [];
+        localInquiries.unshift(res.data);
+        localStorage.setItem(DATA_KEYS.INQUIRIES, JSON.stringify(localInquiries));
+        return res.data;
+    } catch (e) {
+        console.warn('[Backend] Failed to save inquiry lead, writing to localStorage fallback.', e);
+        const inquiries = getInquiries();
+        const newInquiry = {
+            ...inquiry,
+            id: 'INQ_' + Math.floor(100000 + Math.random() * 900000),
+            date: new Date().toISOString(),
+            status: 'Pending'
+        };
+        inquiries.unshift(newInquiry);
+        localStorage.setItem(DATA_KEYS.INQUIRIES, JSON.stringify(inquiries));
+        return newInquiry;
+    }
 }
 
 // Buying Guide Database & Helpers
@@ -907,18 +1069,64 @@ function saveGuidePosts(guides) {
 }
 
 async function addGuidePost(guide) {
-    const res = await axios.post('/api/guides', guide);
-    return res.data;
+    try {
+        const res = await axios.post('/api/guides', guide);
+        const localGuides = JSON.parse(localStorage.getItem(DATA_KEYS.GUIDES)) || [];
+        localGuides.push(res.data);
+        localStorage.setItem(DATA_KEYS.GUIDES, JSON.stringify(localGuides));
+        return res.data;
+    } catch (e) {
+        console.warn('[Backend] Failed to add guide post, updating localStorage fallback.', e);
+        const guides = getGuidePosts();
+        const newGuide = {
+            ...guide,
+            id: 'g_' + Date.now()
+        };
+        guides.push(newGuide);
+        localStorage.setItem(DATA_KEYS.GUIDES, JSON.stringify(guides));
+        return newGuide;
+    }
 }
 
 async function updateGuidePost(id, updatedGuide) {
-    const res = await axios.put(`/api/guides/${id}`, updatedGuide);
-    return res.data;
+    try {
+        const res = await axios.put(`/api/guides/${id}`, updatedGuide);
+        const localGuides = JSON.parse(localStorage.getItem(DATA_KEYS.GUIDES)) || [];
+        const idx = localGuides.findIndex(g => g.id === id);
+        if (idx !== -1) {
+            localGuides[idx] = { ...localGuides[idx], ...res.data };
+            localStorage.setItem(DATA_KEYS.GUIDES, JSON.stringify(localGuides));
+        }
+        return res.data;
+    } catch (e) {
+        console.warn('[Backend] Failed to update guide post, updating localStorage fallback.', e);
+        const guides = getGuidePosts();
+        const index = guides.findIndex(g => g.id === id);
+        if (index !== -1) {
+            guides[index] = {
+                ...guides[index],
+                ...updatedGuide
+            };
+            localStorage.setItem(DATA_KEYS.GUIDES, JSON.stringify(guides));
+            return guides[index];
+        }
+        return null;
+    }
 }
 
 async function deleteGuidePost(id) {
-    const res = await axios.delete(`/api/guides/${id}`);
-    return res.data;
+    try {
+        const res = await axios.delete(`/api/guides/${id}`);
+        let localGuides = JSON.parse(localStorage.getItem(DATA_KEYS.GUIDES)) || [];
+        localGuides = localGuides.filter(g => g.id !== id);
+        localStorage.setItem(DATA_KEYS.GUIDES, JSON.stringify(localGuides));
+        return res.data;
+    } catch (e) {
+        console.warn('[Backend] Failed to delete guide post, updating localStorage fallback.', e);
+        let guides = getGuidePosts();
+        guides = guides.filter(g => g.id !== id);
+        localStorage.setItem(DATA_KEYS.GUIDES, JSON.stringify(guides));
+    }
 }
 
 // Banners CRUD operations
@@ -935,16 +1143,66 @@ function saveBanners(banners) {
 }
 
 async function addBanner(banner) {
-    const res = await axios.post('/api/banners', banner);
-    return res.data;
+    try {
+        const res = await axios.post('/api/banners', banner);
+        const localBanners = JSON.parse(localStorage.getItem(DATA_KEYS.BANNERS)) || [];
+        localBanners.push(res.data);
+        localStorage.setItem(DATA_KEYS.BANNERS, JSON.stringify(localBanners));
+        return res.data;
+    } catch (e) {
+        console.warn('[Backend] Failed to add banner, updating localStorage fallback.', e);
+        const banners = getBanners();
+        const newBanner = {
+            id: 'b_' + Date.now(),
+            imageSrc: banner.imageSrc,
+            link: banner.link || '#/products',
+            styleType: banner.styleType || 'cover',
+            position: banner.position || 'center',
+            bgColor: banner.bgColor || '#ffffff'
+        };
+        banners.push(newBanner);
+        localStorage.setItem(DATA_KEYS.BANNERS, JSON.stringify(banners));
+        return newBanner;
+    }
 }
 
 async function updateBanner(id, updatedBanner) {
-    const res = await axios.put(`/api/banners/${id}`, updatedBanner);
-    return res.data;
+    try {
+        const res = await axios.put(`/api/banners/${id}`, updatedBanner);
+        const localBanners = JSON.parse(localStorage.getItem(DATA_KEYS.BANNERS)) || [];
+        const idx = localBanners.findIndex(b => b.id === id);
+        if (idx !== -1) {
+            localBanners[idx] = { ...localBanners[idx], ...res.data };
+            localStorage.setItem(DATA_KEYS.BANNERS, JSON.stringify(localBanners));
+        }
+        return res.data;
+    } catch (e) {
+        console.warn('[Backend] Failed to update banner, updating localStorage fallback.', e);
+        const banners = getBanners();
+        const index = banners.findIndex(b => b.id === id);
+        if (index !== -1) {
+            banners[index] = {
+                ...banners[index],
+                ...updatedBanner
+            };
+            localStorage.setItem(DATA_KEYS.BANNERS, JSON.stringify(banners));
+            return banners[index];
+        }
+        return null;
+    }
 }
 
 async function deleteBanner(id) {
-    const res = await axios.delete(`/api/banners/${id}`);
-    return res.data;
+    try {
+        const res = await axios.delete(`/api/banners/${id}`);
+        let localBanners = JSON.parse(localStorage.getItem(DATA_KEYS.BANNERS)) || [];
+        localBanners = localBanners.filter(b => b.id !== id);
+        localStorage.setItem(DATA_KEYS.BANNERS, JSON.stringify(localBanners));
+        return res.data;
+    } catch (e) {
+        console.warn('[Backend] Failed to delete banner, updating localStorage fallback.', e);
+        let banners = getBanners();
+        banners = banners.filter(b => b.id !== id);
+        localStorage.setItem(DATA_KEYS.BANNERS, JSON.stringify(banners));
+    }
 }

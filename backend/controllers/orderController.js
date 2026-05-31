@@ -11,6 +11,9 @@ exports.getOrders = async (req, res) => {
 
 exports.createOrder = async (req, res) => {
     try {
+        if (!req.body.id) {
+            req.body.id = 'ORD_' + Math.floor(100000 + Math.random() * 900000);
+        }
         const order = await Order.create(req.body);
         res.status(201).json(order);
     } catch (e) {

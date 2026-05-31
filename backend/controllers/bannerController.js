@@ -24,6 +24,9 @@ exports.getBannerById = async (req, res) => {
 
 exports.createBanner = async (req, res) => {
     try {
+        if (!req.body.id) {
+            req.body.id = 'b_' + Date.now();
+        }
         const banner = await Banner.create(req.body);
         res.status(201).json(banner);
     } catch (e) {

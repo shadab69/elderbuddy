@@ -11,6 +11,9 @@ exports.getUnits = async (req, res) => {
 
 exports.createUnit = async (req, res) => {
     try {
+        if (!req.body.id && req.body.name) {
+            req.body.id = req.body.name.replace(/[^a-zA-Z0-9]/g, '');
+        }
         const unit = await Unit.create(req.body);
         if (unit) {
             res.status(201).json(unit);

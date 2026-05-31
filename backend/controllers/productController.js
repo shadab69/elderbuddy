@@ -24,6 +24,9 @@ exports.getProductById = async (req, res) => {
 
 exports.createProduct = async (req, res) => {
     try {
+        if (!req.body.id) {
+            req.body.id = 'p_' + Date.now();
+        }
         const product = await Product.create(req.body);
         res.status(201).json(product);
     } catch (e) {

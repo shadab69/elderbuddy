@@ -24,6 +24,9 @@ exports.getGuideById = async (req, res) => {
 
 exports.createGuide = async (req, res) => {
     try {
+        if (!req.body.id) {
+            req.body.id = 'g_' + Date.now();
+        }
         const guide = await Guide.create(req.body);
         res.status(201).json(guide);
     } catch (e) {

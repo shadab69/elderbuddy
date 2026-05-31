@@ -11,6 +11,9 @@ exports.getCategories = async (req, res) => {
 
 exports.createCategory = async (req, res) => {
     try {
+        if (!req.body.id && req.body.name) {
+            req.body.id = req.body.name.toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-');
+        }
         const category = await Category.create(req.body);
         if (category) {
             res.status(201).json(category);
