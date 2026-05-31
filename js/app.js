@@ -12,13 +12,14 @@ let APP_STATE = {
 // Fetch initial data from server API
 async function fetchInitialData() {
     try {
-        const [prods, cats, units, banners, orders, leads] = await Promise.all([
+        const [prods, cats, units, banners, orders, leads, guides] = await Promise.all([
             axios.get('/api/products').then(res => res.data),
             axios.get('/api/categories').then(res => res.data),
             axios.get('/api/units').then(res => res.data),
             axios.get('/api/banners').then(res => res.data),
             axios.get('/api/orders').then(res => res.data),
-            axios.get('/api/leads').then(res => res.data)
+            axios.get('/api/leads').then(res => res.data),
+            axios.get('/api/guides').then(res => res.data)
         ]);
 
         window.SERVER_PRODUCTS = prods;
@@ -27,6 +28,7 @@ async function fetchInitialData() {
         window.SERVER_BANNERS = banners;
         window.SERVER_ORDERS = orders;
         window.SERVER_INQUIRIES = leads;
+        window.SERVER_GUIDES = guides;
 
         APP_STATE.products = prods;
         APP_STATE.categories = cats;
@@ -38,6 +40,7 @@ async function fetchInitialData() {
         window.SERVER_BANNERS = null;
         window.SERVER_ORDERS = null;
         window.SERVER_INQUIRIES = null;
+        window.SERVER_GUIDES = null;
 
         APP_STATE.products = getProducts();
         APP_STATE.categories = getCategories();

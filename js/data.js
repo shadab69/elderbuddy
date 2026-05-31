@@ -729,12 +729,18 @@ function initializeData() {
 
 // Product CRUD operations
 function getProducts() {
+    if (window.SERVER_PRODUCTS) {
+        return window.SERVER_PRODUCTS.map(p => {
+            if (!p.imageSrc || typeof p.imageSrc === 'string' && p.imageSrc.startsWith('<svg') === false && p.imageSrc.startsWith('<img') === false) {
+                const cat = p.category || 'cement';
+                p.imageSrc = SVG_TEMPLATES[cat] ? SVG_TEMPLATES[cat]() : SVG_TEMPLATES.cement();
+            }
+            return p;
+        });
+    }
     initializeData();
-    const prods = JSON.parse(localStorage.getItem(DATA_KEYS.PRODUCTS));
-    
-    // Wire up SVG renders for products loaded from storage
+    const prods = JSON.parse(localStorage.getItem(DATA_KEYS.PRODUCTS)) || [];
     return prods.map(p => {
-        // If imageSrc is missing or is just a key, link it back to a templated SVG
         if (!p.imageSrc || typeof p.imageSrc === 'string' && p.imageSrc.startsWith('<svg') === false && p.imageSrc.startsWith('<img') === false) {
             const cat = p.category || 'cement';
             p.imageSrc = SVG_TEMPLATES[cat] ? SVG_TEMPLATES[cat]() : SVG_TEMPLATES.cement();
@@ -744,13 +750,7 @@ function getProducts() {
 }
 
 function saveProducts(products) {
-    // Strip generated SVG code back to categories to avoid bloated localStorage
-    const cleanProds = products.map(p => {
-        const cleanCopy = { ...p };
-        // If it was dynamically created/rendered, we can just save it. But if it contains SVG code, it's fine.
-        return cleanCopy;
-    });
-    localStorage.setItem(DATA_KEYS.PRODUCTS, JSON.stringify(cleanProds));
+    localStorage.setItem(DATA_KEYS.PRODUCTS, JSON.stringify(products));
 }
 
 function getProductById(id) {
@@ -758,67 +758,26 @@ function getProductById(id) {
     return products.find(p => p.id === id);
 }
 
-function addProduct(product) {
-    const products = getProducts();
-    
-    let imgHtml = product.imageSrc;
-    if (imgHtml && imgHtml.trim() !== '') {
-        imgHtml = imgHtml.trim();
-        if (!imgHtml.startsWith('<svg') && !imgHtml.startsWith('<img')) {
-            imgHtml = `<img src="${imgHtml}" alt="${product.name}">`;
-        }
-    } else {
-        imgHtml = SVG_TEMPLATES[product.category] ? SVG_TEMPLATES[product.category]() : SVG_TEMPLATES.cement();
-    }
-
-    const newProduct = {
-        ...product,
-        id: 'p_' + Date.now(),
-        rating: 5.0,
-        ratingCount: 1,
-        imageSrc: imgHtml
-    };
-    products.unshift(newProduct); // Add new item at the top
-    saveProducts(products);
-    return newProduct;
+async function addProduct(product) {
+    const res = await axios.post('/api/products', product);
+    return res.data;
 }
 
-function updateProduct(id, updatedProduct) {
-    const products = getProducts();
-    const index = products.findIndex(p => p.id === id);
-    if (index !== -1) {
-        const original = products[index];
-        
-        let imgHtml = updatedProduct.imageSrc;
-        if (imgHtml && imgHtml.trim() !== '') {
-            imgHtml = imgHtml.trim();
-            if (!imgHtml.startsWith('<svg') && !imgHtml.startsWith('<img')) {
-                imgHtml = `<img src="${imgHtml}" alt="${updatedProduct.name}">`;
-            }
-        } else {
-            // Keep original if it's already an img tag, otherwise use category template
-            imgHtml = original.imageSrc.startsWith('<img') ? original.imageSrc : (SVG_TEMPLATES[updatedProduct.category] ? SVG_TEMPLATES[updatedProduct.category]() : original.imageSrc);
-        }
-
-        products[index] = {
-            ...original,
-            ...updatedProduct,
-            imageSrc: imgHtml
-        };
-        saveProducts(products);
-        return products[index];
-    }
-    return null;
+async function updateProduct(id, updatedProduct) {
+    const res = await axios.put(`/api/products/${id}`, updatedProduct);
+    return res.data;
 }
 
-function deleteProduct(id) {
-    let products = getProducts();
-    products = products.filter(p => p.id !== id);
-    saveProducts(products);
+async function deleteProduct(id) {
+    const res = await axios.delete(`/api/products/${id}`);
+    return res.data;
 }
 
 // Category details & CRUD operations
 function getCategories() {
+    if (window.SERVER_CATEGORIES) {
+        return window.SERVER_CATEGORIES;
+    }
     initializeData();
     return JSON.parse(localStorage.getItem(DATA_KEYS.CATEGORIES)) || INITIAL_CATEGORIES;
 }
@@ -827,31 +786,21 @@ function saveCategories(categories) {
     localStorage.setItem(DATA_KEYS.CATEGORIES, JSON.stringify(categories));
 }
 
-function addCategory(category) {
-    const categories = getCategories();
-    const id = category.name.toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-');
-    const newCat = {
-        id: id,
-        name: category.name,
-        icon: category.icon || 'boxes',
-        desc: category.desc || ''
-    };
-    if (!categories.find(c => c.id === id)) {
-        categories.push(newCat);
-        saveCategories(categories);
-        return newCat;
-    }
-    return null;
+async function addCategory(category) {
+    const res = await axios.post('/api/categories', category);
+    return res.data;
 }
 
-function deleteCategory(id) {
-    let categories = getCategories();
-    categories = categories.filter(c => c.id !== id);
-    saveCategories(categories);
+async function deleteCategory(id) {
+    const res = await axios.delete(`/api/categories/${id}`);
+    return res.data;
 }
 
 // Measurement Units CRUD operations
 function getUnits() {
+    if (window.SERVER_UNITS) {
+        return window.SERVER_UNITS;
+    }
     initializeData();
     return JSON.parse(localStorage.getItem(DATA_KEYS.UNITS)) || INITIAL_UNITS;
 }
@@ -860,66 +809,43 @@ function saveUnits(units) {
     localStorage.setItem(DATA_KEYS.UNITS, JSON.stringify(units));
 }
 
-function addUnit(unit) {
-    const units = getUnits();
-    const id = unit.name.replace(/[^a-zA-Z0-9]/g, '');
-    const newUnit = {
-        id: id,
-        name: unit.name
-    };
-    if (!units.find(u => u.id === id)) {
-        units.push(newUnit);
-        saveUnits(units);
-        return newUnit;
-    }
-    return null;
+async function addUnit(unit) {
+    const res = await axios.post('/api/units', unit);
+    return res.data;
 }
 
-function deleteUnit(id) {
-    let units = getUnits();
-    units = units.filter(u => u.id !== id);
-    saveUnits(units);
+async function deleteUnit(id) {
+    const res = await axios.delete(`/api/units/${id}`);
+    return res.data;
 }
 
 // Order operations
 function getOrders() {
+    if (window.SERVER_ORDERS) {
+        return window.SERVER_ORDERS;
+    }
     initializeData();
-    return JSON.parse(localStorage.getItem(DATA_KEYS.ORDERS));
+    return JSON.parse(localStorage.getItem(DATA_KEYS.ORDERS)) || [];
 }
 
-function saveOrder(order) {
-    const orders = getOrders();
-    const newOrder = {
-        ...order,
-        id: 'ORD_' + Math.floor(100000 + Math.random() * 900000),
-        date: new Date().toISOString()
-    };
-    orders.unshift(newOrder);
-    localStorage.setItem(DATA_KEYS.ORDERS, JSON.stringify(orders));
-    return newOrder;
+async function saveOrder(order) {
+    const res = await axios.post('/api/orders', order);
+    return res.data;
 }
 
 // Inquiry Sourcing Lead operations
 function getInquiries() {
+    if (window.SERVER_INQUIRIES) {
+        return window.SERVER_INQUIRIES;
+    }
     initializeData();
-    return JSON.parse(localStorage.getItem(DATA_KEYS.INQUIRIES));
+    return JSON.parse(localStorage.getItem(DATA_KEYS.INQUIRIES)) || [];
 }
 
-function saveInquiry(inquiry) {
-    const inquiries = getInquiries();
-    const newInquiry = {
-        ...inquiry,
-        id: 'INQ_' + Math.floor(100000 + Math.random() * 900000),
-        date: new Date().toISOString(),
-        status: 'Pending'
-    };
-    inquiries.unshift(newInquiry);
-    localStorage.setItem(DATA_KEYS.INQUIRIES, JSON.stringify(inquiries));
-    return newInquiry;
+async function saveInquiry(inquiry) {
+    const res = await axios.post('/api/leads', inquiry);
+    return res.data;
 }
-
-// Run first-time setup on inclusion
-initializeData();
 
 // Buying Guide Database & Helpers
 const INITIAL_GUIDE_POSTS = [
@@ -969,14 +895,37 @@ const INITIAL_GUIDE_POSTS = [
 ];
 
 function getGuidePosts() {
-    if (!localStorage.getItem('builderpro_guides')) {
-        localStorage.setItem('builderpro_guides', JSON.stringify(INITIAL_GUIDE_POSTS));
+    if (window.SERVER_GUIDES) {
+        return window.SERVER_GUIDES;
     }
-    return JSON.parse(localStorage.getItem('builderpro_guides'));
+    initializeData();
+    return JSON.parse(localStorage.getItem(DATA_KEYS.GUIDES)) || INITIAL_GUIDE_POSTS;
+}
+
+function saveGuidePosts(guides) {
+    localStorage.setItem(DATA_KEYS.GUIDES, JSON.stringify(guides));
+}
+
+async function addGuidePost(guide) {
+    const res = await axios.post('/api/guides', guide);
+    return res.data;
+}
+
+async function updateGuidePost(id, updatedGuide) {
+    const res = await axios.put(`/api/guides/${id}`, updatedGuide);
+    return res.data;
+}
+
+async function deleteGuidePost(id) {
+    const res = await axios.delete(`/api/guides/${id}`);
+    return res.data;
 }
 
 // Banners CRUD operations
 function getBanners() {
+    if (window.SERVER_BANNERS) {
+        return window.SERVER_BANNERS;
+    }
     initializeData();
     return JSON.parse(localStorage.getItem(DATA_KEYS.BANNERS)) || INITIAL_BANNERS;
 }
@@ -985,37 +934,17 @@ function saveBanners(banners) {
     localStorage.setItem(DATA_KEYS.BANNERS, JSON.stringify(banners));
 }
 
-function addBanner(banner) {
-    const banners = getBanners();
-    const newBanner = {
-        id: 'b_' + Date.now(),
-        imageSrc: banner.imageSrc,
-        link: banner.link || '#/products',
-        styleType: banner.styleType || 'cover',
-        position: banner.position || 'center',
-        bgColor: banner.bgColor || '#ffffff'
-    };
-    banners.push(newBanner);
-    saveBanners(banners);
-    return newBanner;
+async function addBanner(banner) {
+    const res = await axios.post('/api/banners', banner);
+    return res.data;
 }
 
-function updateBanner(id, updatedBanner) {
-    const banners = getBanners();
-    const index = banners.findIndex(b => b.id === id);
-    if (index !== -1) {
-        banners[index] = {
-            ...banners[index],
-            ...updatedBanner
-        };
-        saveBanners(banners);
-        return banners[index];
-    }
-    return null;
+async function updateBanner(id, updatedBanner) {
+    const res = await axios.put(`/api/banners/${id}`, updatedBanner);
+    return res.data;
 }
 
-function deleteBanner(id) {
-    let banners = getBanners();
-    banners = banners.filter(b => b.id !== id);
-    saveBanners(banners);
+async function deleteBanner(id) {
+    const res = await axios.delete(`/api/banners/${id}`);
+    return res.data;
 }
