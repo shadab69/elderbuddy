@@ -32,7 +32,7 @@ const INITIAL_BANNERS = [
     },
     {
         id: 'b3',
-        imageSrc: 'assets/new_hero_banner.png',
+        imageSrc: 'assets/new_hero_banner.jpg',
         link: '#/products',
         styleType: 'dual',
         position: 'center',
