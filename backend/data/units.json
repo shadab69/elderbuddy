@@ -1,0 +1,34 @@
+[
+  {
+    "id": "Bag",
+    "name": "Bag (Cement)"
+  },
+  {
+    "id": "Ton",
+    "name": "Ton (Steel/Sand)"
+  },
+  {
+    "id": "Piece",
+    "name": "Piece (Bricks/Blocks)"
+  },
+  {
+    "id": "SqFt",
+    "name": "SqFt (Tiles/Stones)"
+  },
+  {
+    "id": "Coil",
+    "name": "Coil (Electrical)"
+  },
+  {
+    "id": "Bucket",
+    "name": "Bucket (Paints)"
+  },
+  {
+    "id": "Litre",
+    "name": "Litre (Liquids)"
+  },
+  {
+    "id": "Kg",
+    "name": "Kg (Hardware/Nails)"
+  }
+]

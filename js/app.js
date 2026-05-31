@@ -9,8 +9,45 @@ let APP_STATE = {
     categories: []
 };
 
+// Fetch initial data from server API
+async function fetchInitialData() {
+    try {
+        const [prods, cats, units, banners, orders, leads] = await Promise.all([
+            axios.get('/api/products').then(res => res.data),
+            axios.get('/api/categories').then(res => res.data),
+            axios.get('/api/units').then(res => res.data),
+            axios.get('/api/banners').then(res => res.data),
+            axios.get('/api/orders').then(res => res.data),
+            axios.get('/api/leads').then(res => res.data)
+        ]);
+
+        window.SERVER_PRODUCTS = prods;
+        window.SERVER_CATEGORIES = cats;
+        window.SERVER_UNITS = units;
+        window.SERVER_BANNERS = banners;
+        window.SERVER_ORDERS = orders;
+        window.SERVER_INQUIRIES = leads;
+
+        APP_STATE.products = prods;
+        APP_STATE.categories = cats;
+    } catch (e) {
+        console.warn('[Backend] Failed to fetch data from API, using local storage fallback.', e);
+        window.SERVER_PRODUCTS = null;
+        window.SERVER_CATEGORIES = null;
+        window.SERVER_UNITS = null;
+        window.SERVER_BANNERS = null;
+        window.SERVER_ORDERS = null;
+        window.SERVER_INQUIRIES = null;
+
+        APP_STATE.products = getProducts();
+        APP_STATE.categories = getCategories();
+    }
+}
+window.fetchInitialData = fetchInitialData;
+
 // Initialize Cart and state
 function initAppState() {
+    // Falls back to localStorage if SERVER variables are null
     APP_STATE.products = getProducts();
     APP_STATE.categories = getCategories();
     APP_STATE.cart = JSON.parse(localStorage.getItem('builderpro_cart') || '[]');
@@ -139,8 +176,9 @@ function router() {
 // --------------------------------------------------------------------------
 // EVENT LISTENERS & INITS
 // --------------------------------------------------------------------------
-document.addEventListener('DOMContentLoaded', () => {
-    // 1. Initial State Load
+document.addEventListener('DOMContentLoaded', async () => {
+    // 1. Initial State Load from API
+    await fetchInitialData();
     initAppState();
     
     // 2. Render Shared Components
@@ -301,7 +339,7 @@ document.addEventListener('DOMContentLoaded', () => {
         inquiryForm.reset();
     });
 
-    inquiryForm.addEventListener('submit', (e) => {
+    inquiryForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         
         const inqData = {
@@ -313,9 +351,10 @@ document.addEventListener('DOMContentLoaded', () => {
             details: document.getElementById('inq-details').value
         };
 
-        saveInquiry(inqData);
+        await saveInquiry(inqData);
         alert(`Quote Inquiry submitted successfully! Our engineering team will call you on ${inqData.phone} shortly.`);
         
+        if (window.fetchInitialData) await window.fetchInitialData();
         inquiryModal.classList.remove('active');
         inquiryForm.reset();
     });

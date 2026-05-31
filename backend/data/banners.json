@@ -1,0 +1,42 @@
+[
+  {
+    "id": "b1",
+    "imageSrc": "assets/banner1.png",
+    "link": "#/products",
+    "styleType": "stretch",
+    "position": "center",
+    "bgColor": "#ffffff"
+  },
+  {
+    "id": "b2",
+    "imageSrc": "assets/promo_bricks.png",
+    "link": "#/products",
+    "styleType": "cover",
+    "position": "center",
+    "bgColor": "#ffffff"
+  },
+  {
+    "id": "b_1780252292326",
+    "imageSrc": "/uploads/file-1780252287259-134887561.jpg",
+    "link": "#/products",
+    "styleType": "cover",
+    "position": "center",
+    "bgColor": "#ffffff"
+  },
+  {
+    "id": "b_1780252356471",
+    "imageSrc": "/uploads/file-1780252352036-568850373.jpg",
+    "link": "#/products",
+    "styleType": "cover",
+    "position": "center",
+    "bgColor": "#ffffff"
+  },
+  {
+    "id": "b_1780252392455",
+    "imageSrc": "/uploads/file-1780252390733-406158070.jpg",
+    "link": "#/products",
+    "styleType": "cover",
+    "position": "center",
+    "bgColor": "#ffffff"
+  }
+]

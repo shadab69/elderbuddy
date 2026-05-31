@@ -1,0 +1,56 @@
+[
+  {
+    "id": "cement",
+    "name": "Cement & Concrete",
+    "icon": "boxes",
+    "desc": "OPC & PPC Cements, Ready Mix Concrete"
+  },
+  {
+    "id": "steel",
+    "name": "TMT Steel Bars",
+    "icon": "anvil",
+    "desc": "Reinforcement bars for columns & slabs"
+  },
+  {
+    "id": "bricks",
+    "name": "Bricks & Blocks",
+    "icon": "layers",
+    "desc": "Red clay bricks, fly ash & AAC blocks"
+  },
+  {
+    "id": "tiles",
+    "name": "Tiles & Flooring",
+    "icon": "grid",
+    "desc": "Ceramic, vitrified tiles & natural stones"
+  },
+  {
+    "id": "plumbing",
+    "name": "Plumbing & Pipes",
+    "icon": "droplet",
+    "desc": "CPVC, PVC pipes & bathroom fittings"
+  },
+  {
+    "id": "electrical",
+    "name": "Electricals & Wires",
+    "icon": "zap",
+    "desc": "FRLS wires, modular switches & lights"
+  },
+  {
+    "id": "paints",
+    "name": "Paints & Finishes",
+    "icon": "paint-bucket",
+    "desc": "Interior, exterior paints & primers"
+  },
+  {
+    "id": "hardware",
+    "name": "Hardware & Fixtures",
+    "icon": "wrench",
+    "desc": "Locks, hinges, screws & steel fixtures"
+  },
+  {
+    "id": "Interior",
+    "name": "Interior Design",
+    "icon": "home",
+    "desc": "Decorative items and furnishings for indoor spaces"
+  }
+]

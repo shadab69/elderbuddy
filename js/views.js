@@ -1078,7 +1078,7 @@ function renderCheckoutView(root) {
     `;
 
     // Form submission listener
-    document.getElementById('checkout-form').addEventListener('submit', (e) => {
+    document.getElementById('checkout-form').addEventListener('submit', async (e) => {
         e.preventDefault();
         
         // Build order object
@@ -1107,7 +1107,10 @@ function renderCheckoutView(root) {
         };
 
         // Save order via data layer
-        const savedOrder = saveOrder(orderData);
+        const savedOrder = await saveOrder(orderData);
+
+        // Fetch refreshed server data in memory
+        if (window.fetchInitialData) await window.fetchInitialData();
 
         // Clear cart
         localStorage.setItem('builderpro_cart', JSON.stringify([]));
@@ -1417,10 +1420,11 @@ function renderAdminView(root, activeTab = 'products') {
         });
 
         document.querySelectorAll('[data-delete-prod-id]').forEach(btn => {
-            btn.addEventListener('click', (e) => {
+            btn.addEventListener('click', async (e) => {
                 const id = btn.getAttribute('data-delete-prod-id');
                 if (confirm('Are you sure you want to delete this product listing from the e-commerce store?')) {
-                    deleteProduct(id);
+                    await deleteProduct(id);
+                    if (window.fetchInitialData) await window.fetchInitialData();
                     renderAdminView(root, 'products'); // Refresh View
                 }
             });
@@ -1596,13 +1600,14 @@ function renderAdminView(root, activeTab = 'products') {
             </div>
         `;
 
-        document.getElementById('btn-admin-add-cat').addEventListener('click', () => {
+        document.getElementById('btn-admin-add-cat').addEventListener('click', async () => {
             const name = prompt('Enter Category Name (e.g. Sanitaryware):');
             if (name && name.trim() !== '') {
                 const desc = prompt('Enter Category Description (optional):');
                 const icon = prompt('Enter Lucide Icon name (optional, e.g. bath, wrench, boxes):') || 'boxes';
-                const added = addCategory({ name: name.trim(), desc: desc ? desc.trim() : '', icon: icon.trim() });
+                const added = await addCategory({ name: name.trim(), desc: desc ? desc.trim() : '', icon: icon.trim() });
                 if (added) {
+                    if (window.fetchInitialData) await window.fetchInitialData();
                     renderAdminView(root, 'categories');
                 } else {
                     alert('Category already exists or name is invalid!');
@@ -1611,10 +1616,11 @@ function renderAdminView(root, activeTab = 'products') {
         });
 
         document.querySelectorAll('[data-delete-cat-id]').forEach(btn => {
-            btn.addEventListener('click', () => {
+            btn.addEventListener('click', async () => {
                 const id = btn.getAttribute('data-delete-cat-id');
                 if (confirm(`Are you sure you want to delete category "${id}"? Products in this category will remain but the category filter will be removed.`)) {
-                    deleteCategory(id);
+                    await deleteCategory(id);
+                    if (window.fetchInitialData) await window.fetchInitialData();
                     renderAdminView(root, 'categories');
                 }
             });
@@ -1663,11 +1669,12 @@ function renderAdminView(root, activeTab = 'products') {
             </div>
         `;
 
-        document.getElementById('btn-admin-add-unit').addEventListener('click', () => {
+        document.getElementById('btn-admin-add-unit').addEventListener('click', async () => {
             const name = prompt('Enter Unit Name (e.g. Litre (Liquids) or Kg (Hardware)):');
             if (name && name.trim() !== '') {
-                const added = addUnit({ name: name.trim() });
+                const added = await addUnit({ name: name.trim() });
                 if (added) {
+                    if (window.fetchInitialData) await window.fetchInitialData();
                     renderAdminView(root, 'units');
                 } else {
                     alert('Unit already exists or name is invalid!');
@@ -1676,10 +1683,11 @@ function renderAdminView(root, activeTab = 'products') {
         });
 
         document.querySelectorAll('[data-delete-unit-id]').forEach(btn => {
-            btn.addEventListener('click', () => {
+            btn.addEventListener('click', async () => {
                 const id = btn.getAttribute('data-delete-unit-id');
                 if (confirm(`Are you sure you want to delete unit "${id}"?`)) {
-                    deleteUnit(id);
+                    await deleteUnit(id);
+                    if (window.fetchInitialData) await window.fetchInitialData();
                     renderAdminView(root, 'units');
                 }
             });
@@ -1776,10 +1784,11 @@ function renderAdminView(root, activeTab = 'products') {
         });
 
         document.querySelectorAll('[data-delete-banner-id]').forEach(btn => {
-            btn.addEventListener('click', () => {
+            btn.addEventListener('click', async () => {
                 const id = btn.getAttribute('data-delete-banner-id');
                 if (confirm('Are you sure you want to delete this banner?')) {
-                    deleteBanner(id);
+                    await deleteBanner(id);
+                    if (window.fetchInitialData) await window.fetchInitialData();
                     renderAdminView(root, 'banners');
                 }
             });
@@ -1863,9 +1872,25 @@ function renderAdminView(root, activeTab = 'products') {
         const file = e.target.files[0];
         if (file) {
             document.getElementById('prod-image-filename').textContent = file.name;
-            compressAndReadFile(file, 400, (dataUrl) => {
-                document.getElementById('prod-image-url').value = dataUrl;
-                updateProdPreview(dataUrl);
+            compressAndReadFile(file, 400, async (dataUrl) => {
+                try {
+                    const blob = await fetch(dataUrl).then(res => res.blob());
+                    const formData = new FormData();
+                    formData.append('image', blob, file.name);
+                    
+                    const res = await axios.post('/api/upload', formData, {
+                        headers: { 'Content-Type': 'multipart/form-data' }
+                    });
+                    
+                    const serverUrl = res.data.url;
+                    document.getElementById('prod-image-url').value = serverUrl;
+                    updateProdPreview(serverUrl);
+                } catch (err) {
+                    console.error('Image upload failed', err);
+                    // Fallback to Base64 in case server upload fails
+                    document.getElementById('prod-image-url').value = dataUrl;
+                    updateProdPreview(dataUrl);
+                }
             });
         }
     });
@@ -1875,7 +1900,7 @@ function renderAdminView(root, activeTab = 'products') {
     });
 
     // Save/Update Form submit handler
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
         e.preventDefault();
 
         const editId = document.getElementById('prod-edit-id').value;
@@ -1894,11 +1919,12 @@ function renderAdminView(root, activeTab = 'products') {
         };
 
         if (editId) {
-            updateProduct(editId, prodData);
+            await updateProduct(editId, prodData);
         } else {
-            addProduct(prodData);
+            await addProduct(prodData);
         }
 
+        if (window.fetchInitialData) await window.fetchInitialData();
         hideProductModal();
         renderAdminView(root, 'products'); // Reload view
     });
@@ -1974,9 +2000,25 @@ function renderAdminView(root, activeTab = 'products') {
         const file = e.target.files[0];
         if (file) {
             document.getElementById('banner-image-filename').textContent = file.name;
-            compressAndReadFile(file, 1000, (dataUrl) => {
-                document.getElementById('banner-img-path').value = dataUrl;
-                updateBannerPreview(dataUrl);
+            compressAndReadFile(file, 1000, async (dataUrl) => {
+                try {
+                    const blob = await fetch(dataUrl).then(res => res.blob());
+                    const formData = new FormData();
+                    formData.append('image', blob, file.name);
+                    
+                    const res = await axios.post('/api/upload', formData, {
+                        headers: { 'Content-Type': 'multipart/form-data' }
+                    });
+                    
+                    const serverUrl = res.data.url;
+                    document.getElementById('banner-img-path').value = serverUrl;
+                    updateBannerPreview(serverUrl);
+                } catch (err) {
+                    console.error('Image upload failed', err);
+                    // Fallback to Base64 in case server upload fails
+                    document.getElementById('banner-img-path').value = dataUrl;
+                    updateBannerPreview(dataUrl);
+                }
             });
         }
     });
@@ -1985,7 +2027,7 @@ function renderAdminView(root, activeTab = 'products') {
         updateBannerPreview(e.target.value);
     });
 
-    bannerForm.addEventListener('submit', (e) => {
+    bannerForm.addEventListener('submit', async (e) => {
         e.preventDefault();
 
         const editId = document.getElementById('banner-edit-id').value;
@@ -1998,11 +2040,12 @@ function renderAdminView(root, activeTab = 'products') {
         };
 
         if (editId) {
-            updateBanner(editId, bannerData);
+            await updateBanner(editId, bannerData);
         } else {
-            addBanner(bannerData);
+            await addBanner(bannerData);
         }
 
+        if (window.fetchInitialData) await window.fetchInitialData();
         hideBannerModal();
         renderAdminView(root, 'banners'); // Reload view
     });

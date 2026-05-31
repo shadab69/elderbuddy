@@ -4,7 +4,14 @@
   "description": "E-commerce portal for construction materials",
   "main": "index.html",
   "scripts": {
-    "dev": "npx live-server"
+    "dev": "npx live-server",
+    "start": "node backend/server.js"
   },
-  "dependencies": {}
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "mongoose": "^8.4.1",
+    "multer": "^1.4.5-lts.1"
+  }
 }
