@@ -2,6 +2,37 @@
 // VIEWS MODULE: Rendering Engines for the SPA Routes
 // ==========================================================================
 
+// Helper: Compress and read image file to lightweight Base64 string
+function compressAndReadFile(file, maxWidth, callback) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        const img = new Image();
+        img.onload = function() {
+            let width = img.width;
+            let height = img.height;
+            if (width > maxWidth) {
+                height = Math.round((height * maxWidth) / width);
+                width = maxWidth;
+            }
+            const canvas = document.createElement('canvas');
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, width, height);
+            const dataUrl = canvas.toDataURL('image/jpeg', 0.75);
+            callback(dataUrl);
+        };
+        img.onerror = function() {
+            alert('Error loading image. Please try another file.');
+        };
+        img.src = e.target.result;
+    };
+    reader.onerror = function() {
+        alert('Error reading file. Please try again.');
+    };
+    reader.readAsDataURL(file);
+}
+
 // --------------------------------------------------------------------------
 // 1. HOME VIEW
 // --------------------------------------------------------------------------
@@ -9,32 +40,57 @@ function renderHomeView(root) {
     const categories = getCategories();
     const allProducts = getProducts();
     const featuredProducts = allProducts.filter(p => p.id.startsWith('p')); // Display catalog products as featured
+    const banners = getBanners();
+
+    const slidesHtml = banners.map((b, index) => {
+        const isActive = index === 0 ? 'active' : '';
+        const link = b.link || '#/products';
+        const bgColor = b.bgColor ? `background-color: ${b.bgColor};` : '';
+        const bgPos = b.position ? `background-position: center ${b.position};` : 'background-position: center;';
+
+        if (b.styleType === 'dual') {
+            return `
+                <div class="carousel-slide ${isActive}" onclick="location.hash='${link}'" style="cursor: pointer; ${bgColor}">
+                    <div class="slide-blur-bg" style="background-image: url('${b.imageSrc}');"></div>
+                    <div class="slide-main-img" style="background-image: url('${b.imageSrc}'); ${bgPos}"></div>
+                </div>
+            `;
+        } else if (b.styleType === 'contain') {
+            return `
+                <div class="carousel-slide ${isActive}" onclick="location.hash='${link}'" style="cursor: pointer; background-image: url('${b.imageSrc}'); background-size: contain; ${bgPos} background-repeat: no-repeat; ${bgColor}">
+                </div>
+            `;
+        } else if (b.styleType === 'stretch') {
+            return `
+                <div class="carousel-slide ${isActive}" onclick="location.hash='${link}'" style="cursor: pointer; background-image: url('${b.imageSrc}'); background-size: 100% 100%; ${bgColor}">
+                </div>
+            `;
+        } else { // 'cover'
+            return `
+                <div class="carousel-slide ${isActive}" onclick="location.hash='${link}'" style="cursor: pointer; background-image: url('${b.imageSrc}'); background-size: cover; ${bgPos} background-repeat: no-repeat; ${bgColor}">
+                </div>
+            `;
+        }
+    }).join('');
+
+    const indicatorsHtml = banners.map((b, index) => {
+        const isActive = index === 0 ? 'active' : '';
+        return `<span class="indicator ${isActive}" data-slide="${index}"></span>`;
+    }).join('');
 
     root.innerHTML = `
         <div class="container animate-fade-in">
             <!-- Hero Carousel -->
             <section class="hero-carousel-container">
                 <div class="carousel-track" id="hero-carousel-track">
-                    <!-- Slide 1 -->
-                    <div class="carousel-slide active" onclick="location.hash='#/products'" style="cursor: pointer; background-image: url('assets/banner1.png');">
-                    </div>
-                    <!-- Slide 2 -->
-                    <div class="carousel-slide" onclick="location.hash='#/products'" style="cursor: pointer; background-image: url('assets/promo_bricks.png');">
-                    </div>
-                    <!-- Slide 3 -->
-                    <div class="carousel-slide" onclick="location.hash='#/products'" style="cursor: pointer;">
-                        <div class="slide-blur-bg" style="background-image: url('assets/new_hero_banner.png');"></div>
-                        <div class="slide-main-img" style="background-image: url('assets/new_hero_banner.png');"></div>
-                    </div>
+                    ${slidesHtml}
                 </div>
                 <!-- Carousel Controls -->
                 <button class="carousel-arrow prev" id="btn-carousel-prev"><i data-lucide="chevron-left"></i></button>
                 <button class="carousel-arrow next" id="btn-carousel-next"><i data-lucide="chevron-right"></i></button>
                 <!-- Carousel Indicators -->
                 <div class="carousel-indicators">
-                    <span class="indicator active" data-slide="0"></span>
-                    <span class="indicator" data-slide="1"></span>
-                    <span class="indicator" data-slide="2"></span>
+                    ${indicatorsHtml}
                 </div>
             </section>
 
@@ -1105,6 +1161,18 @@ function renderAdminView(root, activeTab = 'products') {
                         <i data-lucide="boxes"></i>
                         <span>Manage Products</span>
                     </button>
+                    <button class="admin-nav-item ${activeTab === 'categories' ? 'active' : ''}" id="adm-nav-categories">
+                        <i data-lucide="folder-open"></i>
+                        <span>Manage Categories</span>
+                    </button>
+                    <button class="admin-nav-item ${activeTab === 'units' ? 'active' : ''}" id="adm-nav-units">
+                        <i data-lucide="hash"></i>
+                        <span>Manage Units</span>
+                    </button>
+                    <button class="admin-nav-item ${activeTab === 'banners' ? 'active' : ''}" id="adm-nav-banners">
+                        <i data-lucide="image"></i>
+                        <span>Manage Banners</span>
+                    </button>
                     <button class="admin-nav-item ${activeTab === 'orders' ? 'active' : ''}" id="adm-nav-orders">
                         <i data-lucide="shopping-bag"></i>
                         <span>Customer Orders</span>
@@ -1158,12 +1226,7 @@ function renderAdminView(root, activeTab = 'products') {
                             <div class="input-group">
                                 <label for="prod-unit">Unit of Measure</label>
                                 <select id="prod-unit">
-                                    <option value="Bag">Bag (Cement)</option>
-                                    <option value="Ton">Ton (Steel/Sand)</option>
-                                    <option value="Piece">Piece (Bricks/Blocks)</option>
-                                    <option value="SqFt">SqFt (Tiles/Stones)</option>
-                                    <option value="Coil">Coil (Electrical)</option>
-                                    <option value="Bucket">Bucket (Paints)</option>
+                                    ${getUnits().map(u => `<option value="${u.id}">${u.name}</option>`).join('')}
                                 </select>
                             </div>
                         </div>
@@ -1172,7 +1235,20 @@ function renderAdminView(root, activeTab = 'products') {
                             <textarea id="prod-desc" rows="3" placeholder="Explain technical benefits, standard ratings, cement grade, compression test results..." required></textarea>
                         </div>
                         <div class="input-group" style="margin-top:12px;">
-                            <label for="prod-image-url">Image URL or Local Path (Optional)</label>
+                            <label>Product Image</label>
+                            <div style="display:flex; gap:12px; align-items:center; margin-bottom:8px;">
+                                <div id="prod-img-preview-box" style="width:64px; height:64px; border:1px dashed var(--border-color); border-radius:6px; display:flex; align-items:center; justify-content:center; background:var(--bg-surface-alt); overflow:hidden; flex-shrink:0;">
+                                    <span style="font-size:0.65rem; color:var(--text-muted);">No Image</span>
+                                </div>
+                                <div style="flex:1;">
+                                    <input type="file" id="prod-image-file" accept="image/*" style="display:none;">
+                                    <button type="button" class="btn-secondary" id="btn-upload-prod-img" style="padding: 8px 14px; font-size: 0.8rem; display: inline-flex; align-items:center; gap:6px; cursor:pointer; border:none; height:auto; line-height:1;">
+                                        <i data-lucide="upload" style="width:14px; height:14px;"></i> Upload Image
+                                    </button>
+                                    <span id="prod-image-filename" style="font-size:0.7rem; color:var(--text-muted); display:block; margin-top:4px; max-width:200px; text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">No file selected</span>
+                                </div>
+                            </div>
+                            <label for="prod-image-url" style="font-size:0.75rem; margin-top:4px; display:block;">Or enter Image URL / Local Path manually</label>
                             <input type="text" id="prod-image-url" placeholder="e.g. assets/my_product.png or https://example.com/image.jpg">
                             <span style="font-size:0.7rem; color:var(--text-muted); display:block; margin-top:2px;">Leave empty to use the default category icon.</span>
                         </div>
@@ -1195,6 +1271,75 @@ function renderAdminView(root, activeTab = 'products') {
                     <div class="modal-footer">
                         <button type="button" class="btn-cancel" id="btn-cancel-prod-modal">Cancel</button>
                         <button type="submit" class="btn-primary" id="btn-submit-prod">Save Product</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Add/Edit Banner Modal Form -->
+        <div class="modal-overlay" id="admin-banner-modal">
+            <div class="modal-card" style="max-width:500px;">
+                <div class="modal-header">
+                    <h3 id="banner-modal-title">Add Carousel Banner</h3>
+                    <button class="btn-close-modal" id="btn-close-banner-modal">
+                        <i data-lucide="x"></i>
+                    </button>
+                </div>
+                <form id="banner-form">
+                    <input type="hidden" id="banner-edit-id">
+                    <div class="modal-body">
+                        <div class="input-group">
+                            <label>Banner Image</label>
+                            <div style="display:flex; gap:12px; align-items:center; margin-bottom:8px;">
+                                <div id="banner-img-preview-box" style="width:120px; height:50px; border:1px dashed var(--border-color); border-radius:6px; display:flex; align-items:center; justify-content:center; background:var(--bg-surface-alt); overflow:hidden; flex-shrink:0;">
+                                    <span style="font-size:0.65rem; color:var(--text-muted);">No Preview</span>
+                                </div>
+                                <div style="flex:1;">
+                                    <input type="file" id="banner-image-file" accept="image/*" style="display:none;">
+                                    <button type="button" class="btn-secondary" id="btn-upload-banner-img" style="padding: 8px 14px; font-size: 0.8rem; display: inline-flex; align-items:center; gap:6px; cursor:pointer; border:none; height:auto; line-height:1;">
+                                        <i data-lucide="upload" style="width:14px; height:14px;"></i> Upload Image
+                                    </button>
+                                    <span id="banner-image-filename" style="font-size:0.7rem; color:var(--text-muted); display:block; margin-top:4px; max-width:200px; text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">No file selected</span>
+                                </div>
+                            </div>
+                            <label for="banner-img-path" style="font-size:0.75rem; margin-top:4px; display:block;">Or enter Banner Image URL / Local Path manually</label>
+                            <input type="text" id="banner-img-path" placeholder="e.g. assets/banner1.png or https://site.com/image.jpg" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="banner-redirect-link">Click Redirect Link / Hash</label>
+                            <input type="text" id="banner-redirect-link" placeholder="e.g. #/products or #/products?category=cement" value="#/products">
+                        </div>
+                        <div class="form-row">
+                            <div class="input-group">
+                                <label for="banner-fit-style">Fitting Style</label>
+                                <select id="banner-fit-style">
+                                    <option value="cover">Full Cover (Scale & Crop)</option>
+                                    <option value="dual">Dual-Layer Blur Backdrop</option>
+                                    <option value="contain">Fit Inside (Letterbox)</option>
+                                    <option value="stretch">Stretch to Fill (100% Width & Height)</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label for="banner-position">Vertical Position</label>
+                                <select id="banner-position">
+                                    <option value="center">Center</option>
+                                    <option value="top">Top</option>
+                                    <option value="bottom">Bottom</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label for="banner-bg-color">Slide Background Color (Optional)</label>
+                            <div style="display:flex; gap:10px; align-items:center;">
+                                <input type="color" id="banner-bg-color" value="#ffffff" style="width:40px; height:36px; padding:0; border-radius:4px; border:1px solid var(--border-color); cursor:pointer;">
+                                <input type="text" id="banner-bg-color-txt" placeholder="e.g. #ffffff" value="#ffffff" style="flex:1;">
+                            </div>
+                            <span style="font-size:0.7rem; color:var(--text-muted); display:block; margin-top:2px;">Helpful when using 'Fit Inside' for transparent/centered logos.</span>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn-cancel" id="btn-cancel-banner-modal">Cancel</button>
+                        <button type="submit" class="btn-primary" id="btn-submit-banner">Save Banner</button>
                     </div>
                 </form>
             </div>
@@ -1407,13 +1552,261 @@ function renderAdminView(root, activeTab = 'products') {
         if (window.lucide) window.lucide.createIcons();
     }
 
+    // ----------------------------------------------------
+    // Sub-pane 4: Manage Categories Tab
+    // ----------------------------------------------------
+    function renderCategoriesTab() {
+        const currentCats = getCategories();
+        subPane.innerHTML = `
+            <div class="admin-pane-header">
+                <h3>Manage Product Categories</h3>
+                <button class="btn-primary" id="btn-admin-add-cat" style="font-size:0.8rem; padding:8px 16px; display:flex; align-items:center; gap:6px;">
+                    <i data-lucide="plus-circle" style="width:16px; height:16px;"></i>
+                    Add Category
+                </button>
+            </div>
+            
+            <div class="admin-table-wrapper">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Category ID</th>
+                            <th>Category Name</th>
+                            <th>Icon</th>
+                            <th>Description</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${currentCats.map(c => `
+                            <tr>
+                                <td><code>${c.id}</code></td>
+                                <td><strong>${c.name}</strong></td>
+                                <td><i data-lucide="${c.icon || 'boxes'}" style="width:18px; height:18px;"></i> (<code>${c.icon || 'boxes'}</code>)</td>
+                                <td>${c.desc || '-'}</td>
+                                <td>
+                                    <button class="btn-icon-action delete" data-delete-cat-id="${c.id}" title="Delete Category">
+                                        <i data-lucide="trash-2"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            </div>
+        `;
+
+        document.getElementById('btn-admin-add-cat').addEventListener('click', () => {
+            const name = prompt('Enter Category Name (e.g. Sanitaryware):');
+            if (name && name.trim() !== '') {
+                const desc = prompt('Enter Category Description (optional):');
+                const icon = prompt('Enter Lucide Icon name (optional, e.g. bath, wrench, boxes):') || 'boxes';
+                const added = addCategory({ name: name.trim(), desc: desc ? desc.trim() : '', icon: icon.trim() });
+                if (added) {
+                    renderAdminView(root, 'categories');
+                } else {
+                    alert('Category already exists or name is invalid!');
+                }
+            }
+        });
+
+        document.querySelectorAll('[data-delete-cat-id]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const id = btn.getAttribute('data-delete-cat-id');
+                if (confirm(`Are you sure you want to delete category "${id}"? Products in this category will remain but the category filter will be removed.`)) {
+                    deleteCategory(id);
+                    renderAdminView(root, 'categories');
+                }
+            });
+        });
+
+        if (window.lucide) window.lucide.createIcons();
+    }
+
+    // ----------------------------------------------------
+    // Sub-pane 5: Manage Units Tab
+    // ----------------------------------------------------
+    function renderUnitsTab() {
+        const currentUnits = getUnits();
+        subPane.innerHTML = `
+            <div class="admin-pane-header">
+                <h3>Manage Measurement Units</h3>
+                <button class="btn-primary" id="btn-admin-add-unit" style="font-size:0.8rem; padding:8px 16px; display:flex; align-items:center; gap:6px;">
+                    <i data-lucide="plus-circle" style="width:16px; height:16px;"></i>
+                    Add Unit
+                </button>
+            </div>
+            
+            <div class="admin-table-wrapper">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Unit ID</th>
+                            <th>Unit Name / Label</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${currentUnits.map(u => `
+                            <tr>
+                                <td><code>${u.id}</code></td>
+                                <td><strong>${u.name}</strong></td>
+                                <td>
+                                    <button class="btn-icon-action delete" data-delete-unit-id="${u.id}" title="Delete Unit">
+                                        <i data-lucide="trash-2"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            </div>
+        `;
+
+        document.getElementById('btn-admin-add-unit').addEventListener('click', () => {
+            const name = prompt('Enter Unit Name (e.g. Litre (Liquids) or Kg (Hardware)):');
+            if (name && name.trim() !== '') {
+                const added = addUnit({ name: name.trim() });
+                if (added) {
+                    renderAdminView(root, 'units');
+                } else {
+                    alert('Unit already exists or name is invalid!');
+                }
+            }
+        });
+
+        document.querySelectorAll('[data-delete-unit-id]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const id = btn.getAttribute('data-delete-unit-id');
+                if (confirm(`Are you sure you want to delete unit "${id}"?`)) {
+                    deleteUnit(id);
+                    renderAdminView(root, 'units');
+                }
+            });
+        });
+
+        if (window.lucide) window.lucide.createIcons();
+    }
+
+    // ----------------------------------------------------
+    // Sub-pane 6: Manage Banners Tab
+    // ----------------------------------------------------
+    function renderBannersTab() {
+        const currentBanners = getBanners();
+        subPane.innerHTML = `
+            <div class="admin-pane-header">
+                <h3>Manage Carousel Banners</h3>
+                <button class="btn-primary" id="btn-admin-add-banner" style="font-size:0.8rem; padding:8px 16px; display:flex; align-items:center; gap:6px;">
+                    <i data-lucide="plus-circle" style="width:16px; height:16px;"></i>
+                    Add Banner
+                </button>
+            </div>
+            
+            <div class="admin-table-wrapper">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Preview</th>
+                            <th>Banner Image URL/Path</th>
+                            <th>Link (URL/Hash)</th>
+                            <th>Fitting Style</th>
+                            <th>Bg Color</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${currentBanners.map(b => `
+                            <tr>
+                                <td>
+                                    <div style="width:120px; height:42px; border-radius:4px; overflow:hidden; border:1px solid var(--border-color); position:relative; background:${b.bgColor || 'var(--bg-surface-alt)'};">
+                                        ${b.styleType === 'dual' ? `
+                                            <div style="background-image: url('${b.imageSrc}'); top:-10%; left:-10%; width:120%; height:120%; filter:blur(4px); opacity:0.45; position:absolute; background-size:cover; background-position:center;"></div>
+                                            <div style="background-image: url('${b.imageSrc}'); background-size:contain; background-position:center ${b.position || 'center'}; background-repeat:no-repeat; width:100%; height:100%; position:absolute; z-index:2;"></div>
+                                        ` : b.styleType === 'contain' ? `
+                                            <div style="background-image: url('${b.imageSrc}'); background-size:contain; background-position:center ${b.position || 'center'}; background-repeat:no-repeat; width:100%; height:100%;"></div>
+                                        ` : b.styleType === 'stretch' ? `
+                                            <div style="background-image: url('${b.imageSrc}'); background-size:100% 100%; width:100%; height:100%;"></div>
+                                        ` : `
+                                            <div style="background-image: url('${b.imageSrc}'); background-size:cover; background-position:center ${b.position || 'center'}; width:100%; height:100%;"></div>
+                                        `}
+                                    </div>
+                                </td>
+                                <td style="font-size:0.8rem;"><code>${b.imageSrc}</code></td>
+                                <td style="font-size:0.8rem;"><code>${b.link}</code></td>
+                                <td>
+                                    <span class="badge ${
+                                        b.styleType === 'dual' ? 'badge-primary' : 
+                                        b.styleType === 'contain' ? 'badge-info' : 
+                                        b.styleType === 'stretch' ? 'badge-warning' : 'badge-success'
+                                    }">
+                                        ${
+                                            b.styleType === 'dual' ? 'Dual-Layer' : 
+                                            b.styleType === 'contain' ? 'Fit Inside' : 
+                                            b.styleType === 'stretch' ? 'Stretch' : 'Full Cover'
+                                        }
+                                    </span>
+                                </td>
+                                <td><code style="font-size:0.75rem;">${b.bgColor || '#ffffff'}</code></td>
+                                <td>
+                                    <div class="admin-actions-cell">
+                                        <button class="btn-icon-action edit" data-edit-banner-id="${b.id}" title="Edit Banner">
+                                            <i data-lucide="edit-3"></i>
+                                        </button>
+                                        <button class="btn-icon-action delete" data-delete-banner-id="${b.id}" title="Delete Banner">
+                                            <i data-lucide="trash-2"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            </div>
+        `;
+
+        document.getElementById('btn-admin-add-banner').addEventListener('click', () => {
+            showBannerModal();
+        });
+
+        document.querySelectorAll('[data-edit-banner-id]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const id = btn.getAttribute('data-edit-banner-id');
+                showBannerModal(id);
+            });
+        });
+
+        document.querySelectorAll('[data-delete-banner-id]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const id = btn.getAttribute('data-delete-banner-id');
+                if (confirm('Are you sure you want to delete this banner?')) {
+                    deleteBanner(id);
+                    renderAdminView(root, 'banners');
+                }
+            });
+        });
+
+        if (window.lucide) window.lucide.createIcons();
+    }
+
     // Helper: Show Product modal form for create or update
     const modal = document.getElementById('admin-product-modal');
     const form = document.getElementById('prod-form');
+    const prodPreviewBox = document.getElementById('prod-img-preview-box');
+
+    function updateProdPreview(src) {
+        if (src && src.trim() !== '') {
+            prodPreviewBox.innerHTML = `<img src="${src}" style="width:100%; height:100%; object-fit:contain;">`;
+        } else {
+            prodPreviewBox.innerHTML = `<span style="font-size:0.65rem; color:var(--text-muted);">No Image</span>`;
+        }
+    }
     
     function showProductModal(editId = null) {
         modal.classList.add('active');
         form.reset();
+
+        document.getElementById('prod-image-file').value = '';
+        document.getElementById('prod-image-filename').textContent = 'No file selected';
 
         const title = document.getElementById('prod-modal-title');
         const editIdEl = document.getElementById('prod-edit-id');
@@ -1435,17 +1828,21 @@ function renderAdminView(root, activeTab = 'products') {
                 document.getElementById('prod-spec-size').value = orig.specs.Weight || orig.specs.Size || 'Standard';
                 
                 // Extract src from <img src="..."> if custom, otherwise leave blank
+                let imgSrcVal = '';
                 if (orig.imageSrc && orig.imageSrc.startsWith('<img')) {
                     const match = orig.imageSrc.match(/src="([^"]+)"/);
-                    document.getElementById('prod-image-url').value = match ? match[1] : orig.imageSrc;
-                } else {
-                    document.getElementById('prod-image-url').value = '';
+                    imgSrcVal = match ? match[1] : orig.imageSrc;
+                } else if (orig.imageSrc && !orig.imageSrc.startsWith('<svg')) {
+                    imgSrcVal = orig.imageSrc;
                 }
+                document.getElementById('prod-image-url').value = imgSrcVal;
+                updateProdPreview(imgSrcVal);
             }
         } else {
             title.textContent = 'Add New Construction Material';
             editIdEl.value = '';
             document.getElementById('prod-image-url').value = '';
+            updateProdPreview('');
         }
     }
 
@@ -1456,6 +1853,26 @@ function renderAdminView(root, activeTab = 'products') {
     // Modal control listeners
     document.getElementById('btn-close-prod-modal').addEventListener('click', hideProductModal);
     document.getElementById('btn-cancel-prod-modal').addEventListener('click', hideProductModal);
+
+    // Product Image Upload & Preview bindings
+    document.getElementById('btn-upload-prod-img').addEventListener('click', () => {
+        document.getElementById('prod-image-file').click();
+    });
+
+    document.getElementById('prod-image-file').addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            document.getElementById('prod-image-filename').textContent = file.name;
+            compressAndReadFile(file, 400, (dataUrl) => {
+                document.getElementById('prod-image-url').value = dataUrl;
+                updateProdPreview(dataUrl);
+            });
+        }
+    });
+
+    document.getElementById('prod-image-url').addEventListener('input', (e) => {
+        updateProdPreview(e.target.value);
+    });
 
     // Save/Update Form submit handler
     form.addEventListener('submit', (e) => {
@@ -1486,14 +1903,130 @@ function renderAdminView(root, activeTab = 'products') {
         renderAdminView(root, 'products'); // Reload view
     });
 
+    // Helper: Show/Hide Banner modal form for create or update
+    const bannerModal = document.getElementById('admin-banner-modal');
+    const bannerForm = document.getElementById('banner-form');
+    const bannerPreviewBox = document.getElementById('banner-img-preview-box');
+
+    function updateBannerPreview(src) {
+        if (src && src.trim() !== '') {
+            bannerPreviewBox.innerHTML = `<img src="${src}" style="width:100%; height:100%; object-fit:contain;">`;
+        } else {
+            bannerPreviewBox.innerHTML = `<span style="font-size:0.65rem; color:var(--text-muted);">No Preview</span>`;
+        }
+    }
+    
+    function showBannerModal(editId = null) {
+        bannerModal.classList.add('active');
+        bannerForm.reset();
+
+        document.getElementById('banner-image-file').value = '';
+        document.getElementById('banner-image-filename').textContent = 'No file selected';
+
+        const title = document.getElementById('banner-modal-title');
+        const editIdEl = document.getElementById('banner-edit-id');
+        const colorInput = document.getElementById('banner-bg-color');
+        const colorTxt = document.getElementById('banner-bg-color-txt');
+
+        // Link color input and text input together
+        colorInput.oninput = () => { colorTxt.value = colorInput.value; };
+        colorTxt.oninput = () => { colorInput.value = colorTxt.value; };
+
+        if (editId) {
+            title.textContent = 'Edit Carousel Banner';
+            editIdEl.value = editId;
+
+            // Load original banner details
+            const orig = getBanners().find(b => b.id === editId);
+            if (orig) {
+                document.getElementById('banner-img-path').value = orig.imageSrc;
+                document.getElementById('banner-redirect-link').value = orig.link || '#/products';
+                document.getElementById('banner-fit-style').value = orig.styleType || 'cover';
+                document.getElementById('banner-position').value = orig.position || 'center';
+                const col = orig.bgColor || '#ffffff';
+                colorInput.value = col;
+                colorTxt.value = col;
+                updateBannerPreview(orig.imageSrc);
+            }
+        } else {
+            title.textContent = 'Add Carousel Banner';
+            editIdEl.value = '';
+            colorInput.value = '#ffffff';
+            colorTxt.value = '#ffffff';
+            updateBannerPreview('');
+        }
+    }
+
+    function hideBannerModal() {
+        bannerModal.classList.remove('active');
+    }
+
+    // Banner Modal listeners
+    document.getElementById('btn-close-banner-modal').addEventListener('click', hideBannerModal);
+    document.getElementById('btn-cancel-banner-modal').addEventListener('click', hideBannerModal);
+
+    // Banner Image Upload & Preview bindings
+    document.getElementById('btn-upload-banner-img').addEventListener('click', () => {
+        document.getElementById('banner-image-file').click();
+    });
+
+    document.getElementById('banner-image-file').addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            document.getElementById('banner-image-filename').textContent = file.name;
+            compressAndReadFile(file, 1000, (dataUrl) => {
+                document.getElementById('banner-img-path').value = dataUrl;
+                updateBannerPreview(dataUrl);
+            });
+        }
+    });
+
+    document.getElementById('banner-img-path').addEventListener('input', (e) => {
+        updateBannerPreview(e.target.value);
+    });
+
+    bannerForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const editId = document.getElementById('banner-edit-id').value;
+        const bannerData = {
+            imageSrc: document.getElementById('banner-img-path').value.trim(),
+            link: document.getElementById('banner-redirect-link').value.trim(),
+            styleType: document.getElementById('banner-fit-style').value,
+            position: document.getElementById('banner-position').value,
+            bgColor: document.getElementById('banner-bg-color-txt').value.trim()
+        };
+
+        if (editId) {
+            updateBanner(editId, bannerData);
+        } else {
+            addBanner(bannerData);
+        }
+
+        hideBannerModal();
+        renderAdminView(root, 'banners'); // Reload view
+    });
+
     // Render initial active tab contents
     if (activeTab === 'products') renderProductsTab();
     else if (activeTab === 'orders') renderOrdersTab();
     else if (activeTab === 'leads') renderLeadsTab();
+    else if (activeTab === 'categories') renderCategoriesTab();
+    else if (activeTab === 'units') renderUnitsTab();
+    else if (activeTab === 'banners') renderBannersTab();
 
     // Hook tab buttons
     document.getElementById('adm-nav-products').addEventListener('click', () => {
         renderAdminView(root, 'products');
+    });
+    document.getElementById('adm-nav-categories').addEventListener('click', () => {
+        renderAdminView(root, 'categories');
+    });
+    document.getElementById('adm-nav-units').addEventListener('click', () => {
+        renderAdminView(root, 'units');
+    });
+    document.getElementById('adm-nav-banners').addEventListener('click', () => {
+        renderAdminView(root, 'banners');
     });
     document.getElementById('adm-nav-orders').addEventListener('click', () => {
         renderAdminView(root, 'orders');

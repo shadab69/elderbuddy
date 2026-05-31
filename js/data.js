@@ -13,6 +13,33 @@ const INITIAL_CATEGORIES = [
     { id: 'hardware', name: 'Hardware & Fixtures', icon: 'wrench', desc: 'Locks, hinges, screws & steel fixtures' }
 ];
 
+const INITIAL_BANNERS = [
+    {
+        id: 'b1',
+        imageSrc: 'assets/banner1.png',
+        link: '#/products',
+        styleType: 'cover',
+        position: 'center',
+        bgColor: '#ffffff'
+    },
+    {
+        id: 'b2',
+        imageSrc: 'assets/promo_bricks.png',
+        link: '#/products',
+        styleType: 'cover',
+        position: 'center',
+        bgColor: '#ffffff'
+    },
+    {
+        id: 'b3',
+        imageSrc: 'assets/new_hero_banner.png',
+        link: '#/products',
+        styleType: 'dual',
+        position: 'center',
+        bgColor: '#1a0933'
+    }
+];
+
 // Programmatic SVG helper to generate high-quality building material SVGs inline
 const SVG_TEMPLATES = {
     cement: (color = '#64748b') => `
@@ -660,8 +687,22 @@ const INITIAL_PRODUCTS = [
 const DATA_KEYS = {
     PRODUCTS: 'builderpro_products',
     ORDERS: 'builderpro_orders',
-    INQUIRIES: 'builderpro_inquiries'
+    INQUIRIES: 'builderpro_inquiries',
+    CATEGORIES: 'builderpro_categories',
+    UNITS: 'builderpro_units',
+    BANNERS: 'builderpro_banners'
 };
+
+const INITIAL_UNITS = [
+    { id: 'Bag', name: 'Bag (Cement)' },
+    { id: 'Ton', name: 'Ton (Steel/Sand)' },
+    { id: 'Piece', name: 'Piece (Bricks/Blocks)' },
+    { id: 'SqFt', name: 'SqFt (Tiles/Stones)' },
+    { id: 'Coil', name: 'Coil (Electrical)' },
+    { id: 'Bucket', name: 'Bucket (Paints)' },
+    { id: 'Litre', name: 'Litre (Liquids)' },
+    { id: 'Kg', name: 'Kg (Hardware/Nails)' }
+];
 
 // Initialization helper
 function initializeData() {
@@ -674,6 +715,15 @@ function initializeData() {
     }
     if (!localStorage.getItem(DATA_KEYS.INQUIRIES)) {
         localStorage.setItem(DATA_KEYS.INQUIRIES, JSON.stringify([]));
+    }
+    if (!localStorage.getItem(DATA_KEYS.CATEGORIES)) {
+        localStorage.setItem(DATA_KEYS.CATEGORIES, JSON.stringify(INITIAL_CATEGORIES));
+    }
+    if (!localStorage.getItem(DATA_KEYS.UNITS)) {
+        localStorage.setItem(DATA_KEYS.UNITS, JSON.stringify(INITIAL_UNITS));
+    }
+    if (!localStorage.getItem(DATA_KEYS.BANNERS)) {
+        localStorage.setItem(DATA_KEYS.BANNERS, JSON.stringify(INITIAL_BANNERS));
     }
 }
 
@@ -767,9 +817,68 @@ function deleteProduct(id) {
     saveProducts(products);
 }
 
-// Category details
+// Category details & CRUD operations
 function getCategories() {
-    return INITIAL_CATEGORIES;
+    initializeData();
+    return JSON.parse(localStorage.getItem(DATA_KEYS.CATEGORIES)) || INITIAL_CATEGORIES;
+}
+
+function saveCategories(categories) {
+    localStorage.setItem(DATA_KEYS.CATEGORIES, JSON.stringify(categories));
+}
+
+function addCategory(category) {
+    const categories = getCategories();
+    const id = category.name.toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-');
+    const newCat = {
+        id: id,
+        name: category.name,
+        icon: category.icon || 'boxes',
+        desc: category.desc || ''
+    };
+    if (!categories.find(c => c.id === id)) {
+        categories.push(newCat);
+        saveCategories(categories);
+        return newCat;
+    }
+    return null;
+}
+
+function deleteCategory(id) {
+    let categories = getCategories();
+    categories = categories.filter(c => c.id !== id);
+    saveCategories(categories);
+}
+
+// Measurement Units CRUD operations
+function getUnits() {
+    initializeData();
+    return JSON.parse(localStorage.getItem(DATA_KEYS.UNITS)) || INITIAL_UNITS;
+}
+
+function saveUnits(units) {
+    localStorage.setItem(DATA_KEYS.UNITS, JSON.stringify(units));
+}
+
+function addUnit(unit) {
+    const units = getUnits();
+    const id = unit.name.replace(/[^a-zA-Z0-9]/g, '');
+    const newUnit = {
+        id: id,
+        name: unit.name
+    };
+    if (!units.find(u => u.id === id)) {
+        units.push(newUnit);
+        saveUnits(units);
+        return newUnit;
+    }
+    return null;
+}
+
+function deleteUnit(id) {
+    let units = getUnits();
+    units = units.filter(u => u.id !== id);
+    saveUnits(units);
 }
 
 // Order operations
@@ -864,4 +973,49 @@ function getGuidePosts() {
         localStorage.setItem('builderpro_guides', JSON.stringify(INITIAL_GUIDE_POSTS));
     }
     return JSON.parse(localStorage.getItem('builderpro_guides'));
+}
+
+// Banners CRUD operations
+function getBanners() {
+    initializeData();
+    return JSON.parse(localStorage.getItem(DATA_KEYS.BANNERS)) || INITIAL_BANNERS;
+}
+
+function saveBanners(banners) {
+    localStorage.setItem(DATA_KEYS.BANNERS, JSON.stringify(banners));
+}
+
+function addBanner(banner) {
+    const banners = getBanners();
+    const newBanner = {
+        id: 'b_' + Date.now(),
+        imageSrc: banner.imageSrc,
+        link: banner.link || '#/products',
+        styleType: banner.styleType || 'cover',
+        position: banner.position || 'center',
+        bgColor: banner.bgColor || '#ffffff'
+    };
+    banners.push(newBanner);
+    saveBanners(banners);
+    return newBanner;
+}
+
+function updateBanner(id, updatedBanner) {
+    const banners = getBanners();
+    const index = banners.findIndex(b => b.id === id);
+    if (index !== -1) {
+        banners[index] = {
+            ...banners[index],
+            ...updatedBanner
+        };
+        saveBanners(banners);
+        return banners[index];
+    }
+    return null;
+}
+
+function deleteBanner(id) {
+    let banners = getBanners();
+    banners = banners.filter(b => b.id !== id);
+    saveBanners(banners);
 }

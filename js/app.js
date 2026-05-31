@@ -81,8 +81,10 @@ function router() {
     const root = document.getElementById('app-root');
     if (!root) return;
 
-    // Refresh products list in case admin modified it
+    // Refresh products and categories in case admin modified them
     APP_STATE.products = getProducts();
+    APP_STATE.categories = getCategories();
+    renderCategoryDropdown(); // Keep header category dropdown in sync
 
     // Close any overlays on route change
     closeCartDrawer();
