@@ -271,7 +271,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Update display text values
         document.getElementById('res-bricks').textContent = `${res.bricks.toLocaleString()} pcs`;
         document.getElementById('res-cement').textContent = `${res.cement} bags`;
-        document.getElementById('res-sand').textContent = `${res.sand.toFixed(1)} tons`;
+        document.getElementById('res-sand').textContent = `${res.sand.toFixed(1)} cft`;
 
         // Highlight pane and enable Add to Cart button
         document.getElementById('calc-results-pane').style.borderColor = 'var(--primary)';
@@ -310,7 +310,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.getElementById('calc-height').value = 10;
         document.getElementById('res-bricks').textContent = '0 pcs';
         document.getElementById('res-cement').textContent = '0 bags';
-        document.getElementById('res-sand').textContent = '0.0 tons';
+        document.getElementById('res-sand').textContent = '0 cft';
         addToCartCalcBtn.disabled = true;
         addToCartCalcBtn.classList.add('disabled');
     });

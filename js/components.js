@@ -178,36 +178,41 @@ function calculateWallMaterials(length, height, thickness) {
     const thickFeet = thickness / 12;
     const volumeCFT = length * height * thickFeet;
 
-    // 2. Convert CFT to Cubic Meters (m3) -> 1 CFT = 0.0283168 m3
-    const volumeM3 = volumeCFT * 0.0283168;
+    // 2. Bricks required:
+    // Traditional country bricks in India (approx. 9" x 4" x 3" or 9" x 4.5" x 3") average 13.5 bricks per CFT of masonry.
+    // We add a standard 5% wastage factor.
+    const bricksNeeded = Math.ceil(volumeCFT * 13.5 * 1.05);
 
-    // 3. Bricks required:
-    // Standard modular brickwork uses approx 500 bricks per cubic meter (including mortar joint thickness)
-    const bricksNeeded = Math.ceil(volumeM3 * 500);
+    // 3. Dry mortar volume (CFT):
+    // Wet mortar volume is approx 30% of total masonry volume for country bricks.
+    // Dry mortar volume including shrinkage/wastage is wet volume * 1.33.
+    // This gives a dry mortar factor of 0.30 * 1.33 = 0.399 CFT per CFT of brickwork.
+    const dryMortarCFT = volumeCFT * 0.399;
 
-    // 4. Mortar required:
-    // Wet mortar volume is approx 30% of masonry volume
-    const wetMortarM3 = volumeM3 * 0.30;
-    
-    // Dry mortar volume is wet volume multiplied by shrinkage/wastage factor (approx 1.33)
-    const dryMortarM3 = wetMortarM3 * 1.33;
-
-    // Standard masonry mortar ratio is 1:6 (1 Cement : 6 Sand) -> Total parts = 7
-    const cementVolumeM3 = dryMortarM3 * (1 / 7);
-    const sandVolumeM3 = dryMortarM3 * (6 / 7);
+    // 4. Mortar mix ratio parts:
+    // Thinner 4.5" partitions use a richer mix of 1:4 (1 cement : 4 sand) for stability
+    // Standard 9" load-bearing walls use a mix of 1:6 (1 cement : 6 sand)
+    let cementVolumeCFT, sandVolumeCFT;
+    if (thickness <= 4.5) {
+        // 1:4 Ratio -> Total parts = 5
+        cementVolumeCFT = dryMortarCFT * (1 / 5);
+        sandVolumeCFT = dryMortarCFT * (4 / 5);
+    } else {
+        // 1:6 Ratio -> Total parts = 7
+        cementVolumeCFT = dryMortarCFT * (1 / 7);
+        sandVolumeCFT = dryMortarCFT * (6 / 7);
+    }
 
     // 5. Cement bags needed:
-    // Cement density = 1440 kg/m3. 1 Bag = 50 kg.
-    const cementWeightKg = cementVolumeM3 * 1440;
-    const cementBagsNeeded = Math.ceil(cementWeightKg / 50);
+    // 1 Bag of Cement (50kg) is exactly 1.25 cubic feet (CFT).
+    const cementBagsNeeded = Math.ceil(cementVolumeCFT / 1.25);
 
-    // 6. Sand needed:
-    // Sand density = approx 1600 kg/m3 (or 1.6 metric tons per m3)
-    const sandTonsNeeded = parseFloat((sandVolumeM3 * 1.6).toFixed(2));
+    // 6. Sand needed in cubic feet (CFT):
+    const sandCFTNeeded = parseFloat(sandVolumeCFT.toFixed(1));
 
     return {
         bricks: bricksNeeded,
         cement: cementBagsNeeded,
-        sand: sandTonsNeeded
+        sand: sandCFTNeeded
     };
 }
