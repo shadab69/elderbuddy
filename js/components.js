@@ -10,8 +10,13 @@ function renderCategoryDropdown() {
 
     dropdown.innerHTML = categories.map(cat => `
         <a href="#/products?category=${cat.id}" class="category-drop-item" data-category-id="${cat.id}">
-            <i data-lucide="${cat.icon}"></i>
-            <span>${cat.name}</span>
+            <div class="category-icon-wrapper">
+                <i data-lucide="${cat.icon}"></i>
+            </div>
+            <div class="category-content">
+                <span class="category-name">${cat.name}</span>
+                <span class="category-desc">${cat.desc || ''}</span>
+            </div>
         </a>
     `).join('');
 
