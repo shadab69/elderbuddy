@@ -94,14 +94,13 @@ function renderHomeView(root) {
                 </div>
             </section>
 
-            <!-- Brands Slider Section (ElderOBuddy style) -->
+            <!-- Brands Section (Continuous Marquee) -->
             <section class="home-section">
                 <div class="section-header">
                     <h2>Brands</h2>
                     <a href="#/products" class="btn-view-all">View All</a>
                 </div>
-                <div class="brands-carousel-wrapper">
-                    <button class="brands-arrow prev" id="btn-brands-prev"><i data-lucide="chevron-left"></i></button>
+                <div class="brands-carousel-wrapper" style="overflow: hidden;">
                     <div class="brands-track" id="brands-track">
                         <div class="brand-item-card"><div class="brand-logo-mock ambuja">Ambuja<span>Cement</span></div></div>
                         <div class="brand-item-card"><div class="brand-logo-mock asianpaints">asian<span>paints</span></div></div>
@@ -111,8 +110,16 @@ function renderHomeView(root) {
                         <div class="brand-item-card"><div class="brand-logo-mock grasim">G<span>GRASIM</span></div></div>
                         <div class="brand-item-card"><div class="brand-logo-mock godrej">godrej</div></div>
                         <div class="brand-item-card"><div class="brand-logo-mock greenpanel">green<span>panel</span></div></div>
+                        <!-- Duplicated for seamless loop -->
+                        <div class="brand-item-card"><div class="brand-logo-mock ambuja">Ambuja<span>Cement</span></div></div>
+                        <div class="brand-item-card"><div class="brand-logo-mock asianpaints">asian<span>paints</span></div></div>
+                        <div class="brand-item-card"><div class="brand-logo-mock birla">Birla-A1<span>StrongCrete</span></div></div>
+                        <div class="brand-item-card"><div class="brand-logo-mock bondit">BONDIT<span>Const. Chemicals</span></div></div>
+                        <div class="brand-item-card"><div class="brand-logo-mock centuryply">CENTURY<span>PLY</span></div></div>
+                        <div class="brand-item-card"><div class="brand-logo-mock grasim">G<span>GRASIM</span></div></div>
+                        <div class="brand-item-card"><div class="brand-logo-mock godrej">godrej</div></div>
+                        <div class="brand-item-card"><div class="brand-logo-mock greenpanel">green<span>panel</span></div></div>
                     </div>
-                    <button class="brands-arrow next" id="btn-brands-next"><i data-lucide="chevron-right"></i></button>
                 </div>
             </section>
 
@@ -351,6 +358,28 @@ function renderHomeView(root) {
 
     // Start auto slide
     startAutoSlide();
+
+    // Auto-scroll product showcases (Hot Deals, Offers For You, Trending, Featured)
+    let showcaseScrollInterval = setInterval(() => {
+        const showcaseTracks = [
+            { id: 'hot-deals-track', amount: 240 },
+            { id: 'offers-track', amount: 240 },
+            { id: 'trending-track', amount: 240 },
+            { id: 'featured-track', amount: 280 }
+        ];
+
+        showcaseTracks.forEach(t => {
+            const el = root.querySelector(`#${t.id}`);
+            if (el) {
+                // Check if scrolled near the end. If so, reset to 0.
+                if (el.scrollLeft + el.clientWidth >= el.scrollWidth - 30) {
+                    el.scrollTo({ left: 0, behavior: 'smooth' });
+                } else {
+                    el.scrollBy({ left: t.amount, behavior: 'smooth' });
+                }
+            }
+        });
+    }, 4500); // Auto-scroll every 4.5 seconds
 
     // Render Hot Deals cards dynamically
     const hotDealsIds = ['hd1', 'hd2', 'hd3', 'hd4', 'hd5', 'hd6'];
@@ -650,6 +679,7 @@ function renderHomeView(root) {
     // Clean up interval when window hash changes (handled by router, but good safety)
     const cleanup = () => {
         stopAutoSlide();
+        if (showcaseScrollInterval) clearInterval(showcaseScrollInterval);
         window.removeEventListener('hashchange', cleanup);
     };
     window.addEventListener('hashchange', cleanup);

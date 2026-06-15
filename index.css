@@ -2337,20 +2337,28 @@ body.dark-theme .product-detail-gallery {
     width: 100%;
     margin-top: 10px;
     margin-bottom: 25px;
+    overflow: hidden;
 }
 
 .brands-track {
     display: flex;
     gap: 15px;
-    overflow-x: auto;
-    scroll-behavior: smooth;
-    width: 100%;
     padding: 10px 0;
-    scrollbar-width: none; /* Hide scrollbar for clean look */
+    width: max-content;
+    animation: brands-marquee 25s linear infinite;
 }
 
-.brands-track::-webkit-scrollbar {
-    display: none; /* Hide scrollbar Chrome/Safari */
+.brands-track:hover {
+    animation-play-state: paused;
+}
+
+@keyframes brands-marquee {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(calc(-50% - 7.5px));
+    }
 }
 
 .brand-item-card {
