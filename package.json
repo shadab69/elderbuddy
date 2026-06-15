@@ -5,7 +5,7 @@
   "main": "index.html",
   "scripts": {
     "dev": "npx live-server",
-    "start": "node backend/server.js"
+    "start": "nodemon backend/server.js"
   },
   "dependencies": {
     "cors": "^2.8.5",

@@ -690,7 +690,9 @@ const DATA_KEYS = {
     INQUIRIES: 'builderpro_inquiries',
     CATEGORIES: 'builderpro_categories',
     UNITS: 'builderpro_units',
-    BANNERS: 'builderpro_banners'
+    BANNERS: 'builderpro_banners',
+    GUIDES: 'builderpro_guides',
+    DESIGNERS: 'builderpro_designers'
 };
 
 const INITIAL_UNITS = [
@@ -702,6 +704,99 @@ const INITIAL_UNITS = [
     { id: 'Bucket', name: 'Bucket (Paints)' },
     { id: 'Litre', name: 'Litre (Liquids)' },
     { id: 'Kg', name: 'Kg (Hardware/Nails)' }
+];
+
+const INITIAL_DESIGNERS = [
+    {
+        id: 'ananya-sharma',
+        name: 'Ananya Sharma',
+        avatarText: 'AS',
+        avatarBg: 'linear-gradient(135deg, #4f46e5, #06b6d4)',
+        firm: 'Principal Designer, Studio Luxe',
+        experience: '10+ Years',
+        rating: '4.9',
+        reviewsCount: 86,
+        completedProjects: 124,
+        specialties: ['Luxury Living Rooms', 'Space Optimization', 'Modern Minimalist'],
+        bio: 'Ananya is an award-winning principal designer specializing in elegant residential transformations. She combines space planning and modern minimalist aesthetics to create gorgeous environments.',
+        fullBio: 'Ananya Sharma founded Studio Luxe in 2016. Since then, she has successfully designed over 120 residential spaces in Pan India, Bangalore, and Mumbai. Her design philosophy revolves around clean lines, neutral color palettes, and maximizing natural lighting. She works closely with clients to understand their lifestyles and incorporate personalized custom elements into every corner.',
+        projects: [
+            {
+                title: 'Modern Minimalist Living Room',
+                location: 'Jubilee Hills, Pan India',
+                year: '2025',
+                desc: 'A complete redesign of a 500 sq ft living room featuring custom walnut paneling, velvet seating, and built-in smart ambient lighting.',
+                images: ['assets/interior_portfolio1.png', 'assets/interior_portfolio7.png']
+            },
+            {
+                title: 'Sleek Executive Home Study',
+                location: 'Gachibowli, Pan India',
+                year: '2024',
+                desc: 'An ergonomic and cozy home office built with high-quality oakwood storage shelves, task lighting, and customized noise isolation walls.',
+                images: ['assets/interior_portfolio4.png', 'assets/interior_portfolio8.png']
+            }
+        ]
+    },
+    {
+        id: 'karan-malhotra',
+        name: 'Karan Malhotra',
+        avatarText: 'KM',
+        avatarBg: 'linear-gradient(135deg, #ec4899, #f43f5e)',
+        firm: 'Kitchen & Modular Specialist, Malhotra & Co.',
+        experience: '8+ Years',
+        rating: '4.8',
+        reviewsCount: 112,
+        completedProjects: 210,
+        specialties: ['Contemporary Kitchens', 'Smart Storage', 'Modular Wardrobes'],
+        bio: 'Karan Malhotra is a modular specialist focusing on space-saving kitchen layouts, functional hardware, and sleek wardrobe designs.',
+        fullBio: 'Karan is a modular design expert. Over the last 8 years, he has designed and executed over 200 high-end contemporary kitchens and wardrobes. He believes in maximizing efficiency and storage through state-of-the-art pull-out trays, corner carousels, and premium hardware. His projects stand out for their ergonomics and durable premium finishes.',
+        projects: [
+            {
+                title: 'Premium Matte Black Modular Kitchen',
+                location: 'Banjara Hills, Pan India',
+                year: '2025',
+                desc: 'A high-end contemporary kitchen featuring sleek matte black anti-scratch cabinets, premium white marble countertops, and gold plumbing fixtures.',
+                images: ['assets/interior_portfolio2.png', 'assets/interior_portfolio9.png']
+            },
+            {
+                title: 'Luxury Marble Master Bathroom Suite',
+                location: 'Kondapur, Pan India',
+                year: '2024',
+                desc: 'A premium master bathroom remodel featuring a freestanding porcelain tub, gold plumbing fixtures, floating wash vanity, and soft mood lighting.',
+                images: ['assets/interior_portfolio5.png', 'assets/interior_portfolio10.png']
+            }
+        ]
+    },
+    {
+        id: 'priya-nair',
+        name: 'Priya Nair',
+        avatarText: 'PN',
+        avatarBg: 'linear-gradient(135deg, #10b981, #3b82f6)',
+        firm: 'Founder, GreenSpace Interiors',
+        experience: '12+ Years',
+        rating: '5.0',
+        reviewsCount: 94,
+        completedProjects: 88,
+        specialties: ['Eco-Friendly Homes', 'Luxury Bedrooms', 'Ambient Lighting'],
+        bio: 'Priya Nair is an industry veteran focused on sustainable interior architecture, energy-efficient lighting, and biophilic designs.',
+        fullBio: 'Priya founded GreenSpace Interiors with a vision to merge luxury and sustainability. She uses organic, non-toxic paints, reclaimed timber, and energy-efficient automation to create healthy, eco-friendly homes. She has a deep understanding of ambient lighting and uses biophilic elements like vertical gardens to create highly calming, therapeutic indoor environments.',
+        projects: [
+            {
+                title: 'Cozy Luxury Master Bedroom',
+                location: 'Begumpet, Pan India',
+                year: '2025',
+                desc: 'A tranquil master bedroom design showcasing custom organic fabric upholstery, warm beige backlighting, and solid reclaimed wood headboard.',
+                images: ['assets/interior_portfolio3.png', 'assets/interior_portfolio11.png']
+            },
+            {
+                title: 'Biophilic Sky Villa Balcony Lounge',
+                location: 'Hitec City, Pan India',
+                year: '2024',
+                desc: 'A sky villa balcony converted into a lush green lounge featuring vertical plant walls, comfortable weather-resistant seating, and warm overhead Edison bulbs.',
+                images: ['assets/interior_portfolio6.png', 'assets/interior_portfolio12.png']
+            }
+        ]
+    }
 ];
 
 // Initialization helper
@@ -724,6 +819,9 @@ function initializeData() {
     }
     if (!localStorage.getItem(DATA_KEYS.BANNERS)) {
         localStorage.setItem(DATA_KEYS.BANNERS, JSON.stringify(INITIAL_BANNERS));
+    }
+    if (!localStorage.getItem(DATA_KEYS.DESIGNERS)) {
+        localStorage.setItem(DATA_KEYS.DESIGNERS, JSON.stringify(INITIAL_DESIGNERS));
     }
 }
 
@@ -1204,5 +1302,79 @@ async function deleteBanner(id) {
         let banners = getBanners();
         banners = banners.filter(b => b.id !== id);
         localStorage.setItem(DATA_KEYS.BANNERS, JSON.stringify(banners));
+    }
+}
+
+// Designers CRUD operations
+function getDesigners() {
+    if (window.SERVER_DESIGNERS) {
+        return window.SERVER_DESIGNERS;
+    }
+    initializeData();
+    return JSON.parse(localStorage.getItem(DATA_KEYS.DESIGNERS)) || [];
+}
+
+function saveDesigners(designers) {
+    localStorage.setItem(DATA_KEYS.DESIGNERS, JSON.stringify(designers));
+}
+
+async function addDesigner(designer) {
+    try {
+        const res = await axios.post('/api/designers', designer);
+        const localDesigners = JSON.parse(localStorage.getItem(DATA_KEYS.DESIGNERS)) || [];
+        localDesigners.push(res.data);
+        localStorage.setItem(DATA_KEYS.DESIGNERS, JSON.stringify(localDesigners));
+        return res.data;
+    } catch (e) {
+        console.warn('[Backend] Failed to add designer, updating localStorage fallback.', e);
+        const designers = getDesigners();
+        const newDesigner = {
+            ...designer,
+            id: designer.name ? designer.name.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-') : 'designer-' + Date.now()
+        };
+        designers.push(newDesigner);
+        localStorage.setItem(DATA_KEYS.DESIGNERS, JSON.stringify(designers));
+        return newDesigner;
+    }
+}
+
+async function updateDesigner(id, updatedDesigner) {
+    try {
+        const res = await axios.put(`/api/designers/${id}`, updatedDesigner);
+        const localDesigners = JSON.parse(localStorage.getItem(DATA_KEYS.DESIGNERS)) || [];
+        const idx = localDesigners.findIndex(d => d.id === id);
+        if (idx !== -1) {
+            localDesigners[idx] = { ...localDesigners[idx], ...res.data };
+            localStorage.setItem(DATA_KEYS.DESIGNERS, JSON.stringify(localDesigners));
+        }
+        return res.data;
+    } catch (e) {
+        console.warn('[Backend] Failed to update designer, updating localStorage fallback.', e);
+        const designers = getDesigners();
+        const index = designers.findIndex(d => d.id === id);
+        if (index !== -1) {
+            designers[index] = {
+                ...designers[index],
+                ...updatedDesigner
+            };
+            localStorage.setItem(DATA_KEYS.DESIGNERS, JSON.stringify(designers));
+            return designers[index];
+        }
+        return null;
+    }
+}
+
+async function deleteDesigner(id) {
+    try {
+        const res = await axios.delete(`/api/designers/${id}`);
+        let localDesigners = JSON.parse(localStorage.getItem(DATA_KEYS.DESIGNERS)) || [];
+        localDesigners = localDesigners.filter(d => d.id !== id);
+        localStorage.setItem(DATA_KEYS.DESIGNERS, JSON.stringify(localDesigners));
+        return res.data;
+    } catch (e) {
+        console.warn('[Backend] Failed to delete designer, updating localStorage fallback.', e);
+        let designers = getDesigners();
+        designers = designers.filter(d => d.id !== id);
+        localStorage.setItem(DATA_KEYS.DESIGNERS, JSON.stringify(designers));
     }
 }

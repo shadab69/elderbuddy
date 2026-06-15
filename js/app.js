@@ -12,14 +12,15 @@ let APP_STATE = {
 // Fetch initial data from server API
 async function fetchInitialData() {
     try {
-        const [prods, cats, units, banners, orders, leads, guides] = await Promise.all([
+        const [prods, cats, units, banners, orders, leads, guides, designers] = await Promise.all([
             axios.get('/api/products').then(res => res.data),
             axios.get('/api/categories').then(res => res.data),
             axios.get('/api/units').then(res => res.data),
             axios.get('/api/banners').then(res => res.data),
             axios.get('/api/orders').then(res => res.data),
             axios.get('/api/leads').then(res => res.data),
-            axios.get('/api/guides').then(res => res.data)
+            axios.get('/api/guides').then(res => res.data),
+            axios.get('/api/designers').then(res => res.data)
         ]);
 
         window.SERVER_PRODUCTS = prods;
@@ -29,6 +30,7 @@ async function fetchInitialData() {
         window.SERVER_ORDERS = orders;
         window.SERVER_INQUIRIES = leads;
         window.SERVER_GUIDES = guides;
+        window.SERVER_DESIGNERS = designers;
 
         APP_STATE.products = prods;
         APP_STATE.categories = cats;
@@ -41,6 +43,7 @@ async function fetchInitialData() {
         window.SERVER_ORDERS = null;
         window.SERVER_INQUIRIES = null;
         window.SERVER_GUIDES = null;
+        window.SERVER_DESIGNERS = null;
 
         APP_STATE.products = getProducts();
         APP_STATE.categories = getCategories();
@@ -167,6 +170,21 @@ function router() {
     // Route: #/admin
     if (hash.startsWith('#/admin')) {
         renderAdminView(root, 'products');
+        window.scrollTo(0, 0);
+        return;
+    }
+
+    // Route: #/interior-designers
+    if (hash.startsWith('#/interior-designers')) {
+        renderInteriorDesignersView(root);
+        window.scrollTo(0, 0);
+        return;
+    }
+
+    // Route: #/interior-designer/:id
+    if (hash.startsWith('#/interior-designer/')) {
+        const designerId = hash.substring(20);
+        renderInteriorDesignerDetailView(root, designerId);
         window.scrollTo(0, 0);
         return;
     }

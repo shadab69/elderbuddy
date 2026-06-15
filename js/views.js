@@ -1019,7 +1019,7 @@ function renderCheckoutView(root) {
                     <div class="form-row">
                         <div class="input-group">
                             <label for="bill-city">City / Area</label>
-                            <input type="text" id="bill-city" placeholder="e.g. Hyderabad" required>
+                            <input type="text" id="bill-city" placeholder="e.g. Mumbai, Delhi (Pan India)" required>
                         </div>
                         <div class="input-group">
                             <label for="bill-pincode">Pincode</label>
@@ -1184,6 +1184,10 @@ function renderAdminView(root, activeTab = 'products') {
                         <i data-lucide="file-text"></i>
                         <span>Service Leads</span>
                     </button>
+                    <button class="admin-nav-item ${activeTab === 'designers' ? 'active' : ''}" id="adm-nav-designers">
+                        <i data-lucide="users"></i>
+                        <span>Manage Designers</span>
+                    </button>
                 </aside>
 
                 <!-- Admin Dynamic Sub-pane Container -->
@@ -1343,6 +1347,109 @@ function renderAdminView(root, activeTab = 'products') {
                     <div class="modal-footer">
                         <button type="button" class="btn-cancel" id="btn-cancel-banner-modal">Cancel</button>
                         <button type="submit" class="btn-primary" id="btn-submit-banner">Save Banner</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Add/Edit Designer Modal Form -->
+        <div class="modal-overlay" id="admin-designer-modal">
+            <div class="modal-card" style="max-width:650px;">
+                <div class="modal-header">
+                    <h3 id="designer-modal-title">Add New Interior Designer</h3>
+                    <button class="btn-close-modal" id="btn-close-designer-modal">
+                        <i data-lucide="x"></i>
+                    </button>
+                </div>
+                <form id="designer-form">
+                    <input type="hidden" id="designer-edit-id">
+                    <div class="modal-body" style="max-height:70vh; overflow-y:auto; padding-right:10px;">
+                        <div class="form-row">
+                            <div class="input-group">
+                                <label for="designer-name">Designer Name</label>
+                                <input type="text" id="designer-name" placeholder="e.g. Priya Nair" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="designer-firm">Firm / Studio Name</label>
+                                <input type="text" id="designer-firm" placeholder="e.g. GreenSpace Interiors" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="input-group">
+                                <label for="designer-experience">Experience</label>
+                                <input type="text" id="designer-experience" placeholder="e.g. 8+ Years" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="designer-rating">Rating</label>
+                                <input type="text" id="designer-rating" placeholder="5.0" value="5.0" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="input-group">
+                                <label for="designer-reviews-count">Reviews Count</label>
+                                <input type="number" id="designer-reviews-count" placeholder="0" min="0" value="0">
+                            </div>
+                            <div class="input-group">
+                                <label for="designer-completed-projects">Completed Projects</label>
+                                <input type="number" id="designer-completed-projects" placeholder="0" min="0" value="0">
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label for="designer-specialties">Specialties (Comma-separated)</label>
+                            <input type="text" id="designer-specialties" placeholder="e.g. Contemporary Kitchens, Smart Storage, Modular Wardrobes" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="designer-bio">Bio (Short summary for list card)</label>
+                            <textarea id="designer-bio" rows="2" placeholder="e.g. Priya Nair is an industry veteran focused on sustainable interior architecture..." required></textarea>
+                        </div>
+                        <div class="input-group">
+                            <label for="designer-full-bio">Full Bio (Detailed description for profile page)</label>
+                            <textarea id="designer-full-bio" rows="4" placeholder="e.g. Priya founded GreenSpace Interiors with a vision..." required></textarea>
+                        </div>
+
+                        <!-- Profile Avatar Upload / Custom Text Initials -->
+                        <div style="border:1px solid var(--border-color); padding:12px; border-radius:6px; background:var(--bg-surface-alt); margin-top:15px; margin-bottom:15px;">
+                            <strong style="font-size:0.85rem; display:block; margin-bottom:10px;">Profile Picture / Avatar Settings</strong>
+                            <div class="form-row" style="align-items: center; gap: 15px;">
+                                <div id="designer-avatar-preview-box" style="width:70px; height:70px; border-radius:50%; border:1px dashed var(--border-color); display:flex; align-items:center; justify-content:center; background:var(--bg-surface-alt); overflow:hidden; flex-shrink:0;">
+                                    <span style="font-size:0.65rem; color:var(--text-muted);">No Photo</span>
+                                </div>
+                                <div style="flex:1;">
+                                    <input type="file" id="designer-avatar-file" accept="image/*" style="display:none;">
+                                    <button type="button" class="btn-secondary" id="btn-upload-designer-avatar" style="padding: 8px 14px; font-size: 0.8rem; display: inline-flex; align-items:center; gap:6px; cursor:pointer; border:none; height:auto; line-height:1; margin-bottom: 5px;">
+                                        <i data-lucide="upload" style="width:14px; height:14px;"></i> Upload Profile Photo
+                                    </button>
+                                    <input type="text" id="designer-avatar-url" placeholder="Or enter manual Photo URL / Path" style="font-size: 0.8rem; padding: 6px 10px; border: 1px solid var(--border-color); border-radius: 4px; width: 100%;">
+                                </div>
+                            </div>
+                            <div class="form-row" style="margin-top:12px;">
+                                <div class="input-group">
+                                    <label for="designer-avatar-text" style="font-size:0.75rem;">Fallback Initials (e.g. PN)</label>
+                                    <input type="text" id="designer-avatar-text" placeholder="PN">
+                                </div>
+                                <div class="input-group">
+                                    <label for="designer-avatar-bg" style="font-size:0.75rem;">Fallback Background Gradient/Color</label>
+                                    <input type="text" id="designer-avatar-bg" placeholder="linear-gradient(135deg, #10b981, #3b82f6)" value="linear-gradient(135deg, #4f46e5, #06b6d4)">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Projects Portfolio list section -->
+                        <div style="border:1px solid var(--border-color); padding:15px; border-radius:6px; background:var(--bg-surface-alt); margin-top:15px;">
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+                                <strong style="font-size:0.9rem;">Designer Projects Portfolio</strong>
+                                <button type="button" class="btn-secondary" id="btn-designer-add-project" style="padding:6px 12px; font-size:0.75rem; display:flex; align-items:center; gap:4px; height:auto; line-height:1;">
+                                    <i data-lucide="plus" style="width:14px; height:14px;"></i> Add Project
+                                </button>
+                            </div>
+                            <div id="designer-projects-list-container" style="display:flex; flex-direction:column; gap:15px;">
+                                <!-- Dynamic project items loaded here -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn-cancel" id="btn-cancel-designer-modal">Cancel</button>
+                        <button type="submit" class="btn-primary" id="btn-submit-designer">Save Designer</button>
                     </div>
                 </form>
             </div>
@@ -1797,6 +1904,224 @@ function renderAdminView(root, activeTab = 'products') {
         if (window.lucide) window.lucide.createIcons();
     }
 
+    // ----------------------------------------------------
+    // Sub-pane 7: Manage Designers Tab
+    // ----------------------------------------------------
+    function renderDesignersTab() {
+        const designersList = getDesigners();
+        subPane.innerHTML = `
+            <div class="admin-pane-header">
+                <h3>Interior Designers Management</h3>
+                <button class="btn-primary" id="btn-admin-add-designer" style="font-size:0.8rem; padding:8px 16px; display:flex; align-items:center; gap:6px;">
+                    <i data-lucide="user-plus" style="width:16px; height:16px;"></i>
+                    Add Designer
+                </button>
+            </div>
+            
+            <div class="admin-table-wrapper">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Designer</th>
+                            <th>Firm</th>
+                            <th>Experience</th>
+                            <th>Rating</th>
+                            <th>Projects</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${designersList.map(d => `
+                            <tr>
+                                <td>
+                                    <div class="admin-prod-cell">
+                                        <div class="designer-avatar" style="width:40px; height:40px; font-size:1rem; flex-shrink:0; background: ${d.avatarBg || 'var(--primary-light)'}; overflow:hidden; border-radius:50%; display:flex; align-items:center; justify-content:center; color:white; font-weight:700;">
+                                            ${d.avatarImg ? `<img src="${d.avatarImg}" style="width:100%; height:100%; object-fit:cover;">` : (d.avatarText || d.name.substring(0,2).toUpperCase())}
+                                        </div>
+                                        <div>
+                                            <strong>${d.name}</strong>
+                                            <div style="font-size:0.7rem; color:var(--text-muted);">ID: ${d.id}</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>${d.firm}</td>
+                                <td>${d.experience}</td>
+                                <td><strong>${d.rating}</strong> (${d.reviewsCount} reviews)</td>
+                                <td>${d.projects ? d.projects.length : 0} projects</td>
+                                <td>
+                                    <div class="admin-actions-cell">
+                                        <button class="btn-icon-action edit" data-edit-designer-id="${d.id}" title="Edit Designer">
+                                            <i data-lucide="edit-3"></i>
+                                        </button>
+                                        <button class="btn-icon-action delete" data-delete-designer-id="${d.id}" title="Delete Designer">
+                                            <i data-lucide="trash-2"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            </div>
+        `;
+
+        document.getElementById('btn-admin-add-designer').addEventListener('click', () => {
+            showDesignerModal();
+        });
+
+        document.querySelectorAll('[data-edit-designer-id]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const id = btn.getAttribute('data-edit-designer-id');
+                showDesignerModal(id);
+            });
+        });
+
+        document.querySelectorAll('[data-delete-designer-id]').forEach(btn => {
+            btn.addEventListener('click', async () => {
+                const id = btn.getAttribute('data-delete-designer-id');
+                if (confirm('Are you sure you want to delete this designer profile? This action cannot be undone.')) {
+                    await deleteDesigner(id);
+                    if (window.fetchInitialData) await window.fetchInitialData();
+                    renderAdminView(root, 'designers');
+                }
+            });
+        });
+
+        if (window.lucide) window.lucide.createIcons();
+    }
+
+    // Dynamic projects sub-form state and handlers
+    window.currentDesignerProjects = [];
+
+    window.renderModalProjectsList = function() {
+        const container = document.getElementById('designer-projects-list-container');
+        if (!container) return;
+
+        if (window.currentDesignerProjects.length === 0) {
+            container.innerHTML = `
+                <div style="padding: 15px; text-align: center; border: 1px dashed var(--border-color); border-radius: 6px; color: var(--text-muted); font-size: 0.8rem;">
+                    No projects added to portfolio yet. Click "Add Project" to begin.
+                </div>
+            `;
+            return;
+        }
+
+        container.innerHTML = window.currentDesignerProjects.map((proj, idx) => {
+            const imagesHtml = (proj.images || []).map((img, imgIdx) => `
+                <div style="position:relative; width:60px; height:60px; border-radius:4px; overflow:hidden; border:1px solid var(--border-color); flex-shrink:0;">
+                    <img src="${img}" style="width:100%; height:100%; object-fit:cover;">
+                    <button type="button" onclick="window.removeProjectImageFromModal(${idx}, ${imgIdx})" style="position:absolute; top:2px; right:2px; width:16px; height:16px; border-radius:50%; background:rgba(239,68,68,0.9); border:none; color:white; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:10px; line-height:1; padding:0;">×</button>
+                </div>
+            `).join('');
+
+            return `
+                <div class="project-form-item" style="border: 1px solid var(--border-color); padding: 12px; border-radius: 6px; background: var(--bg-surface-alt); position: relative; margin-bottom: 10px;">
+                    <button type="button" onclick="window.removeProjectFromModal(${idx})" style="position: absolute; top: 10px; right: 10px; padding: 4px 8px; font-size: 0.75rem; color: var(--accent-red); background: transparent; border: 1px solid var(--accent-red); border-radius: 4px; cursor: pointer; display: flex; align-items: center; gap: 4px; height:auto; line-height:1;">
+                        Delete Project
+                    </button>
+                    
+                    <strong style="font-size:0.8rem; display:block; margin-bottom:8px; color:var(--primary);">Project #${idx + 1}</strong>
+                    
+                    <div class="form-row">
+                        <div class="input-group">
+                            <label style="font-size:0.75rem;">Project Title</label>
+                            <input type="text" value="${proj.title || ''}" placeholder="e.g. Modern Minimalist Living Room" oninput="window.updateProjectFieldInModal(${idx}, 'title', this.value)" required style="font-size: 0.8rem; padding: 6px 10px; width: 100%;">
+                        </div>
+                        <div class="input-group">
+                            <label style="font-size:0.75rem;">Location</label>
+                            <input type="text" value="${proj.location || ''}" placeholder="e.g. Jubilee Hills, Pan India" oninput="window.updateProjectFieldInModal(${idx}, 'location', this.value)" required style="font-size: 0.8rem; padding: 6px 10px; width: 100%;">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="input-group">
+                            <label style="font-size:0.75rem;">Year Completed</label>
+                            <input type="text" value="${proj.year || ''}" placeholder="e.g. 2025" oninput="window.updateProjectFieldInModal(${idx}, 'year', this.value)" required style="font-size: 0.8rem; padding: 6px 10px; width: 100%;">
+                        </div>
+                        <div class="input-group">
+                            <label style="font-size:0.75rem;">Description</label>
+                            <input type="text" value="${proj.desc || ''}" placeholder="Short project summary..." oninput="window.updateProjectFieldInModal(${idx}, 'desc', this.value)" style="font-size: 0.8rem; padding: 6px 10px; width: 100%;">
+                        </div>
+                    </div>
+
+                    <div class="input-group" style="margin-top:10px;">
+                        <label style="font-size:0.75rem;">Project Photos</label>
+                        <div style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:8px; align-items:center;">
+                            ${imagesHtml}
+                            <div style="display:inline-block;">
+                                <input type="file" id="project-upload-input-${idx}" accept="image/*" multiple style="display:none;" onchange="window.uploadProjectPhotosInModal(${idx}, this.files)">
+                                <button type="button" class="btn-secondary" onclick="document.getElementById('project-upload-input-${idx}').click()" style="padding: 6px 12px; font-size: 0.75rem; display: flex; align-items: center; gap: 4px; height:auto; line-height:1;">
+                                    Upload Photos
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    };
+
+    window.updateProjectFieldInModal = function(idx, field, value) {
+        if (window.currentDesignerProjects[idx]) {
+            window.currentDesignerProjects[idx][field] = value;
+        }
+    };
+
+    window.removeProjectFromModal = function(idx) {
+        window.currentDesignerProjects.splice(idx, 1);
+        window.renderModalProjectsList();
+    };
+
+    window.removeProjectImageFromModal = function(projIdx, imgIdx) {
+        if (window.currentDesignerProjects[projIdx] && window.currentDesignerProjects[projIdx].images) {
+            window.currentDesignerProjects[projIdx].images.splice(imgIdx, 1);
+            window.renderModalProjectsList();
+        }
+    };
+
+    window.addProjectToModal = function() {
+        window.currentDesignerProjects.push({
+            title: '',
+            location: '',
+            year: '',
+            desc: '',
+            images: []
+        });
+        window.renderModalProjectsList();
+    };
+
+    window.uploadProjectPhotosInModal = async function(projIdx, files) {
+        if (!files || files.length === 0) return;
+        
+        // Loop through each file
+        for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+            compressAndReadFile(file, 600, async (dataUrl) => {
+                try {
+                    const blob = await fetch(dataUrl).then(res => res.blob());
+                    const formData = new FormData();
+                    formData.append('image', blob, file.name);
+                    
+                    const res = await axios.post('/api/upload', formData, {
+                        headers: { 'Content-Type': 'multipart/form-data' }
+                    });
+                    
+                    const serverUrl = res.data.url;
+                    if (window.currentDesignerProjects[projIdx]) {
+                        window.currentDesignerProjects[projIdx].images.push(serverUrl);
+                        window.renderModalProjectsList();
+                    }
+                } catch (err) {
+                    console.error('Project image upload failed, falling back to base64', err);
+                    if (window.currentDesignerProjects[projIdx]) {
+                        window.currentDesignerProjects[projIdx].images.push(dataUrl);
+                        window.renderModalProjectsList();
+                    }
+                }
+            });
+        }
+    };
+
     // Helper: Show Product modal form for create or update
     const modal = document.getElementById('admin-product-modal');
     const form = document.getElementById('prod-form');
@@ -2050,6 +2375,154 @@ function renderAdminView(root, activeTab = 'products') {
         renderAdminView(root, 'banners'); // Reload view
     });
 
+    // Helper: Show/Hide Designer modal form for create or update
+    const designerModal = document.getElementById('admin-designer-modal');
+    const designerForm = document.getElementById('designer-form');
+    const designerAvatarPreviewBox = document.getElementById('designer-avatar-preview-box');
+
+    function updateDesignerAvatarPreview(src) {
+        if (src && src.trim() !== '') {
+            designerAvatarPreviewBox.innerHTML = `<img src="${src}" style="width:100%; height:100%; object-fit:cover; border-radius:50%;">`;
+        } else {
+            designerAvatarPreviewBox.innerHTML = `<span style="font-size:0.65rem; color:var(--text-muted);">No Photo</span>`;
+        }
+    }
+
+    function showDesignerModal(editId = null) {
+        designerModal.classList.add('active');
+        designerForm.reset();
+
+        document.getElementById('designer-avatar-file').value = '';
+
+        const title = document.getElementById('designer-modal-title');
+        const editIdEl = document.getElementById('designer-edit-id');
+
+        if (editId) {
+            title.textContent = 'Edit Designer Profile';
+            editIdEl.value = editId;
+
+            const designersList = getDesigners();
+            const orig = designersList.find(d => d.id === editId);
+            if (orig) {
+                document.getElementById('designer-name').value = orig.name;
+                document.getElementById('designer-firm').value = orig.firm;
+                document.getElementById('designer-experience').value = orig.experience;
+                document.getElementById('designer-rating').value = orig.rating || '5.0';
+                document.getElementById('designer-reviews-count').value = orig.reviewsCount || 0;
+                document.getElementById('designer-completed-projects').value = orig.completedProjects || 0;
+                document.getElementById('designer-specialties').value = orig.specialties ? orig.specialties.join(', ') : '';
+                document.getElementById('designer-bio').value = orig.bio;
+                document.getElementById('designer-full-bio').value = orig.fullBio;
+                document.getElementById('designer-avatar-url').value = orig.avatarImg || '';
+                document.getElementById('designer-avatar-text').value = orig.avatarText || '';
+                document.getElementById('designer-avatar-bg').value = orig.avatarBg || 'linear-gradient(135deg, #4f46e5, #06b6d4)';
+                
+                updateDesignerAvatarPreview(orig.avatarImg || '');
+                window.currentDesignerProjects = JSON.parse(JSON.stringify(orig.projects || []));
+            }
+        } else {
+            title.textContent = 'Add New Interior Designer';
+            editIdEl.value = '';
+            document.getElementById('designer-avatar-url').value = '';
+            document.getElementById('designer-avatar-text').value = '';
+            document.getElementById('designer-avatar-bg').value = 'linear-gradient(135deg, #4f46e5, #06b6d4)';
+            updateDesignerAvatarPreview('');
+            window.currentDesignerProjects = [];
+        }
+
+        window.renderModalProjectsList();
+    }
+
+    function hideDesignerModal() {
+        designerModal.classList.remove('active');
+    }
+
+    // Designer Modal control listeners
+    document.getElementById('btn-close-designer-modal').addEventListener('click', hideDesignerModal);
+    document.getElementById('btn-cancel-designer-modal').addEventListener('click', hideDesignerModal);
+
+    // Designer Avatar Upload & Preview bindings
+    document.getElementById('btn-upload-designer-avatar').addEventListener('click', () => {
+        document.getElementById('designer-avatar-file').click();
+    });
+
+    document.getElementById('designer-avatar-file').addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            compressAndReadFile(file, 200, async (dataUrl) => {
+                try {
+                    const blob = await fetch(dataUrl).then(res => res.blob());
+                    const formData = new FormData();
+                    formData.append('image', blob, file.name);
+                    
+                    const res = await axios.post('/api/upload', formData, {
+                        headers: { 'Content-Type': 'multipart/form-data' }
+                    });
+                    
+                    const serverUrl = res.data.url;
+                    document.getElementById('designer-avatar-url').value = serverUrl;
+                    updateDesignerAvatarPreview(serverUrl);
+                } catch (err) {
+                    console.error('Designer avatar upload failed, falling back to base64', err);
+                    document.getElementById('designer-avatar-url').value = dataUrl;
+                    updateDesignerAvatarPreview(dataUrl);
+                }
+            });
+        }
+    });
+
+    document.getElementById('designer-avatar-url').addEventListener('input', (e) => {
+        updateDesignerAvatarPreview(e.target.value);
+    });
+
+    // Designer Add Project button in modal
+    document.getElementById('btn-designer-add-project').addEventListener('click', () => {
+        window.addProjectToModal();
+    });
+
+    // Save/Update Designer Form submit handler
+    designerForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const editId = document.getElementById('designer-edit-id').value;
+        const nameVal = document.getElementById('designer-name').value;
+        
+        // Compute initials if avatarText is blank
+        let avatarTextVal = document.getElementById('designer-avatar-text').value.trim();
+        if (!avatarTextVal) {
+            avatarTextVal = nameVal.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
+        }
+
+        const designerData = {
+            name: nameVal,
+            firm: document.getElementById('designer-firm').value,
+            experience: document.getElementById('designer-experience').value,
+            rating: document.getElementById('designer-rating').value,
+            reviewsCount: parseInt(document.getElementById('designer-reviews-count').value || '0'),
+            completedProjects: parseInt(document.getElementById('designer-completed-projects').value || '0'),
+            specialties: document.getElementById('designer-specialties').value.split(',').map(s => s.trim()).filter(s => s !== ''),
+            bio: document.getElementById('designer-bio').value,
+            fullBio: document.getElementById('designer-full-bio').value,
+            avatarImg: document.getElementById('designer-avatar-url').value.trim(),
+            avatarText: avatarTextVal,
+            avatarBg: document.getElementById('designer-avatar-bg').value.trim(),
+            projects: window.currentDesignerProjects
+        };
+
+        if (editId) {
+            await updateDesigner(editId, designerData);
+        } else {
+            // Generate id from name if creating
+            const idVal = nameVal.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-');
+            designerData.id = idVal;
+            await addDesigner(designerData);
+        }
+
+        if (window.fetchInitialData) await window.fetchInitialData();
+        hideDesignerModal();
+        renderAdminView(root, 'designers'); // Reload designers view
+    });
+
     // Render initial active tab contents
     if (activeTab === 'products') renderProductsTab();
     else if (activeTab === 'orders') renderOrdersTab();
@@ -2057,6 +2530,7 @@ function renderAdminView(root, activeTab = 'products') {
     else if (activeTab === 'categories') renderCategoriesTab();
     else if (activeTab === 'units') renderUnitsTab();
     else if (activeTab === 'banners') renderBannersTab();
+    else if (activeTab === 'designers') renderDesignersTab();
 
     // Hook tab buttons
     document.getElementById('adm-nav-products').addEventListener('click', () => {
@@ -2077,6 +2551,332 @@ function renderAdminView(root, activeTab = 'products') {
     document.getElementById('adm-nav-leads').addEventListener('click', () => {
         renderAdminView(root, 'leads');
     });
+    document.getElementById('adm-nav-designers').addEventListener('click', () => {
+        renderAdminView(root, 'designers');
+    });
+
+    if (window.lucide) {
+        window.lucide.createIcons();
+    }
+}
+
+// --------------------------------------------------------------------------
+// 9. INTERIOR DESIGNERS & PORTFOLIO VIEWS
+// --------------------------------------------------------------------------
+
+// Global slider actions
+window.slideProjectImage = function(designerId, projIndex, direction) {
+    const wrapper = document.querySelector(`#slider-${designerId}-${projIndex}`);
+    if (!wrapper) return;
+    const track = wrapper.querySelector('.project-slider-track');
+    const images = track.querySelectorAll('.project-img');
+    const dots = wrapper.querySelectorAll('.slider-dot');
+    
+    let activeIndex = parseInt(wrapper.getAttribute('data-active-index') || '0');
+    activeIndex = (activeIndex + direction + images.length) % images.length;
+    
+    wrapper.setAttribute('data-active-index', activeIndex);
+    track.style.transform = `translateX(-${activeIndex * 100}%)`;
+    
+    dots.forEach((dot, idx) => {
+        dot.classList.toggle('active', idx === activeIndex);
+    });
+};
+
+window.setProjectImage = function(designerId, projIndex, activeIndex) {
+    const wrapper = document.querySelector(`#slider-${designerId}-${projIndex}`);
+    if (!wrapper) return;
+    const track = wrapper.querySelector('.project-slider-track');
+    const dots = wrapper.querySelectorAll('.slider-dot');
+    
+    wrapper.setAttribute('data-active-index', activeIndex);
+    track.style.transform = `translateX(-${activeIndex * 100}%)`;
+    
+    dots.forEach((dot, idx) => {
+        dot.classList.toggle('active', idx === activeIndex);
+    });
+};
+
+const DESIGNERS_DB = [
+    {
+        id: 'ananya-sharma',
+        name: 'Ananya Sharma',
+        avatarText: 'AS',
+        avatarBg: 'linear-gradient(135deg, #4f46e5, #06b6d4)',
+        firm: 'Principal Designer, Studio Luxe',
+        experience: '10+ Years',
+        rating: '4.9',
+        reviewsCount: 86,
+        completedProjects: 124,
+        specialties: ['Luxury Living Rooms', 'Space Optimization', 'Modern Minimalist'],
+        bio: 'Ananya is an award-winning principal designer specializing in elegant residential transformations. She combines space planning and modern minimalist aesthetics to create gorgeous environments.',
+        fullBio: 'Ananya Sharma founded Studio Luxe in 2016. Since then, she has successfully designed over 120 residential spaces in Pan India, Bangalore, and Mumbai. Her design philosophy revolves around clean lines, neutral color palettes, and maximizing natural lighting. She works closely with clients to understand their lifestyles and incorporate personalized custom elements into every corner.',
+        projects: [
+            {
+                title: 'Modern Minimalist Living Room',
+                location: 'Jubilee Hills, Pan India',
+                year: '2025',
+                desc: 'A complete redesign of a 500 sq ft living room featuring custom walnut paneling, velvet seating, and built-in smart ambient lighting.',
+                images: ['assets/interior_portfolio1.png', 'assets/interior_portfolio7.png']
+            },
+            {
+                title: 'Sleek Executive Home Study',
+                location: 'Gachibowli, Pan India',
+                year: '2024',
+                desc: 'An ergonomic and cozy home office built with high-quality oakwood storage shelves, task lighting, and customized noise isolation walls.',
+                images: ['assets/interior_portfolio4.png', 'assets/interior_portfolio8.png']
+            }
+        ]
+    },
+    {
+        id: 'karan-malhotra',
+        name: 'Karan Malhotra',
+        avatarText: 'KM',
+        avatarBg: 'linear-gradient(135deg, #ec4899, #f43f5e)',
+        firm: 'Kitchen & Modular Specialist, Malhotra & Co.',
+        experience: '8+ Years',
+        rating: '4.8',
+        reviewsCount: 112,
+        completedProjects: 210,
+        specialties: ['Contemporary Kitchens', 'Smart Storage', 'Modular Wardrobes'],
+        bio: 'Karan Malhotra is a modular specialist focusing on space-saving kitchen layouts, functional hardware, and sleek wardrobe designs.',
+        fullBio: 'Karan is a modular design expert. Over the last 8 years, he has designed and executed over 200 high-end contemporary kitchens and wardrobes. He believes in maximizing efficiency and storage through state-of-the-art pull-out trays, corner carousels, and premium hardware. His projects stand out for their ergonomics and durable premium finishes.',
+        projects: [
+            {
+                title: 'Premium Matte Black Modular Kitchen',
+                location: 'Banjara Hills, Pan India',
+                year: '2025',
+                desc: 'A high-end contemporary kitchen featuring sleek matte black anti-scratch cabinets, premium white marble countertops, and gold plumbing fixtures.',
+                images: ['assets/interior_portfolio2.png', 'assets/interior_portfolio9.png']
+            },
+            {
+                title: 'Luxury Marble Master Bathroom Suite',
+                location: 'Kondapur, Pan India',
+                year: '2024',
+                desc: 'A premium master bathroom remodel featuring a freestanding porcelain tub, gold plumbing fixtures, floating wash vanity, and soft mood lighting.',
+                images: ['assets/interior_portfolio5.png', 'assets/interior_portfolio10.png']
+            }
+        ]
+    },
+    {
+        id: 'priya-nair',
+        name: 'Priya Nair',
+        avatarText: 'PN',
+        avatarBg: 'linear-gradient(135deg, #10b981, #3b82f6)',
+        firm: 'Founder, GreenSpace Interiors',
+        experience: '12+ Years',
+        rating: '5.0',
+        reviewsCount: 94,
+        completedProjects: 88,
+        specialties: ['Eco-Friendly Homes', 'Luxury Bedrooms', 'Ambient Lighting'],
+        bio: 'Priya Nair is an industry veteran focused on sustainable interior architecture, energy-efficient lighting, and biophilic designs.',
+        fullBio: 'Priya founded GreenSpace Interiors with a vision to merge luxury and sustainability. She uses organic, non-toxic paints, reclaimed timber, and energy-efficient automation to create healthy, eco-friendly homes. She has a deep understanding of ambient lighting and uses biophilic elements like vertical gardens to create highly calming, therapeutic indoor environments.',
+        projects: [
+            {
+                title: 'Cozy Luxury Master Bedroom',
+                location: 'Begumpet, Pan India',
+                year: '2025',
+                desc: 'A tranquil master bedroom design showcasing custom organic fabric upholstery, warm beige backlighting, and solid reclaimed wood headboard.',
+                images: ['assets/interior_portfolio3.png', 'assets/interior_portfolio11.png']
+            },
+            {
+                title: 'Biophilic Sky Villa Balcony Lounge',
+                location: 'Hitec City, Pan India',
+                year: '2024',
+                desc: 'A sky villa balcony converted into a lush green lounge featuring vertical plant walls, comfortable weather-resistant seating, and warm overhead Edison bulbs.',
+                images: ['assets/interior_portfolio6.png', 'assets/interior_portfolio12.png']
+            }
+        ]
+    }
+];
+
+function renderInteriorDesignersView(root) {
+    const designersList = getDesigners();
+    const cardsHtml = designersList.map(designer => {
+        const hasProjects = designer.projects && designer.projects.length > 0;
+        const featuredProjHtml = hasProjects ? `
+            <div class="designer-portfolio-preview">
+                <h4>Featured Project: ${designer.projects[0].title}</h4>
+                <a href="#/interior-designer/${designer.id}">
+                    <img src="${designer.projects[0].images && designer.projects[0].images[0] ? designer.projects[0].images[0] : 'assets/interior_portfolio1.png'}" alt="${designer.name} Portfolio" class="portfolio-img">
+                </a>
+            </div>
+        ` : `
+            <div class="designer-portfolio-preview" style="padding: 24px; text-align: center; border: 1px dashed var(--border-color); border-radius: 6px; background: var(--bg-surface-alt); margin-top: 15px;">
+                <i data-lucide="image-off" style="width: 24px; height: 24px; color: var(--text-muted); margin-bottom: 8px; display: inline-block;"></i>
+                <p style="font-size: 0.8rem; color: var(--text-muted); margin: 0;">No projects uploaded yet.</p>
+            </div>
+        `;
+
+        const avatarHtml = designer.avatarImg ? `
+            <img src="${designer.avatarImg}" alt="${designer.name}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+        ` : (designer.avatarText || designer.name.substring(0, 2).toUpperCase());
+
+        return `
+            <div class="designer-card">
+                <div class="designer-header">
+                    <a href="#/interior-designer/${designer.id}" class="designer-avatar-wrapper-link" style="text-decoration: none;">
+                        <div class="designer-avatar" style="background: ${designer.avatarBg || 'var(--primary-light)'}; overflow: hidden;">${avatarHtml}</div>
+                    </a>
+                    <div class="designer-info">
+                        <a href="#/interior-designer/${designer.id}" style="text-decoration: none;">
+                            <h3 style="margin: 0; transition: color 0.2s ease;">${designer.name}</h3>
+                        </a>
+                        <p class="designer-firm" style="margin: 4px 0 8px 0;">${designer.firm}</p>
+                        <div class="designer-stats">
+                            <span class="stat-badge"><i data-lucide="award"></i> ${designer.experience} Exp</span>
+                            <span class="stat-badge"><i data-lucide="star" style="fill: var(--secondary); stroke: none;"></i> ${designer.rating} (${designer.reviewsCount} Reviews)</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="designer-body">
+                    <p class="designer-bio">${designer.bio}</p>
+                    <div class="designer-specialties">
+                        ${designer.specialties ? designer.specialties.map(spec => `<span class="spec-tag">${spec}</span>`).join('') : ''}
+                    </div>
+                    ${featuredProjHtml}
+                </div>
+                <div class="designer-footer">
+                    <a href="#/interior-designer/${designer.id}" class="btn-secondary w-full text-center" style="display: block; text-decoration: none; margin-bottom: 10px; padding: 10px 0;">
+                        View Profile & All ${designer.projects ? designer.projects.length : 0} Projects
+                    </a>
+                    <button class="btn-primary w-full service-inq-trigger" data-service="Interior Design - ${designer.name}">
+                        Book Free Consultation
+                    </button>
+                </div>
+            </div>
+        `;
+    }).join('');
+
+    root.innerHTML = `
+        <section class="interior-designers-section">
+            <div class="interior-hero-banner">
+                <div class="container">
+                    <h1>Premium Interior Designers in Pan India</h1>
+                    <p>Connect with top-rated interior design experts, browse their portfolios, and book a free design consultation today.</p>
+                </div>
+            </div>
+            
+            <div class="container interior-content-container">
+                <div class="designers-grid">
+                    ${cardsHtml}
+                </div>
+            </div>
+        </section>
+    `;
+
+    if (window.lucide) {
+        window.lucide.createIcons();
+    }
+}
+
+function renderInteriorDesignerDetailView(root, designerId) {
+    const designer = getDesigners().find(d => d.id === designerId);
+    if (!designer) {
+        root.innerHTML = `
+            <div class="container" style="padding: 40px 15px; text-align: center;">
+                <h2>Designer not found</h2>
+                <a href="#/interior-designers" class="btn-primary" style="display: inline-block; margin-top: 15px; text-decoration: none;">Back to Designers</a>
+            </div>
+        `;
+        return;
+    }
+
+    const hasProjects = designer.projects && designer.projects.length > 0;
+    const projectsHtml = hasProjects ? designer.projects.map((proj, projectIndex) => {
+        const imagesHtml = proj.images ? proj.images.map(img => `<img src="${img}" alt="${proj.title}" class="project-img">`).join('') : '';
+        const dotsHtml = proj.images ? proj.images.map((_, idx) => `<span class="slider-dot ${idx === 0 ? 'active' : ''}" onclick="setProjectImage('${designer.id}', ${projectIndex}, ${idx})"></span>`).join('') : '';
+        const imageCount = proj.images ? proj.images.length : 0;
+        
+        return `
+            <div class="project-card-item">
+                <div class="project-card-img-wrapper" style="height: 350px; overflow: hidden; position: relative;">
+                    <div class="project-slider-wrapper" id="slider-${designer.id}-${projectIndex}" data-active-index="0" style="width: 100%; height: 100%;">
+                        <div class="project-slider-track">
+                            ${imagesHtml}
+                        </div>
+                        ${imageCount > 1 ? `
+                            <button class="project-slider-btn prev" onclick="slideProjectImage('${designer.id}', ${projectIndex}, -1)">&#10094;</button>
+                            <button class="project-slider-btn next" onclick="slideProjectImage('${designer.id}', ${projectIndex}, 1)">&#10095;</button>
+                            <div class="project-slider-dots">
+                                ${dotsHtml}
+                            </div>
+                        ` : ''}
+                    </div>
+                    <span class="project-year-badge">${proj.year}</span>
+                </div>
+                <div class="project-card-info">
+                    <h3>${proj.title}</h3>
+                    <div class="project-location" style="margin-bottom: 12px;">
+                        <i data-lucide="map-pin"></i>
+                        <span>${proj.location}</span>
+                    </div>
+                    <p class="project-desc">${proj.desc}</p>
+                </div>
+            </div>
+        `;
+    }).join('') : `
+        <div class="no-results" style="padding: 40px; text-align: center; border: 1px dashed var(--border-color); border-radius: 6px; background: var(--bg-surface-alt);">
+            <i data-lucide="folder-open" style="width:48px; height:48px; color:var(--text-muted); display:inline-block; margin-bottom:12px;"></i>
+            <h4>No projects uploaded yet.</h4>
+        </div>
+    `;
+
+    const avatarHtml = designer.avatarImg ? `
+        <img src="${designer.avatarImg}" alt="${designer.name}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+    ` : (designer.avatarText || designer.name.substring(0, 2).toUpperCase());
+
+    root.innerHTML = `
+        <section class="designer-detail-container">
+            <div class="container">
+                <a href="#/interior-designers" class="btn-back-link">
+                    <i data-lucide="arrow-left"></i> Back to Designers
+                </a>
+                
+                <div class="designer-detail-grid">
+                    <!-- Sidebar Profile Info -->
+                    <aside class="designer-profile-sidebar">
+                        <div class="sidebar-avatar" style="background: ${designer.avatarBg || 'var(--primary-light)'}; overflow: hidden;">${avatarHtml}</div>
+                        <h2>${designer.name}</h2>
+                        <p class="designer-firm">${designer.firm}</p>
+                        
+                        <div class="sidebar-stats-list">
+                            <div class="sidebar-stat-row">
+                                <span>Experience:</span>
+                                <span>${designer.experience}</span>
+                            </div>
+                            <div class="sidebar-stat-row">
+                                <span>Completed Projects:</span>
+                                <span>${designer.completedProjects}+</span>
+                            </div>
+                            <div class="sidebar-stat-row">
+                                <span>Rating:</span>
+                                <span>${designer.rating} ⭐</span>
+                            </div>
+                            <div class="sidebar-stat-row">
+                                <span>Reviews:</span>
+                                <span>${designer.reviewsCount}</span>
+                            </div>
+                        </div>
+                        
+                        <p class="designer-full-bio">${designer.fullBio}</p>
+                        
+                        <button class="btn-primary w-full service-inq-trigger" data-service="Interior Design - ${designer.name}">
+                            Book Consultation
+                        </button>
+                    </aside>
+                    
+                    <!-- Projects Section -->
+                    <main class="designer-projects-showcase">
+                        <h2>Project Portfolio (${designer.projects ? designer.projects.length : 0} Featured Projects)</h2>
+                        <div class="projects-list-wrapper">
+                            ${projectsHtml}
+                        </div>
+                    </main>
+                </div>
+            </div>
+        </section>
+    `;
 
     if (window.lucide) {
         window.lucide.createIcons();

@@ -11,6 +11,7 @@ require('./models/bannerModel');
 require('./models/orderModel');
 require('./models/leadModel');
 require('./models/guideModel');
+require('./models/designerModel');
 
 const connectDB = require('./config/database');
 const apiRoutes = require('./routes/apiRoutes');
