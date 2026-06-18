@@ -4,10 +4,10 @@
   "description": "E-commerce portal for construction materials",
   "main": "backend/server.js",
   "scripts": {
-    "dev": "npm --prefix frontend run dev",
+    "dev": "vite",
     "server": "nodemon backend/server.js",
-    "build": "npm --prefix frontend run build",
-    "preview": "npm --prefix frontend run preview",
+    "build": "vite build",
+    "preview": "vite preview",
     "start": "node backend/server.js"
   },
   "dependencies": {
