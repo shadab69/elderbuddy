@@ -2,6 +2,17 @@ import React, { createContext, useState, useEffect } from 'react';
 import { HashRouter, Routes, Route } from 'react-router-dom';
 import axios from 'axios';
 
+// Import fallback mock data
+import { 
+  INITIAL_CATEGORIES, 
+  INITIAL_BANNERS, 
+  INITIAL_PRODUCTS, 
+  INITIAL_UNITS, 
+  INITIAL_DESIGNERS, 
+  INITIAL_BUILDERS, 
+  INITIAL_GUIDE_POSTS 
+} from '../backend/data/data.js';
+
 // Import Components & Pages
 import Navbar from './components/Navbar.jsx';
 import Footer from './components/Footer.jsx';
@@ -74,13 +85,21 @@ export default function App() {
         axios.get('/api/leads').catch(() => ({ data: [] }))
       ]);
 
-      setProducts(prodsRes.data || []);
-      setCategories(catsRes.data || []);
-      setUnits(unitsRes.data || []);
-      setBanners(bannersRes.data || []);
-      setDesigners(designersRes.data || []);
-      setBuilders(buildersRes.data || []);
-      setGuides(guidesRes.data || []);
+      const fetchedProducts = prodsRes.data && prodsRes.data.length > 0 ? prodsRes.data : INITIAL_PRODUCTS;
+      const fetchedCategories = catsRes.data && catsRes.data.length > 0 ? catsRes.data : INITIAL_CATEGORIES;
+      const fetchedUnits = unitsRes.data && unitsRes.data.length > 0 ? unitsRes.data : INITIAL_UNITS;
+      const fetchedBanners = bannersRes.data && bannersRes.data.length > 0 ? bannersRes.data : INITIAL_BANNERS;
+      const fetchedDesigners = designersRes.data && designersRes.data.length > 0 ? designersRes.data : INITIAL_DESIGNERS;
+      const fetchedBuilders = buildersRes.data && buildersRes.data.length > 0 ? buildersRes.data : INITIAL_BUILDERS;
+      const fetchedGuides = guidesRes.data && guidesRes.data.length > 0 ? guidesRes.data : INITIAL_GUIDE_POSTS;
+
+      setProducts(fetchedProducts);
+      setCategories(fetchedCategories);
+      setUnits(fetchedUnits);
+      setBanners(fetchedBanners);
+      setDesigners(fetchedDesigners);
+      setBuilders(fetchedBuilders);
+      setGuides(fetchedGuides);
       setOrders(ordersRes.data || []);
       setLeads(leadsRes.data || []);
     } catch (e) {

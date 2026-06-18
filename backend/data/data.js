@@ -1804,3 +1804,14 @@ async function deleteBuilder(id) {
         localStorage.setItem(DATA_KEYS.BUILDERS, JSON.stringify(builders));
     }
 }
+
+export {
+    INITIAL_CATEGORIES,
+    INITIAL_BANNERS,
+    INITIAL_PRODUCTS,
+    INITIAL_UNITS,
+    INITIAL_DESIGNERS,
+    INITIAL_BUILDERS,
+    INITIAL_GUIDE_POSTS
+};
+
