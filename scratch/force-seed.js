@@ -1,9 +1,9 @@
 const fs = require('fs');
 const path = require('path');
 
-const jsPath = path.join(__dirname, '../js/data.js');
+const jsPath = path.join(__dirname, '../backend/data/data.js');
 if (!fs.existsSync(jsPath)) {
-    console.error(`Error: js/data.js not found at ${jsPath}`);
+    console.error(`Error: data.js not found at ${jsPath}`);
     process.exit(1);
 }
 

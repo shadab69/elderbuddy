@@ -19,9 +19,9 @@ const SVG_TEMPLATES = {
 // Seeder extraction utility
 function parseJsArray(varName) {
     try {
-        const jsPath = path.join(__dirname, '../../js/data.js');
+        const jsPath = path.join(__dirname, '../data/data.js');
         if (!fs.existsSync(jsPath)) {
-            console.warn(`[Seeder] js/data.js not found at ${jsPath}`);
+            console.warn(`[Seeder] data.js not found at ${jsPath}`);
             return null;
         }
         const fileContent = fs.readFileSync(jsPath, 'utf8');
@@ -80,6 +80,7 @@ async function seedDatabase() {
         const Unit = mongoose.model('Unit');
         const Banner = mongoose.model('Banner');
         const Guide = mongoose.model('Guide');
+        const Builder = mongoose.model('Builder');
 
         const productCount = await Product.countDocuments();
         if (productCount === 0) {
@@ -229,6 +230,16 @@ async function seedDatabase() {
             ];
             await Designer.insertMany(seedDesigners);
             console.log(`[Database seeder] Successfully seeded ${seedDesigners.length} designers.`);
+        }
+
+        const builderCount = await Builder.countDocuments();
+        if (builderCount === 0) {
+            console.log('[Database seeder] Seeding builders...');
+            const seedBuilders = parseJsArray('INITIAL_BUILDERS') || [];
+            if (seedBuilders.length > 0) {
+                await Builder.insertMany(seedBuilders);
+                console.log(`[Database seeder] Successfully seeded ${seedBuilders.length} builders.`);
+            }
         }
     } catch (e) {
         console.error('[Database seeder] Error seeding database:', e.message);

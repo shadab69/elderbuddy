@@ -4,7 +4,8 @@ const guideSchema = new mongoose.Schema({
     id: { type: String, required: true, unique: true },
     title: { type: String, required: true },
     date: { type: String, required: true },
-    imageSrc: { type: String, required: true }
+    imageSrc: { type: String, required: true },
+    content: { type: String }
 });
 
 const Guide = mongoose.model('Guide', guideSchema);

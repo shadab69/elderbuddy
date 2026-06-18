@@ -692,7 +692,8 @@ const DATA_KEYS = {
     UNITS: 'builderpro_units',
     BANNERS: 'builderpro_banners',
     GUIDES: 'builderpro_guides',
-    DESIGNERS: 'builderpro_designers'
+    DESIGNERS: 'builderpro_designers',
+    BUILDERS: 'builderpro_builders'
 };
 
 const INITIAL_UNITS = [
@@ -799,6 +800,99 @@ const INITIAL_DESIGNERS = [
     }
 ];
 
+const INITIAL_BUILDERS = [
+    {
+        id: 'rajesh-kumar',
+        name: 'Rajesh Kumar',
+        avatarText: 'RK',
+        avatarBg: 'linear-gradient(135deg, #1e3a8a, #3b82f6)',
+        firm: 'Principal Builder, Kumar Construction Corp',
+        experience: '15+ Years',
+        rating: '4.9',
+        reviewsCount: 142,
+        completedProjects: 85,
+        specialties: ['Residential Apartments', 'Independent Villas', 'Green Buildings'],
+        bio: 'Rajesh Kumar is a veteran builder known for constructing high-durability residential complexes and eco-friendly structures.',
+        fullBio: 'Rajesh Kumar founded Kumar Construction Corp in 2010. Over the last 15 years, he has successfully delivered over 85 high-end residential and villa projects in Pan India, Noida, and Bangalore. His construction philosophy revolves around earthquake-resistant design, premium quality structural materials, and strict timeline adherence.',
+        projects: [
+            {
+                title: 'Premium 3BHK Apartment Complex',
+                location: 'Whitefield, Pan India',
+                year: '2025',
+                desc: 'A structural masterpiece featuring premium reinforced TMT steel, high-compressive concrete columns, and rainwater harvesting structures.',
+                images: ['assets/interior_portfolio1.png', 'assets/interior_portfolio2.png']
+            },
+            {
+                title: 'Luxury Eco-Villa Project',
+                location: 'Sarjapur, Pan India',
+                year: '2024',
+                desc: 'A premium green housing project built with AAC blocks, low-VOC thermal insulating paints, and integrated solar roofing systems.',
+                images: ['assets/interior_portfolio3.png', 'assets/interior_portfolio4.png']
+            }
+        ]
+    },
+    {
+        id: 'vikram-aditya',
+        name: 'Vikram Aditya',
+        avatarText: 'VA',
+        avatarBg: 'linear-gradient(135deg, #0f766e, #14b8a6)',
+        firm: 'Founder, Aditya Infra Projects',
+        experience: '12+ Years',
+        rating: '4.8',
+        reviewsCount: 96,
+        completedProjects: 40,
+        specialties: ['Commercial Hubs', 'Structural Renovations', 'High-Rise Towers'],
+        bio: 'Vikram Aditya specializes in steel-reinforced high-rise buildings, contemporary commercial plazas, and complex structural expansions.',
+        fullBio: 'Vikram Aditya is an infrastructure pioneer. Over the past 12 years, he has specialized in heavy-duty commercial plazas and high-rise structural designs. His projects stand out for their modern glass facade integrations, spacious column-free office designs, and premium durability standards.',
+        projects: [
+            {
+                title: 'Aditya Business Plaza',
+                location: 'Gachibowli, Pan India',
+                year: '2025',
+                desc: 'An iconic commercial hub constructed with high-grade self-healing concrete and modular columns, spanning over 200,000 sq ft.',
+                images: ['assets/interior_portfolio5.png', 'assets/interior_portfolio6.png']
+            },
+            {
+                title: 'Corporate Office Headquarters',
+                location: 'Hitec City, Pan India',
+                year: '2024',
+                desc: 'A sleek, multi-story corporate building featuring noise-reduction glass paneling, smart HVAC integrations, and customized steel structural frames.',
+                images: ['assets/interior_portfolio7.png', 'assets/interior_portfolio8.png']
+            }
+        ]
+    },
+    {
+        id: 'sanjay-mehta',
+        name: 'Sanjay Mehta',
+        avatarText: 'SM',
+        avatarBg: 'linear-gradient(135deg, #7c2d12, #ea580c)',
+        firm: 'Managing Director, Mehta & Sons Builders',
+        experience: '18+ Years',
+        rating: '5.0',
+        reviewsCount: 110,
+        completedProjects: 150,
+        specialties: ['Industrial Sheds', 'Affordable Housing', 'Concrete Frameworks'],
+        bio: 'Sanjay Mehta is a structural engineer and builder specializing in high-load industrial warehouses and large-scale affordable housing.',
+        fullBio: 'Sanjay Mehta has over 18 years of experience in structural engineering and mass construction. His firm, Mehta & Sons Builders, has delivered over 150 projects across Pan India, including heavy-load industrial sheds, logistic warehouses, and affordable mass housing townships.',
+        projects: [
+            {
+                title: 'Mehta Enclave Housing Scheme',
+                location: 'Noida Sector 62, Pan India',
+                year: '2025',
+                desc: 'A massive residential township built using precast concrete technology, saving 40% construction time while maximizing load bearing strength.',
+                images: ['assets/interior_portfolio9.png', 'assets/interior_portfolio10.png']
+            },
+            {
+                title: 'Heavy Industrial Logistics Warehouse',
+                location: 'Manesar, Pan India',
+                year: '2024',
+                desc: 'A heavy-duty logistics facility built with industrial-grade steel trusses, high-performance vacuum-dewatered flooring, and modular loading bays.',
+                images: ['assets/interior_portfolio11.png', 'assets/interior_portfolio12.png']
+            }
+        ]
+    }
+];
+
 // Initialization helper
 function initializeData() {
     const existing = localStorage.getItem(DATA_KEYS.PRODUCTS);
@@ -822,6 +916,9 @@ function initializeData() {
     }
     if (!localStorage.getItem(DATA_KEYS.DESIGNERS)) {
         localStorage.setItem(DATA_KEYS.DESIGNERS, JSON.stringify(INITIAL_DESIGNERS));
+    }
+    if (!localStorage.getItem(DATA_KEYS.BUILDERS)) {
+        localStorage.setItem(DATA_KEYS.BUILDERS, JSON.stringify(INITIAL_BUILDERS));
     }
 }
 
@@ -1113,31 +1210,272 @@ const INITIAL_GUIDE_POSTS = [
         id: 'g1',
         title: 'Ensuring Quality In Building Materials',
         date: '2023-08-22 10:08:09',
-        imageSrc: 'assets/guide_quality.png'
+        imageSrc: 'assets/guide_quality.png',
+        content: `# Ensuring Quality In Building Materials
+
+Quality assurance is paramount in construction projects. This guide covers how to inspect and ensure you are buying high-grade materials.
+
+## 1. Concrete Quality Testing
+Make sure to check the grade and certification of the cement. High strength concrete starts with grade 43 or 53 OPC cement.
+
+## 2. Steel Reinforcement Inspection
+TMT Bars should have clear certification marks, rust-free surfaces, and excellent bendability.
+
+## 3. Bricks and Blocks
+A high-quality brick should have uniform dimensions, sharp edges, and a metallic ringing sound when struck against another brick.
+
+Buying from verified suppliers ensures that materials meet standard ISI specifications.`
     },
     {
         id: 'g2',
         title: 'The Future of Building Materials and Eco-Friendly Progress',
         date: '2023-08-05 11:33:21',
-        imageSrc: 'assets/guide_future.png'
+        imageSrc: 'assets/guide_future.png',
+        content: `# The Future of Building Materials and Eco-Friendly Progress
+
+Exploring advancements in green technology and how eco-friendly products are shaping the construction landscape.
+
+## Modern Green Building Technologies
+With carbon neutral targets, the construction sector is adopting self-healing concrete, solar panel glass roofs, and smart insulation.
+
+## Eco-Friendly Progress
+Using smart glass reduces heat gain, saving HVAC energy costs. Sustainable paint options release low VOCs, improving indoor air quality.`
     },
     {
         id: 'g3',
         title: 'Building Materials at a Cost Effective Price for Small-Scale Projects',
         date: '2023-07-17 06:45:52',
-        imageSrc: 'assets/guide_cost.png'
+        imageSrc: 'assets/guide_cost.png',
+        content: `# Building Materials at a Cost Effective Price for Small-Scale Projects
+
+Tips and tricks to budget your material procurement without compromising on safety and longevity.
+
+## 1. Plan in Bulk Sourcing
+Even for small projects, grouping material requirements together can help you secure wholesale rates.
+
+## 2. Local Alternatives
+Sourcing clay bricks or aggregates locally reduces transportation overheads drastically.
+
+## 3. Compare Brands
+Opt for secondary tier certified brands that offer similar grades at competitive pricing compared to premium heavily-advertised brands.`
     },
     {
         id: 'g4',
         title: 'The Latest Trends in Sustainable Building Materials',
         date: '2023-04-20 09:12:19',
-        imageSrc: 'assets/guide_trends.png'
+        imageSrc: 'assets/guide_trends.png',
+        content: `# The Latest Trends in Sustainable Building Materials (2025–2026)
+
+As the construction industry works to reduce carbon emissions and improve resource efficiency, sustainable building materials are moving from niche applications to mainstream adoption. The biggest trend is the shift toward **low-carbon, renewable, recycled, and carbon-storing materials** that reduce a building's environmental impact throughout its lifecycle. ([BUILD Magazine][1])
+
+## 1. Mass Timber and Cross-Laminated Timber (CLT)
+
+![Image](https://images.openai.com/static-rsc-4/Zl2fGkM94LwMNOLXlSZkcvqArZmTC6RxusYRdqRnUEUGJRFQrIR_031uR8_L-MsWWju0yYY8i7reqJnb6tnKgtyaqamPg3TdKXoBL_vyaB5GTjmAfyehZMQkM_FD4hhFTTuN1GLbl3ZBtBfn998pCvwXIDEpO_r7rdJ-wkI16ZP6fwMMdk8-QJZDRnpdDn9N?purpose=fullsize)
+
+![Image](https://images.openai.com/static-rsc-4/raSXEJjjbGk7UnWJi5CI0kIcaope8O_YZgAPjf0TmCyxbUKcZytzGGoOamAsEnZrDnPXLIbLm6HkVGJT5hXX0RLBzYMwof7uOYacGWl5acAk-CShSaxOv5XJ6gr1_uyxJ5-rUcIOIHWCzGK_GJnwPX8vtiees1JiG1RLdTWs_mEDu9BeIeVjMGmdOSGf85NF?purpose=fullsize)
+
+![Image](https://images.openai.com/static-rsc-4/GVfXoe-2CoUAk1QjivcEHU8iGmr6xSgpAperMM-folL9ZQ21YYlkdxnAQzSkBqAQGSyAr3evJTOg0ovdZ0OUdZjj-Wn2_11MM25lsRYIYO7wnt1m_GqtY4F-UrA-TS3vELYevkKmQZCTR5b6Q4x1HC8LbWtLHfliwsE8OLwFgAXO-SFcaxD15qnSp8K8wwrB?purpose=fullsize)
+
+![Image](https://images.openai.com/static-rsc-4/Dv8n4j7Er96GMW1iL0hCnNzfRkbsGoKlQys2UXfR43AIpWhZy1-FWt4MBA95R3GIhmDe5H16zCVKxDOmL6yf90pcgwagqUnafil3S2YIFsjEqSw-Q6yz1Cn1MNvph8Sx7w07ZWi3KNFdBi6uo_VyJvLjpYP0S_qFskrEcqcgWIAfvV-iMR6XvanVIsKc3Ws0?purpose=fullsize)
+
+![Image](https://images.openai.com/static-rsc-4/WU3j1o-EoSgUWMYPXCUCKmNv4SLV6EH_XVqoXRxcOluakLvdyNh8wwZ5peCAOdY0BHKB-5AE4ROrZTkzem2RDPcFsCCnyrojvM9wICJTS3Y2QDSo6otSmQrDrK-3yQ_OMsjoViDepHonsjctvKD2to0hrVOAkITYEAqXYedDV_doJ77_fM4_L1Ye_-orJqHt?purpose=fullsize)
+
+![Image](https://images.openai.com/static-rsc-4/X7xEPKVVCS2GRs5ZYbuqLf9oPHKPqVon2Qg4Q4ms9RQgUm7cf6Nn88CFAgbMsla6l58R0FScx7-3oHtZXpHXejCUDF30NHVyCscz_fLoaTagdaQqiTim6TDnyvRJsR08wdJSQOp0k5sEZvmkbI66STvyLAlba2d0cYhfPzhc0bR7Hgp9wzIz1ECkM2tkHnmR?purpose=fullsize)
+
+![Image](https://images.openai.com/static-rsc-4/Bc_bOo85CfgdHmGzPQk7WsMGLHX4qUJmBfppqT7aeaN6c5ZJSjs7JKhs299-LwggtBLdgPRhMdgQ6r_DL2fSSZrS0fgB0n_OhDourr-cm62YiVKl1rxvpDv5vavd7UwuaxceMHV5PvYM08fCp9RYRoZ2Z39MU08NSs0cbH4Clq9Pc92XTa4KyWQyAmtKQbua?purpose=fullsize)
+
+Mass timber products such as Cross-Laminated Timber (CLT) are becoming a preferred alternative to steel and concrete in many mid-rise and commercial projects.
+
+**Why it's trending:**
+
+* Stores carbon instead of emitting it.
+* Faster construction through prefabrication.
+* Reduced construction waste.
+* Strong structural performance with growing code acceptance.
+
+Many jurisdictions now permit taller timber structures, accelerating adoption worldwide. ([Salisbury & Landolt Construction Group][2])
+
+---
+
+## 2. Low-Carbon and Carbon-Capturing Concrete
+
+Concrete remains essential, but manufacturers are developing greener alternatives.
+
+**Innovations include:**
+
+* Cement replacement using fly ash, slag, and calcined clay.
+* Carbon-capture technologies during production.
+* Bio-cement produced using bacteria.
+* Carbon-mineralized concrete that stores CO₂.
+
+These technologies can significantly reduce the embodied carbon of construction projects. ([Firas Engineering Consultancy][3])
+
+---
+
+## 3. Hempcrete and Bio-Based Materials
+
+![Image](https://images.openai.com/static-rsc-4/lHv7PZ6a4jUzPFT3Mhern8ttGEZho40CwChgwWBDZghepamjLMeGe7bvgjk38MfahvW7f_YTVgqrHqgNgdCMX1-oNo-0gOJrIFXaCqWfnjClX6T5SPRRtvlSDfmnjqMsrk4dk3YH-ITEnd-JIPbHoSsHvTvbNwVvraf_3Tu28S2ohaPLKm_KRn4DZAnKt8Mn?purpose=fullsize)
+
+![Image](https://images.openai.com/static-rsc-4/Eo8vfY3EyMKVittyJ_gNc4shjRycjds00vJHhOkQdqFo9rCTHMgifiW9GfenzwdDZxhQ_9XQo6ljjvn1EKBLH9FnO_Dp0I2bvu05WDeIlsSb40SOgDftEvlD8vRzGfKJ9SVkciZPjteWLkO63s3cOEkMEYHvoS5bp5mbT1OJMIquGxi4wzVwYqQbd9CBwJmD?purpose=fullsize)
+
+![Image](https://images.openai.com/static-rsc-4/I_6rM2xe4fOODWYI0jR40D4LgaL4WbSaoRJc88tf7pygtUiv3AuliDJNad-iDuAuixSGC8m0fNcjuq4APXdm23pfTnaHey0OThv4B-TfCrx-ZMaT7FsanC54s1QgOiU5QrgHTFzsiSCg7-yS8evhkO7R0lxTPsn_iVM7viv17xWq3Y7oIIvI_WmwP4i0opaY?purpose=fullsize)
+
+![Image](https://images.openai.com/static-rsc-4/81ay4kHCKiHuhPDwrN34S57YsH373T022xRK7uzPGMViObHitYvey_z_vQlEk2r9zg42NujOsC0AI7v65NAueUIPDbME3o0P2BOVrhF_mEn1x-tRzks35dXJ8yhlQ-DFVUONzk3sin8lJwM9TOjKDtYVZ1D7TUaA1Dki1BSB8jGP9GC0gsBFCm68NdYU5A-1?purpose=fullsize)
+
+![Image](https://images.openai.com/static-rsc-4/Uqz9eevYz2a88qBwImB2I5N0YEc7pdi9s6y89gMSrY_p1Ae6iEUtmwsfrJ2fwYpRS12L53lMEsMkies6C529l2lE5XHhl9CSYukTroSfoG4Y0XH4Z2636Ro2O2lMB9cu_iPldnadPgCh8zN3W_xAABUyVIiVXLrNLmppZBkO9LRxoUUTi6DwZjNjKWA-8GSh?purpose=fullsize)
+
+![Image](https://images.openai.com/static-rsc-4/ioBjCehZNa574rMHLQCHXVfhnqbf-3Sr7P7ITaAgLF4byTZk7aam8BEVuv_gqL5VjEhDbX3-8acl2040NjO-e7Hlj4P1ZNR54q0zLx6mvXDJ0Szqsu5-70hhbYAIKQgzpEDBPC1u33Ae0OxEYBteKSjE3amtITPr5JdBO0l6To7IyzbSWmzTZ867jtKJI6D1?purpose=fullsize)
+
+![Image](https://images.openai.com/static-rsc-4/KrVLdB2y6CaEfVZPKGRemdQG0cXgocDzWiZvEuUS6AYbd97HALTOIyEeLZTcdMKgReLDSP7Mil4uhiOxihhFkh0G4uZYDkumeXzP7_BPP75fQO-Sva7tjfs1CSix5B8Jv6uyVHEU1npiweAkwapxld1AlDvC3oLTUu6ps7rwb-QP7JGGG0SawvoK9E0U5WgH?purpose=fullsize)
+
+![Image](https://images.openai.com/static-rsc-4/2ModEASKczwN8-zCvD2_vnZ9u-ksxmx_s7ivXCtbiI_5IJGpX-PVFU_GX38cAefHFLZ-8AR44pBWuIiyQ4At8FUypC7dsd44OErmazgQAXVRLOoxsQjBtJ0UWhd6xY3T1sXW4dCVVqOQXpiS3gNtZIVd5w4ALA6Y-NDym4NKClZUX1P3gEvMuzqv2TgoY9Oc?purpose=fullsize)
+
+Hempcrete is gaining popularity for residential and sustainable building projects.
+
+**Benefits:**
+
+* Carbon-negative potential.
+* Excellent thermal insulation.
+* Moisture regulation.
+* Improved indoor air quality.
+* Renewable agricultural source.
+
+Although not typically load-bearing, it is increasingly used as wall infill and insulation material. ([Springer][4])
+
+---
+
+## 4. Recycled Construction Materials
+
+The circular economy is becoming a major driver in construction.
+
+Popular recycled materials include:
+
+* Recycled steel
+* Recycled concrete aggregates
+* Reclaimed wood
+* Recycled bricks and masonry
+
+These materials reduce landfill waste while lowering demand for virgin resources. Major building-material companies are investing heavily in recycling infrastructure. ([zigron.com][5])
+
+---
+
+## 5. Bamboo-Based Construction
+
+![Image](https://images.openai.com/static-rsc-4/MZ8Lf4hRZIVVwLLKjw6RHd7v1zxF4pVW9hBY3JT0R0X15R4EmtW04BxOXsrueP138IBE0qV9EztAgI3GI_xDTpFEtAO3WEPrIGdCY-aN1kSdluO1rlr_ZiEfCt0fI7Y1T1ehJEx0b8WjHmK2BRM9l9sP4QK-mS4tL8iDomhVE_ctZrSK6nl8BjYM0bjIN70Q?purpose=fullsize)
+
+![Image](https://images.openai.com/static-rsc-4/uPNlItDSMyBHyN70aThG7qib6P4kHAAyoEWhe_g5kjCt2LFxa6L85iCoSVB76dP9113_4ESd0RmPmksqcogYLml6yiTwlUUdNbh0OVrWucrTytY6boaN0LjLnVxd6FyQPdyUD7QL6KDTRLUq1oph3HSOKseH6mff6pveC-jztYoS5qFvH6P7QGwMlsjb1e8i?purpose=fullsize)
+
+![Image](https://images.openai.com/static-rsc-4/Elf94ISEAYojhNO-7lJigksdJPD4J4esnOu1RM5D1-rwByimRasCow7GegNi5P4xtxXHkGFNvDxS0hmCyU7-GGX7MtJhm0hVl_BHreJ6olLE6tRBfhDsHWow9B6ozeEvsK9cCIsGnmExfX9sX746CaG-MzQsSzeMyhuOugNVRFPOeZQP_aUgVg65lAXqQffg?purpose=fullsize)
+
+![Image](https://images.openai.com/static-rsc-4/pMxYlSbkhfad4GA7CHuaU7hGmi-x5VnS_y11UB9_JS5QT4msUH3xJL3dbhfb6orcp5usTDvjppYrYL-cRshGLN9qQQMphGTtzIW78ppP2iX_VvYC2CYRSlWECscnTvpGHn1zb9pzUZ9j-ufEdmRH13Ktrifx51uqGY7V0HQAXam6RLJ1OGVDc0IaRlKM-57D?purpose=fullsize)
+
+![Image](https://images.openai.com/static-rsc-4/VT9-Zmw0olqMkMH_F4QM53KPKitd486yJOAOQ-xXvxuQEJR71o_QbGEvAnGsrU9BYGoLlJEGUdiVncTMVwhkmUi9hNRWPvUCcFoQCFIF7zCBNzVniJdDjMWMwiUS52TkEu2HStdAelSZmKibaDyXXgxpmaBJkYl-tJeSBHQbUJ1kUNcqs2zSgLt5hcQv0tiQ?purpose=fullsize)
+
+![Image](https://images.openai.com/static-rsc-4/9mL5YsV20y9Mrbo5Hsx0H8R6EN_maYT-tzQ-PaPouLsR4tEbx5tLdPqe1imckRMWo0GU0pBPPH6oS74RMRIJh4K2iZUyCmZ3plpkHoX0GGfx_NnT1RtM26xTCM_4ODmSzB20jEBD_GV-QjhaaU5QzAiQr5T2avlykMVfBNUrdIgqEWrVMCumrh642U0bUfSu?purpose=fullsize)
+
+![Image](https://images.openai.com/static-rsc-4/1Fmsgg_shAG8qX3wv7OMUWjLzY0Aoc_uKzjVbCdXB4WX48nQoZcjIxc_DTFo-TbWCLuErhm-Rj03M2XygUMWEMqhf48rvlHMhd8k-4m1FcgLrsSv49bJ8nTKOl_ZmxpSLi31vi48x70BF4ahG5yBLlH97XzMp3e-ZD-tB41_dB0rY1Gb8W5wfHw7yOuu6YVj?purpose=fullsize)
+
+![Image](https://images.openai.com/static-rsc-4/c1xt4_vEGoRWnD8GdvR17KN4zhNFTajRQmhLkRbjMQyR7mIJ7oSdPQiL4aLMIL3lyeBf9x6h2t2UrzDeO5T0MvFKawWZW91GDLvtHvHHx7mo2OOsNwDjkoutXuuPYe5mpknT7XVK225KB_tdNqWmjlCLJpcRWQjgQ80o7JHpo5P2RwVXZmaq0VQh4NdK24ZB?purpose=fullsize)
+
+Bamboo is emerging as a viable low-carbon alternative for many structural and finishing applications.
+
+**Advantages:**
+
+* Extremely fast-growing renewable resource.
+* High strength-to-weight ratio.
+* Earthquake resilience.
+* Carbon sequestration during growth.
+
+Engineered bamboo products are increasingly being used in modern architecture and infrastructure projects. ([Verger Group][6])
+
+---
+
+## 6. Mycelium-Based Materials
+
+Mycelium (the root structure of mushrooms) is one of the most innovative sustainable materials entering the market.
+
+**Applications:**
+
+* Insulation panels
+* Interior partitions
+* Acoustic products
+* Packaging and temporary structures
+
+Benefits include biodegradability, fire resistance, and very low embodied energy. ([Verger Group][6])
+
+---
+
+## 7. Natural and Regenerative Materials
+
+Growing interest in regenerative construction has increased the use of:
+
+* Straw bale systems
+* Rammed earth
+* Clay plasters
+* Cork insulation
+* Natural fiber insulation
+* Lime-based finishes
+
+These materials are valued for low embodied carbon, healthy indoor environments, and local sourcing opportunities. ([The Guardian][7])
+
+---
+
+## 8. Prefabricated and Modular Building Systems
+
+Sustainability is no longer only about materials; it's also about how buildings are assembled.
+
+**Benefits of prefabrication:**
+
+* Less waste.
+* Faster construction.
+* Improved quality control.
+* Reduced transportation and labor impacts.
+
+Mass timber and other sustainable materials pair particularly well with modular construction methods. ([Fong Prean Industrial Co., Ltd.][8])
+
+---
+
+## Key Takeaway
+
+The most influential sustainable building material trends today are:
+
+1. **Mass Timber (CLT)**
+2. **Low-Carbon Concrete**
+3. **Hempcrete**
+4. **Recycled Steel and Aggregates**
+5. **Engineered Bamboo**
+6. **Mycelium-Based Products**
+7. **Natural Insulation and Earth-Based Materials**
+8. **Modular and Prefabricated Construction**
+
+For builders, developers, and homeowners, the future is increasingly focused on materials that not only reduce emissions but actively **store carbon, support circular economies, and improve building performance over the long term**. ([BUILD Magazine][1])
+
+[1]: https://www.build-review.com/top-trends-in-sustainable-building-materials-for-2025/?utm_source=chatgpt.com "Top Trends in Sustainable Building Materials for 2025 - BUILD Magazine"
+[2]: https://www.slconstructiongroup.com/news/top-eco-friendly-building-materials-for-2025?utm_source=chatgpt.com "Top Eco-Friendly Building Materials for 2025: Sustainable Solutions for Modern Construction — Salisbury & Landolt Construction Group"
+[3]: https://firas-eng.com/low-carbon-materials-2025/?utm_source=chatgpt.com "Top 7 Low-Carbon Construction Materials for Sustainable Homes in 2025"
+[4]: https://link.springer.com/article/10.1007/s41062-025-01906-1?utm_source=chatgpt.com "A comprehensive review of hempcrete as a sustainable building material | Innovative Infrastructure Solutions | Springer Nature Link"
+[5]: https://www.zigron.com/blog/sustainable-materials-civil-engineering-2025?utm_source=chatgpt.com "6 Sustainable Materials Every Civil Engineer Should Know for a Greener Future in 2025 | Zigron"
+[6]: https://verger-group.com/sustainable-building-materials-trends-2025/?utm_source=chatgpt.com "New Sustainable Building Materials to Incorporate into Your Next Project (2025) - Verger Group"
+[7]: https://www.theguardian.com/artanddesign/2025/apr/08/material-cultures-radical-designers-let-nothing-go-to-waste-bark-cactus-plaster-straw?utm_source=chatgpt.com "'Bark is the original dampproof membrane!' Meet the radical designers who let nothing go to waste"
+[8]: https://www.fongprean.com/blog/faq-6/building-for-a-greener-future-top-sustainable-materials-and-fastener-trends-for-2025-construction-projects-68?utm_source=chatgpt.com "Sustainable Building Materials and Fastener Innovations for 2025 Projects | Fong Prean Industrial Co., Ltd."`
     },
     {
         id: 'g5',
         title: 'Renovation vs. Remodeling: Which One is Better?',
         date: '2021-08-13 12:18:00',
-        imageSrc: 'assets/guide_renovation.png'
+        imageSrc: 'assets/guide_renovation.png',
+        content: `# Renovation vs. Remodeling: Which One is Better?
+
+Understanding the core differences between structural remodeling and cosmetic renovation.
+
+## Renovation (Restoring & Repairing)
+Renovation refers to "restoring" something to a good state of repair. It includes painting, replacing flooring, and updating cabinets.
+
+## Remodeling (Changing Structure)
+Remodeling involves altering the structure or layout of a space. Examples include removing walls to create an open-floor kitchen, expanding rooms, or changing plumbing lines.
+
+## Which is better?
+If your budget is tight and you want a fresh aesthetic look, renovation is best. If you need functionality changes, go for remodeling.`
     },
     {
         id: 'g6',
@@ -1150,7 +1488,21 @@ const INITIAL_GUIDE_POSTS = [
             <path d="M150 170 l15 -20 l-10 -15 l20 -30" fill="none" stroke="#ef4444" stroke-width="4" stroke-linecap="round"/>
             <path d="M230 170 l-10 -25 l15 -20" fill="none" stroke="#ef4444" stroke-width="3" stroke-linecap="round"/>
             <text x="200" y="210" font-family="sans-serif" font-size="14" font-weight="bold" fill="#334155" text-anchor="middle">FOUNDATION CRACKS</text>
-        </svg>`
+        </svg>`,
+        content: `# Foundation Cracks - When to Hire an Expert?
+
+Learn to distinguish minor cosmetic settling cracks from major structural hazards.
+
+## Cosmetic Cracks
+Hairline cracks (less than 1/16 inch) are common in newly constructed concrete as it cures and settles. These are usually non-structural.
+
+## Structural Cracks
+- **Horizontal Cracks:** Severe pressure from soil outside. Requires immediate engineering consult.
+- **Wide Cracks:** Cracks wider than 1/4 inch need sealing and structural inspection.
+- **Stair-step Cracks:** Common in brick foundation, indicates uneven settling of foundation footings.
+
+## Summary
+Always inspect cracks periodically. If they grow, seep water, or prevent doors from closing, call a structural engineer immediately.`
     }
 ];
 
@@ -1376,5 +1728,79 @@ async function deleteDesigner(id) {
         let designers = getDesigners();
         designers = designers.filter(d => d.id !== id);
         localStorage.setItem(DATA_KEYS.DESIGNERS, JSON.stringify(designers));
+    }
+}
+
+// Builders CRUD operations
+function getBuilders() {
+    if (window.SERVER_BUILDERS) {
+        return window.SERVER_BUILDERS;
+    }
+    initializeData();
+    return JSON.parse(localStorage.getItem(DATA_KEYS.BUILDERS)) || [];
+}
+
+function saveBuilders(builders) {
+    localStorage.setItem(DATA_KEYS.BUILDERS, JSON.stringify(builders));
+}
+
+async function addBuilder(builder) {
+    try {
+        const res = await axios.post('/api/builders', builder);
+        const localBuilders = JSON.parse(localStorage.getItem(DATA_KEYS.BUILDERS)) || [];
+        localBuilders.push(res.data);
+        localStorage.setItem(DATA_KEYS.BUILDERS, JSON.stringify(localBuilders));
+        return res.data;
+    } catch (e) {
+        console.warn('[Backend] Failed to add builder, updating localStorage fallback.', e);
+        const builders = getBuilders();
+        const newBuilder = {
+            ...builder,
+            id: builder.name ? builder.name.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-') : 'builder-' + Date.now()
+        };
+        builders.push(newBuilder);
+        localStorage.setItem(DATA_KEYS.BUILDERS, JSON.stringify(builders));
+        return newBuilder;
+    }
+}
+
+async function updateBuilder(id, updatedBuilder) {
+    try {
+        const res = await axios.put(`/api/builders/${id}`, updatedBuilder);
+        const localBuilders = JSON.parse(localStorage.getItem(DATA_KEYS.BUILDERS)) || [];
+        const idx = localBuilders.findIndex(b => b.id === id);
+        if (idx !== -1) {
+            localBuilders[idx] = { ...localBuilders[idx], ...res.data };
+            localStorage.setItem(DATA_KEYS.BUILDERS, JSON.stringify(localBuilders));
+        }
+        return res.data;
+    } catch (e) {
+        console.warn('[Backend] Failed to update builder, updating localStorage fallback.', e);
+        const builders = getBuilders();
+        const index = builders.findIndex(b => b.id === id);
+        if (index !== -1) {
+            builders[index] = {
+                ...builders[index],
+                ...updatedBuilder
+            };
+            localStorage.setItem(DATA_KEYS.BUILDERS, JSON.stringify(builders));
+            return builders[index];
+        }
+        return null;
+    }
+}
+
+async function deleteBuilder(id) {
+    try {
+        const res = await axios.delete(`/api/builders/${id}`);
+        let localBuilders = JSON.parse(localStorage.getItem(DATA_KEYS.BUILDERS)) || [];
+        localBuilders = localBuilders.filter(b => b.id !== id);
+        localStorage.setItem(DATA_KEYS.BUILDERS, JSON.stringify(localBuilders));
+        return res.data;
+    } catch (e) {
+        console.warn('[Backend] Failed to delete builder, updating localStorage fallback.', e);
+        let builders = getBuilders();
+        builders = builders.filter(b => b.id !== id);
+        localStorage.setItem(DATA_KEYS.BUILDERS, JSON.stringify(builders));
     }
 }

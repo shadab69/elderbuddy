@@ -10,6 +10,7 @@ const leadRoutes = require('./leadRoutes');
 const uploadRoutes = require('./uploadRoutes');
 const guideRoutes = require('./guideRoutes');
 const designerRoutes = require('./designerRoutes');
+const builderRoutes = require('./builderRoutes');
 
 router.use('/products', productRoutes);
 router.use('/categories', categoryRoutes);
@@ -20,5 +21,6 @@ router.use('/leads', leadRoutes);
 router.use('/upload', uploadRoutes);
 router.use('/guides', guideRoutes);
 router.use('/designers', designerRoutes);
+router.use('/builders', builderRoutes);
 
 module.exports = router;

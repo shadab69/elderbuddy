@@ -13,4 +13,12 @@ Category.findByIdAndDelete = function(id) {
     return this.findOneAndDelete({ id: id });
 };
 
+Category.findByIdAndUpdate = function(id, data) {
+    return this.findOneAndUpdate({ id: id }, data, { new: true });
+};
+
+Category.findById = function(id) {
+    return this.findOne({ id: id });
+};
+
 module.exports = Category;

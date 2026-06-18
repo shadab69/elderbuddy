@@ -12,6 +12,7 @@ require('./models/orderModel');
 require('./models/leadModel');
 require('./models/guideModel');
 require('./models/designerModel');
+require('./models/builderModel');
 
 const connectDB = require('./config/database');
 const apiRoutes = require('./routes/apiRoutes');
@@ -36,18 +37,16 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/api', apiRoutes);
 
 // Serve static frontend files (SPA)
-app.use(express.static(path.join(__dirname, '..')));
+app.use(express.static(path.join(__dirname, '../frontend/dist')));
 
 // Direct any unmatched routes to index.html for SPA hash routing fallback
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'index.html'));
+    res.sendFile(path.join(__dirname, '../frontend/dist', 'index.html'));
 });
 
 // Start the server
 app.listen(PORT, () => {
-    console.log(`====================================================`);
-    console.log(` BuilderPro Backend Server Running!`);
     console.log(` Active Port: ${PORT}`);
     console.log(` Web App URL: http://localhost:${PORT}`);
-    console.log(`====================================================`);
+    
 });
