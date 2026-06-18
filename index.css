@@ -232,14 +232,14 @@ img {
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12), 0 4px 12px rgba(0, 0, 0, 0.08);
-    min-width: 340px;
-    padding: 12px;
+    min-width: 290px;
+    padding: 8px;
     opacity: 0;
     visibility: hidden;
     transform: translateY(10px);
     transition: all var(--transition-normal);
     z-index: 120;
-    max-height: 520px;
+    max-height: 480px;
     overflow-y: auto;
 }
 
@@ -253,14 +253,14 @@ img {
     display: flex;
     align-items: center;
     gap: 12px;
-    padding: 12px 14px;
+    padding: 8px 12px;
     border-radius: var(--radius-sm);
     text-decoration: none;
     color: var(--text-main);
     transition: all var(--transition-fast);
     cursor: pointer;
     border: 1px solid transparent;
-    margin-bottom: 4px;
+    margin-bottom: 2px;
     animation: fadeInSlide 0.3s ease forwards;
     opacity: 0;
 }

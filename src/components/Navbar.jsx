@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AppContext } from '../App.jsx';
 import { ChevronDown, Search, ShoppingCart, Sun, Moon } from 'lucide-react';
@@ -29,7 +29,24 @@ export default function Navbar() {
   const { categories, cart, theme, setTheme } = useContext(AppContext);
   const [catMenuOpen, setCatMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const catMenuRef = useRef(null);
   const navigate = useNavigate();
+
+  // Close categories menu on clicking outside
+  useEffect(() => {
+    const handleOutsideClick = (e) => {
+      if (catMenuRef.current && !catMenuRef.current.contains(e.target)) {
+        setCatMenuOpen(false);
+      }
+    };
+
+    if (catMenuOpen) {
+      document.addEventListener('click', handleOutsideClick);
+    }
+    return () => {
+      document.removeEventListener('click', handleOutsideClick);
+    };
+  }, [catMenuOpen]);
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
@@ -67,7 +84,7 @@ export default function Navbar() {
         </Link>
         
         {/* Shop by Categories Button */}
-        <div className="category-select-bm" style={{ position: 'relative' }}>
+        <div ref={catMenuRef} className="category-select-bm" style={{ position: 'relative' }}>
           <button 
             type="button"
             className="btn-category-bm" 
