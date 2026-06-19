@@ -1067,10 +1067,13 @@ body.dark-theme .btn-secondary {
 /* ==========================================================================
    MAIN ROUTER STYLES / WRAPPERS
    ========================================================================== */
-#app-root {
+main#app, #app-root {
     min-height: calc(100vh - 72px - 300px); /* Fill screen space between header/footer */
     padding-top: 30px;
     padding-bottom: 50px;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
 }
 
 /* ==========================================================================
@@ -2551,25 +2554,37 @@ body.dark-theme .product-detail-gallery {
 
 /* Brands Slider Navigation Arrows */
 .brands-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
     background: #ffffff;
     border: 1px solid #e2e8f0;
     color: #475569;
-    width: 32px;
-    height: 32px;
-    border-radius: 4px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
     cursor: pointer;
     z-index: 5;
-    transition: background var(--transition-fast), color var(--transition-fast);
+    transition: all var(--transition-fast);
 }
 
 .brands-arrow:hover {
     background: var(--primary);
     color: white;
     border-color: var(--primary);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.brands-arrow.prev {
+    left: -18px;
+}
+
+.brands-arrow.next {
+    right: -18px;
 }
 
 /* ==========================================================================
@@ -3077,6 +3092,10 @@ body.dark-theme .guide-card:hover {
         grid-column: 2;
         grid-row: 1;
     }
+    .category-dropdown-bm {
+        left: auto;
+        right: 0;
+    }
     .cart-trigger-bm {
         grid-column: 3;
         grid-row: 1;
@@ -3096,10 +3115,15 @@ body.dark-theme .guide-card:hover {
         width: 100%;
     }
     .header-action-buttons-bm a, 
-    .header-action-buttons-bm button {
+    .header-action-buttons-bm button:not(.theme-toggle-btn) {
         flex: 1;
         text-align: center;
         justify-content: center;
+    }
+    .header-action-buttons-bm .theme-toggle-btn {
+        flex: none;
+        width: 40px !important;
+        height: 40px !important;
     }
 }
 
@@ -3128,6 +3152,8 @@ body.dark-theme .guide-card:hover {
     .category-dropdown-bm {
         min-width: unset;
         width: 100%;
+        left: 0;
+        right: auto;
     }
     .search-form-bm {
         grid-column: 1 / span 2;
@@ -3136,6 +3162,23 @@ body.dark-theme .guide-card:hover {
     .header-action-buttons-bm {
         grid-column: 1 / span 2;
         grid-row: 4;
+        display: grid;
+        grid-template-columns: 1fr 1fr auto;
+        gap: 8px;
+        width: 100%;
+    }
+    .header-action-buttons-bm a, 
+    .header-action-buttons-bm button:not(.theme-toggle-btn) {
+        flex: none;
+        width: 100%;
+        font-size: 0.75rem;
+        padding: 8px 4px;
+        white-space: nowrap;
+    }
+    .header-action-buttons-bm .theme-toggle-btn {
+        flex: none;
+        width: 36px !important;
+        height: 36px !important;
     }
 }
 
