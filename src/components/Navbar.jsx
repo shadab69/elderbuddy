@@ -213,10 +213,10 @@ export default function Navbar() {
             <Link to="/products?category=tiles" className="quick-tag-link">Tiles</Link>
             <span className="divider">,</span>
             <Link to="/products?category=electrical" className="quick-tag-link">Lighting & Fixtures</Link>
-            <span className="divider">,</span>
-            <Link to="/interior-designers" className="quick-tag-link">Interior Designers</Link>
-            <span className="divider">,</span>
-            <Link to="/builders" className="quick-tag-link">Builders</Link>
+            
+            
+            
+            
           </div>
         </div>
       </div>
