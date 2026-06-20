@@ -232,14 +232,13 @@ async function seedDatabase() {
             console.log(`[Database seeder] Successfully seeded ${seedDesigners.length} designers.`);
         }
 
-        const builderCount = await Builder.countDocuments();
-        if (builderCount === 0) {
-            console.log('[Database seeder] Seeding builders...');
-            const seedBuilders = parseJsArray('INITIAL_BUILDERS') || [];
-            if (seedBuilders.length > 0) {
-                await Builder.insertMany(seedBuilders);
-                console.log(`[Database seeder] Successfully seeded ${seedBuilders.length} builders.`);
-            }
+        // Force re-seed builders to update portfolio images
+        await Builder.deleteMany({});
+        console.log('[Database seeder] Seeding builders...');
+        const seedBuilders = parseJsArray('INITIAL_BUILDERS') || [];
+        if (seedBuilders.length > 0) {
+            await Builder.insertMany(seedBuilders);
+            console.log(`[Database seeder] Successfully seeded ${seedBuilders.length} builders.`);
         }
     } catch (e) {
         console.error('[Database seeder] Error seeding database:', e.message);

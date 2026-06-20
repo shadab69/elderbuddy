@@ -565,6 +565,7 @@ img {
 .quick-tag-link {
     color: #0082c3;
     font-weight: 500;
+    white-space: nowrap;
 }
 
 .quick-tag-link:hover {
@@ -3272,6 +3273,7 @@ body.dark-theme .interior-designers-section {
     margin-bottom: 12px;
     letter-spacing: -0.025em;
     font-family: 'Outfit', 'Inter', sans-serif;
+    color: #ffffff;
 }
 
 .interior-hero-banner p {
@@ -3280,6 +3282,7 @@ body.dark-theme .interior-designers-section {
     margin: 0 auto;
     opacity: 0.9;
     line-height: 1.6;
+    color: #ffffff;
 }
 
 .interior-content-container {

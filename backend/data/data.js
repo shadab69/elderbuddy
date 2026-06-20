@@ -820,14 +820,14 @@ const INITIAL_BUILDERS = [
                 location: 'Whitefield, Pan India',
                 year: '2025',
                 desc: 'A structural masterpiece featuring premium reinforced TMT steel, high-compressive concrete columns, and rainwater harvesting structures.',
-                images: ['assets/interior_portfolio1.png', 'assets/interior_portfolio2.png']
+                images: ['assets/builder_project1.png']
             },
             {
                 title: 'Luxury Eco-Villa Project',
                 location: 'Sarjapur, Pan India',
                 year: '2024',
                 desc: 'A premium green housing project built with AAC blocks, low-VOC thermal insulating paints, and integrated solar roofing systems.',
-                images: ['assets/interior_portfolio3.png', 'assets/interior_portfolio4.png']
+                images: ['assets/builder_project2.png']
             }
         ]
     },
@@ -850,14 +850,14 @@ const INITIAL_BUILDERS = [
                 location: 'Gachibowli, Pan India',
                 year: '2025',
                 desc: 'An iconic commercial hub constructed with high-grade self-healing concrete and modular columns, spanning over 200,000 sq ft.',
-                images: ['assets/interior_portfolio5.png', 'assets/interior_portfolio6.png']
+                images: ['assets/builder_project3.png']
             },
             {
                 title: 'Corporate Office Headquarters',
                 location: 'Hitec City, Pan India',
                 year: '2024',
                 desc: 'A sleek, multi-story corporate building featuring noise-reduction glass paneling, smart HVAC integrations, and customized steel structural frames.',
-                images: ['assets/interior_portfolio7.png', 'assets/interior_portfolio8.png']
+                images: ['assets/builder_project4.png']
             }
         ]
     },
@@ -880,14 +880,14 @@ const INITIAL_BUILDERS = [
                 location: 'Noida Sector 62, Pan India',
                 year: '2025',
                 desc: 'A massive residential township built using precast concrete technology, saving 40% construction time while maximizing load bearing strength.',
-                images: ['assets/interior_portfolio9.png', 'assets/interior_portfolio10.png']
+                images: ['assets/builder_project5.png']
             },
             {
                 title: 'Heavy Industrial Logistics Warehouse',
                 location: 'Manesar, Pan India',
                 year: '2024',
                 desc: 'A heavy-duty logistics facility built with industrial-grade steel trusses, high-performance vacuum-dewatered flooring, and modular loading bays.',
-                images: ['assets/interior_portfolio11.png', 'assets/interior_portfolio12.png']
+                images: ['assets/builder_project6.png']
             }
         ]
     }

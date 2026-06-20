@@ -204,6 +204,8 @@ export default function Navbar() {
             <span className="divider">,</span>
             <Link to="/products?category=steel" className="quick-tag-link">TMT Steels</Link>
             <span className="divider">,</span>
+            <Link to="/products?category=bricks" className="quick-tag-link">Bricks & Blocks</Link>
+            <span className="divider">,</span>
             <Link to="/products?category=paints" className="quick-tag-link">Paints</Link>
             <span className="divider">,</span>
             <Link to="/products?category=plumbing" className="quick-tag-link">Plumbing</Link>
@@ -213,6 +215,8 @@ export default function Navbar() {
             <Link to="/products?category=electrical" className="quick-tag-link">Lighting & Fixtures</Link>
             <span className="divider">,</span>
             <Link to="/interior-designers" className="quick-tag-link">Interior Designers</Link>
+            <span className="divider">,</span>
+            <Link to="/builders" className="quick-tag-link">Builders</Link>
           </div>
         </div>
       </div>
