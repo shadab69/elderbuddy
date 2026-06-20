@@ -194,7 +194,7 @@ export default function Home() {
         <section className="home-section">
           <div className="section-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <h2>Buying Guide & Blogs</h2>
-            <Link to="/products" className="btn-view-all" style={{ backgroundColor: '#2196f3', color: 'white', borderRadius: '4px', padding: '6px 16px', fontWeight: '500', fontSize: '0.85rem', border: 'none', textDecoration: 'none' }}>View All</Link>
+            <Link to="/guides" className="btn-view-all" style={{ backgroundColor: '#2196f3', color: 'white', borderRadius: '4px', padding: '6px 16px', fontWeight: '500', fontSize: '0.85rem', border: 'none', textDecoration: 'none' }}>View All</Link>
           </div>
           <div className="hot-deals-carousel-wrapper" style={{ position: 'relative' }}>
             <button type="button" className="brands-arrow prev" onClick={() => handleSlideScroll(guideRef, -280)}><ChevronLeft /></button>

@@ -180,7 +180,7 @@ export default function Navbar() {
         <div className="container menu-nav-container">
           <Link to="/products?category=cement" className="menu-link">Cement Exchange</Link>
           <Link to="/" className="menu-link">Brands</Link>
-          <Link to="/" className="menu-link">Buying Guide</Link>
+          <Link to="/guides" className="menu-link">Buying Guide</Link>
           <Link to="/products" className="menu-link">Best Selling</Link>
           <span className="menu-link" onClick={openEstimator} style={{ cursor: 'pointer' }}>Material Calculator</span>
           <Link to="/interior-designers" className="menu-link">Interior Designers</Link>

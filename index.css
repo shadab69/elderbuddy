@@ -3300,6 +3300,17 @@ body.dark-theme .interior-designers-section {
     gap: 30px;
 }
 
+.guides-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 30px;
+}
+
+.guides-grid .guide-card {
+    width: 100%;
+    height: 100%;
+}
+
 .designer-card {
     background: #ffffff;
     border: 1px solid #e2e8f0;
@@ -3505,7 +3516,8 @@ body.dark-theme .portfolio-img {
     .interior-hero-banner p {
         font-size: 0.95rem;
     }
-    .designers-grid {
+    .designers-grid,
+    .guides-grid {
         grid-template-columns: 1fr;
     }
 }

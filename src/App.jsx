@@ -28,6 +28,7 @@ import DesignerDetail from './pages/DesignerDetail.jsx';
 import Builders from './pages/Builders.jsx';
 import BuilderDetail from './pages/BuilderDetail.jsx';
 import GuideDetail from './pages/GuideDetail.jsx';
+import Guides from './pages/Guides.jsx';
 import AdminConsole from './pages/AdminConsole.jsx';
 import ScrollToTop from './components/ScrollToTop.jsx';
 
@@ -180,6 +181,7 @@ export default function App() {
               <Route path="/interior-designer/:id" element={<DesignerDetail />} />
               <Route path="/builders" element={<Builders />} />
               <Route path="/builder/:id" element={<BuilderDetail />} />
+              <Route path="/guides" element={<Guides />} />
               <Route path="/guide/:id" element={<GuideDetail />} />
               <Route path="/admin" element={<AdminConsole />} />
             </Routes>
