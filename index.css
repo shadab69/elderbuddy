@@ -1705,6 +1705,12 @@ body.dark-theme .product-card-img-wrapper .raw-svg-wrapper {
     .listing-layout {
         grid-template-columns: 1fr;
     }
+    .filters-sidebar {
+        order: 2;
+    }
+    .listing-content {
+        order: 1;
+    }
 }
 
 /* Filter Sidebar */
