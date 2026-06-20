@@ -3183,22 +3183,25 @@ body.dark-theme .guide-card:hover {
     }
 }
 
-/* Horizontal swipe for middle menu links */
+/* Wrapping layout for middle menu links on mobile to show all links */
 @media (max-width: 768px) {
     .menu-nav-container {
         display: flex;
-        overflow-x: auto;
-        white-space: nowrap;
-        gap: 15px;
-        padding: 8px 15px;
-        scrollbar-width: none;
-    }
-    .menu-nav-container::-webkit-scrollbar {
-        display: none;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px 20px;
+        padding: 12px 15px;
     }
     .middle-menu-nav {
         padding: 0;
     }
+}
+
+body.dark-theme .menu-link {
+    color: var(--slate-300);
+}
+body.dark-theme .menu-link:hover {
+    color: var(--primary);
 }
 
 /* Badge tags for quick links */
