@@ -10,7 +10,8 @@ const INITIAL_CATEGORIES = [
     { id: 'plumbing', name: 'Plumbing & Pipes', icon: 'droplet', desc: 'CPVC, PVC pipes & bathroom fittings' },
     { id: 'electrical', name: 'Electricals & Wires', icon: 'zap', desc: 'FRLS wires, modular switches & lights' },
     { id: 'paints', name: 'Paints & Finishes', icon: 'paint-bucket', desc: 'Interior, exterior paints & primers' },
-    { id: 'hardware', name: 'Hardware & Fixtures', icon: 'wrench', desc: 'Locks, hinges, screws & steel fixtures' }
+    { id: 'hardware', name: 'Hardware & Fixtures', icon: 'wrench', desc: 'Locks, hinges, screws & steel fixtures' },
+    { id: 'interior', name: 'Interior & Living', icon: 'sofa', desc: 'Luxury furniture, lighting, decor & interior furnishings' }
 ];
 
 const INITIAL_BANNERS = [
@@ -24,7 +25,7 @@ const INITIAL_BANNERS = [
     },
     {
         id: 'b2',
-        imageSrc: 'assets/promo_bricks.png',
+        imageSrc: 'assets/banner2.png',
         link: '#/products',
         styleType: 'cover',
         position: 'center',
@@ -32,11 +33,11 @@ const INITIAL_BANNERS = [
     },
     {
         id: 'b3',
-        imageSrc: 'assets/new_hero_banner.jpg',
+        imageSrc: 'assets/banner3.png',
         link: '#/products',
-        styleType: 'dual',
+        styleType: 'cover',
         position: 'center',
-        bgColor: '#1a0933'
+        bgColor: '#ffffff'
     }
 ];
 
@@ -680,6 +681,158 @@ const INITIAL_PRODUCTS = [
             'Brand': 'Kshema Technos'
         },
         imageSrc: '<img src="assets/digital_lock.png" alt="Digital Smart Door Lock">'
+    },
+    {
+        id: 'int1',
+        name: 'Luxury Velvet 3-Seater Living Room Sofa',
+        brand: 'Urban Living',
+        category: 'interior',
+        price: 24999,
+        originalPrice: 32999,
+        discountLabel: '24% OFF',
+        unit: 'Piece',
+        description: 'Ergonomic 3-seater plush velvet sofa with high-density foam cushioning and premium hardwood frame for living rooms.',
+        rating: 4.8,
+        ratingCount: 42,
+        specs: {
+            'Material': 'Velvet & Solid Wood',
+            'Seating Capacity': '3 Seater',
+            'Warranty': '3 Years'
+        },
+        imageSrc: 'assets/interior_sofa.jpg'
+    },
+    {
+        id: 'int2',
+        name: 'Nordic Solid Oak Wood Coffee Table',
+        brand: 'WoodCraft',
+        category: 'interior',
+        price: 8499,
+        originalPrice: 11999,
+        discountLabel: '29% OFF',
+        unit: 'Piece',
+        description: 'Minimalist Scandinavian design coffee table with natural grain finish and scratch-resistant matte coat.',
+        rating: 4.7,
+        ratingCount: 38,
+        specs: {
+            'Dimensions': '110 x 60 x 45 cm',
+            'Material': 'Solid Oak Wood',
+            'Finish': 'Natural Matte'
+        },
+        imageSrc: 'assets/interior_table.jpg'
+    },
+    {
+        id: 'int3',
+        name: 'Modern Industrial Pendant Ceiling Light',
+        brand: 'Lumina Decor',
+        category: 'interior',
+        price: 3299,
+        originalPrice: 4999,
+        discountLabel: '34% OFF',
+        unit: 'Set',
+        description: 'Aesthetic metal pendant hanging lamp fixture with warm LED filament illumination for dining and living areas.',
+        rating: 4.6,
+        ratingCount: 54,
+        specs: {
+            'Bulb Base': 'E27',
+            'Voltage': '220V',
+            'Material': 'Matte Black Metal'
+        },
+        imageSrc: 'assets/interior_pendant_light.jpg'
+    },
+    {
+        id: 'int4',
+        name: 'Ergonomic Velvet Accent Lounge Chair',
+        brand: 'Urban Living',
+        category: 'interior',
+        price: 12999,
+        originalPrice: 17500,
+        discountLabel: '25% OFF',
+        unit: 'Piece',
+        description: 'Comfortable lounge accent arm chair with brass metallic legs and soft upholstery for modern homes.',
+        rating: 4.9,
+        ratingCount: 61,
+        specs: {
+            'Leg Finish': 'Gold Plated Brass',
+            'Upholstery': 'Premium Velvet',
+            'Weight Capacity': '150 kg'
+        },
+        imageSrc: 'assets/interior_accent_chair.jpg'
+    },
+    {
+        id: 'int5',
+        name: 'Abstract Canvas Wall Art Frame (Set of 3)',
+        brand: 'Artisan Gallery',
+        category: 'interior',
+        price: 4199,
+        originalPrice: 5999,
+        discountLabel: '30% OFF',
+        unit: 'Set',
+        description: 'HD gallery wrap canvas prints with wooden inner frame for modern living room wall decor.',
+        rating: 4.8,
+        ratingCount: 29,
+        specs: {
+            'Frame Size': '24 x 36 Inches Each',
+            'Frame Material': 'Synthetic Wood',
+            'Print': 'Waterproof Canvas'
+        },
+        imageSrc: 'assets/interior_wall_art.jpg'
+    },
+    {
+        id: 'int6',
+        name: 'Handwoven Boho Plush Area Rug (6 x 9 ft)',
+        brand: 'RugArt Studio',
+        category: 'interior',
+        price: 7999,
+        originalPrice: 10999,
+        discountLabel: '27% OFF',
+        unit: 'Piece',
+        description: 'Ultra-soft micro-fiber handwoven carpet rug with anti-skid backing and stain-resistant fabric.',
+        rating: 4.7,
+        ratingCount: 46,
+        specs: {
+            'Dimensions': '6 x 9 Feet',
+            'Material': 'Microfiber & Cotton',
+            'Backing': 'Anti-Skid Rubber'
+        },
+        imageSrc: 'assets/interior_area_rug.jpg'
+    },
+    {
+        id: 'int7',
+        name: 'Modular Engineered Wood Bookshelf Unit',
+        brand: 'WoodCraft',
+        category: 'interior',
+        price: 9499,
+        originalPrice: 13999,
+        discountLabel: '32% OFF',
+        unit: 'Piece',
+        description: 'Multi-tier display open shelf cabinet for organizing books, planters, and decorative items.',
+        rating: 4.6,
+        ratingCount: 33,
+        specs: {
+            'Tiers': '5 Shelves',
+            'Material': 'Engineered Wood',
+            'Height': '6 Feet'
+        },
+        imageSrc: 'assets/interior_bookshelf.jpg'
+    },
+    {
+        id: 'int8',
+        name: 'Handcrafted Ceramic Decorative Table Vase Set',
+        brand: 'Artisan Gallery',
+        category: 'interior',
+        price: 2199,
+        originalPrice: 3499,
+        discountLabel: '37% OFF',
+        unit: 'Set',
+        description: 'Set of 2 modern minimalist ceramic flower vases with matte textured finish for tabletop decoration.',
+        rating: 4.9,
+        ratingCount: 50,
+        specs: {
+            'Quantity': '2 Vases',
+            'Material': 'Handmade Ceramic',
+            'Finish': 'Matte Beige'
+        },
+        imageSrc: 'assets/interior_vase.jpg'
     }
 ];
 

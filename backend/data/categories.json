@@ -48,9 +48,9 @@
     "desc": "Locks, hinges, screws & steel fixtures"
   },
   {
-    "id": "Interior",
-    "name": "Interior Design",
-    "icon": "home",
-    "desc": "Decorative items and furnishings for indoor spaces"
+    "id": "interior",
+    "name": "Interior & Living",
+    "icon": "sofa",
+    "desc": "Luxury furniture, lighting, decor & interior furnishings"
   }
 ]
