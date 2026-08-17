@@ -128,10 +128,12 @@ export default function ProductList() {
     setSearchParams({});
   };
 
+  const [mobileFilterOpen, setMobileFilterOpen] = useState(false);
+
   return (
     <div className="container animate-fade-in" style={{ paddingBottom: '40px', paddingTop: '15px' }}>
       {/* Breadcrumb Navigation */}
-      <div style={{ fontSize: '0.85rem', color: 'var(--text-muted, #64748b)', marginBottom: '15px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+      <div style={{ fontSize: '0.85rem', color: 'var(--text-muted, #64748b)', marginBottom: '15px', display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap' }}>
         <Link to="/" style={{ color: 'inherit', textDecoration: 'none' }}>Home</Link>
         <span>/</span>
         <Link 
@@ -162,9 +164,47 @@ export default function ProductList() {
         )}
       </div>
 
+      {/* Mobile Filter Trigger Bar (Visible only on mobile) */}
+      <div className="mobile-filter-trigger-bar">
+        <button 
+          type="button" 
+          className="btn-mobile-filter-toggle"
+          onClick={() => setMobileFilterOpen(!mobileFilterOpen)}
+        >
+          <span>⚡ Filter Materials</span>
+          {(selectedCat || selectedSubcat || selectedBrands.length > 0 || priceMin || priceMax) && (
+            <span className="mobile-active-filter-dot">●</span>
+          )}
+        </button>
+
+        <div className="mobile-quick-sort">
+          <select 
+            value={sortBy} 
+            onChange={(e) => setSortBy(e.target.value)}
+            className="mobile-sort-select"
+          >
+            <option value="featured">Featured</option>
+            <option value="price-low">Price: Low to High</option>
+            <option value="price-high">Price: High to Low</option>
+            <option value="rating">Top Rated</option>
+          </select>
+        </div>
+      </div>
+
       <div className="listing-layout">
-        {/* Filters Sidebar */}
-        <aside className="filters-sidebar">
+        {/* Filters Sidebar (Desktop Sidebar / Mobile Drawer Sheet) */}
+        <aside className={`filters-sidebar ${mobileFilterOpen ? 'mobile-drawer-active' : ''}`}>
+          <div className="mobile-filter-drawer-header">
+            <h3>Filter & Refine</h3>
+            <button 
+              type="button" 
+              className="btn-close-filter-drawer"
+              onClick={() => setMobileFilterOpen(false)}
+            >
+              ✕
+            </button>
+          </div>
+
           {/* Categories Filter */}
           <div className="filter-section">
             <h4>Categories</h4>
@@ -175,7 +215,10 @@ export default function ProductList() {
                   name="cat" 
                   value="" 
                   checked={selectedCat === ''}
-                  onChange={() => handleCategorySelect('')}
+                  onChange={() => {
+                    handleCategorySelect('');
+                    setMobileFilterOpen(false);
+                  }}
                 />
                 <span>All Categories</span>
               </label>
@@ -186,7 +229,10 @@ export default function ProductList() {
                     name="cat" 
                     value={cat.id}
                     checked={selectedCat === cat.id}
-                    onChange={() => handleCategorySelect(cat.id)}
+                    onChange={() => {
+                      handleCategorySelect(cat.id);
+                      setMobileFilterOpen(false);
+                    }}
                   />
                   <span>{cat.name}</span>
                 </label>
@@ -205,7 +251,10 @@ export default function ProductList() {
                     name="subcat" 
                     value="" 
                     checked={selectedSubcat === ''}
-                    onChange={() => handleSubcategorySelect('')}
+                    onChange={() => {
+                      handleSubcategorySelect('');
+                      setMobileFilterOpen(false);
+                    }}
                   />
                   <span style={{ fontWeight: selectedSubcat === '' ? '700' : 'normal' }}>All Subcategories</span>
                 </label>
@@ -216,7 +265,10 @@ export default function ProductList() {
                       name="subcat" 
                       value={subcat.id}
                       checked={selectedSubcat === subcat.id}
-                      onChange={() => handleSubcategorySelect(subcat.id)}
+                      onChange={() => {
+                        handleSubcategorySelect(subcat.id);
+                        setMobileFilterOpen(false);
+                      }}
                     />
                     <span style={{ fontWeight: selectedSubcat === subcat.id ? '700' : 'normal', color: selectedSubcat === subcat.id ? 'var(--primary-color, #f97316)' : 'inherit' }}>
                       {subcat.name}
@@ -268,36 +320,46 @@ export default function ProductList() {
             </div>
           </div>
 
-          <button 
-            type="button"
-            className="btn-primary w-full"
-            onClick={handleClearFilters}
-            style={{ marginTop: '15px', padding: '10px', fontSize: '0.85rem' }}
-          >
-            Clear All Filters
-          </button>
+          <div style={{ display: 'flex', gap: '10px', marginTop: '15px' }}>
+            <button 
+              type="button"
+              className="btn-primary w-full"
+              onClick={() => {
+                handleClearFilters();
+                setMobileFilterOpen(false);
+              }}
+              style={{ padding: '10px', fontSize: '0.85rem' }}
+            >
+              Clear All
+            </button>
+            <button 
+              type="button"
+              className="btn-primary w-full desktop-only"
+              onClick={() => setMobileFilterOpen(false)}
+              style={{ padding: '10px', fontSize: '0.85rem', background: '#0f172a' }}
+            >
+              Apply
+            </button>
+          </div>
         </aside>
+
+        {/* Backdrop for mobile filter drawer */}
+        {mobileFilterOpen && (
+          <div 
+            className="mobile-filter-backdrop"
+            onClick={() => setMobileFilterOpen(false)}
+          ></div>
+        )}
 
         {/* Product Listing Area */}
         <div className="listing-content">
           {/* Quick Subcategory Pills at top of page if Category selected */}
           {currentSubcategories.length > 0 && (
-            <div style={{ display: 'flex', gap: '8px', overflowX: 'auto', paddingBottom: '12px', marginBottom: '15px' }}>
+            <div className="subcategory-pills-track">
               <button
                 type="button"
+                className={`subcat-pill-btn ${selectedSubcat === '' ? 'active' : ''}`}
                 onClick={() => handleSubcategorySelect('')}
-                style={{
-                  padding: '6px 14px',
-                  borderRadius: '20px',
-                  border: selectedSubcat === '' ? '1px solid var(--primary-color, #f97316)' : '1px solid var(--border-color, #e2e8f0)',
-                  background: selectedSubcat === '' ? 'var(--primary-color, #f97316)' : '#ffffff',
-                  color: selectedSubcat === '' ? '#ffffff' : 'var(--text-main, #0f172a)',
-                  fontWeight: selectedSubcat === '' ? '700' : '500',
-                  fontSize: '0.82rem',
-                  cursor: 'pointer',
-                  whiteSpace: 'nowrap',
-                  transition: 'all 0.2s ease'
-                }}
               >
                 All {activeCategoryObj.name}
               </button>
@@ -307,19 +369,8 @@ export default function ProductList() {
                   <button
                     key={subcat.id}
                     type="button"
+                    className={`subcat-pill-btn ${isSelected ? 'active' : ''}`}
                     onClick={() => handleSubcategorySelect(subcat.id)}
-                    style={{
-                      padding: '6px 14px',
-                      borderRadius: '20px',
-                      border: isSelected ? '1px solid var(--primary-color, #f97316)' : '1px solid var(--border-color, #e2e8f0)',
-                      background: isSelected ? 'var(--primary-color, #f97316)' : '#ffffff',
-                      color: isSelected ? '#ffffff' : 'var(--text-main, #0f172a)',
-                      fontWeight: isSelected ? '700' : '500',
-                      fontSize: '0.82rem',
-                      cursor: 'pointer',
-                      whiteSpace: 'nowrap',
-                      transition: 'all 0.2s ease'
-                    }}
                   >
                     {subcat.name}
                   </button>

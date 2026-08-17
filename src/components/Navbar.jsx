@@ -369,23 +369,24 @@ export default function Navbar({ mobileDrawerOpen, setMobileDrawerOpen }) {
                       </div>
 
                       {isExpanded && cat.subcategories && (
-                        <div className="mobile-subcat-drawer-list">
+                        <div className="mobile-subcat-drawer-grid">
                           <Link 
                             to={`/products?category=${cat.id}`}
-                            className="mobile-subcat-drawer-item all-link"
+                            className="mobile-subcat-chip all-chip"
                             onClick={() => setMobileDrawerOpen(false)}
                           >
-                            <span>View All {cat.name}</span>
-                            <span>→</span>
+                            <span>Browse All {cat.name}</span>
+                            <span className="chip-arrow">→</span>
                           </Link>
                           {cat.subcategories.map((subcat) => (
                             <Link 
                               key={subcat.id}
                               to={`/products?category=${cat.id}&subcat=${subcat.id}`}
-                              className="mobile-subcat-drawer-item"
+                              className="mobile-subcat-chip"
                               onClick={() => setMobileDrawerOpen(false)}
                             >
-                              <span>{subcat.name}</span>
+                              <span className="subcat-chip-dot"></span>
+                              <span className="subcat-chip-text">{subcat.name}</span>
                             </Link>
                           ))}
                         </div>
