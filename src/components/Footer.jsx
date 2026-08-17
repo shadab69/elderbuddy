@@ -55,6 +55,7 @@ export default function Footer() {
             <li><a href="#" onClick={openInquiry}>Bulk Site Sourcing</a></li>
             <li><a href="#" onClick={openInquiry}>Architectural Planning</a></li>
             <li><a href="#" onClick={openInquiry}>Custom Fabrication</a></li>
+            <li><Link to="/build-your-home">Build Your Home</Link></li>
           </ul>
         </div>
         

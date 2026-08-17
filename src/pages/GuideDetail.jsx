@@ -6,15 +6,6 @@ import { ArrowLeft, User, Calendar, Twitter, Facebook, Linkedin } from 'lucide-r
 function parseMarkdown(md) {
   if (!md) return '';
 
-  // Resolve reference style links: [BUILD Magazine][1]
-  const refLinks = {};
-  const refRegex = /^\[(\d+)\]:\s+([^\s]+)(?:\s+"([^"]+)")?/gm;
-  let match;
-  const cleanMd = md;
-  while ((match = refRegex.exec(cleanMd)) !== null) {
-    refLinks[match[1]] = { url: match[2], title: match[3] || '' };
-  }
-
   const lines = md.split('\n');
   let inList = false;
   let inImageGrid = false;
@@ -23,8 +14,8 @@ function parseMarkdown(md) {
   for (let i = 0; i < lines.length; i++) {
     let line = lines[i].trim();
 
-    // Skip reference declarations like [1]: https://...
-    if (/^\[\d+\]:\s+/.test(line)) {
+    // Skip reference declarations like [1]: https://... or ([Website][1])
+    if (/^\[\d+\]:\s+/.test(line) || /^\(\[.+\]\[\d+\]\)/.test(line)) {
       continue;
     }
 
@@ -65,13 +56,11 @@ function parseMarkdown(md) {
         inList = true;
       }
       let content = line.substring(2);
-      // Replace bold text and inline links in list item
+      // Clean bold text and any markdown links to plain text
       content = content.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
-      content = content.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="blog-link">$1</a>');
-      content = content.replace(/\[([^\]]+)\]\[(\d+)\]/g, (m, text, id) => {
-        const ref = refLinks[id];
-        return ref ? `<a href="${ref.url}" title="${ref.title}" target="_blank" rel="noopener noreferrer" class="blog-link">${text}</a>` : text;
-      });
+      content = content.replace(/\(\[([^\]]+)\]\[\d+\]\)/g, ''); // strip ([Source][1])
+      content = content.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '$1'); // replace [Text](url) with Text
+      content = content.replace(/\[([^\]]+)\]\[\d+\]/g, '$1');
       processedLines.push(`<li>${content}</li>`);
       continue;
     }
@@ -95,15 +84,15 @@ function parseMarkdown(md) {
     } else if (line === '---') {
       processedLines.push('<hr class="blog-hr">');
     } else if (line) {
-      // Regular paragraph or text block. Process bold, inline links, reference links
+      // Regular paragraph or text block. Process bold, remove external reference links
       let content = line;
       content = content.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
-      content = content.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="blog-link">$1</a>');
-      content = content.replace(/\[([^\]]+)\]\[(\d+)\]/g, (m, text, id) => {
-        const ref = refLinks[id];
-        return ref ? `<a href="${ref.url}" title="${ref.title}" target="_blank" rel="noopener noreferrer" class="blog-link">${text}</a>` : text;
-      });
-      processedLines.push(`<p class="blog-p">${content}</p>`);
+      content = content.replace(/\(\[([^\]]+)\]\[\d+\]\)/g, ''); // strip ([Source][1])
+      content = content.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '$1'); // replace [Text](url) with Text
+      content = content.replace(/\[([^\]]+)\]\[\d+\]/g, '$1');
+      if (content.trim()) {
+        processedLines.push(`<p class="blog-p">${content}</p>`);
+      }
     }
   }
 

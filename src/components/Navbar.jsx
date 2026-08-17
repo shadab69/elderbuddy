@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AppContext } from '../App.jsx';
-import { ChevronDown, Search, ShoppingCart, Sun, Moon } from 'lucide-react';
+import { ChevronDown, ChevronRight, Search, ShoppingCart, Sun, Moon, Tag } from 'lucide-react';
 import * as LucideIcons from 'lucide-react';
 
 const getCategoryIcon = (iconName) => {
@@ -27,11 +27,20 @@ const getCategoryIcon = (iconName) => {
 };
 
 export default function Navbar() {
-  const { categories, cart, theme, setTheme } = useContext(AppContext);
+  const { categories = [], cart = [], theme, setTheme } = useContext(AppContext);
   const [catMenuOpen, setCatMenuOpen] = useState(false);
+  const [activeCatId, setActiveCatId] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const catMenuRef = useRef(null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (categories && categories.length > 0 && !activeCatId) {
+      setActiveCatId(categories[0].id);
+    }
+  }, [categories, activeCatId]);
+
+  const currentActiveCat = categories.find((c) => c?.id === activeCatId) || categories[0] || null;
 
   // Close categories menu on clicking outside
   useEffect(() => {
@@ -56,9 +65,9 @@ export default function Navbar() {
     }
   };
 
-  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+  const totalItems = (cart || []).reduce((sum, item) => sum + (item.quantity || 1), 0);
 
-  // Toggle Cart Drawer (Managed globally or via DOM class as styled in index.css)
+  // Toggle Cart Drawer
   const openCartDrawer = () => {
     const drawer = document.getElementById('cart-drawer');
     const overlay = document.getElementById('cart-overlay');
@@ -84,8 +93,13 @@ export default function Navbar() {
           <sup className="logo-tm">®</sup>
         </Link>
         
-        {/* Shop by Categories Button */}
-        <div ref={catMenuRef} className="category-select-bm" style={{ position: 'relative' }}>
+        {/* Shop by Categories Hover Dropdown & Horizontal Mega Menu */}
+        <div 
+          ref={catMenuRef} 
+          className="category-select-bm" 
+          onMouseEnter={() => setCatMenuOpen(true)}
+          onMouseLeave={() => setCatMenuOpen(false)}
+        >
           <button 
             type="button"
             className="btn-category-bm" 
@@ -95,23 +109,71 @@ export default function Navbar() {
             <ChevronDown className={`chevron ${catMenuOpen ? 'rotate-180' : ''}`} style={{ width: '16px', height: '16px', marginLeft: '5px' }} />
           </button>
           
-          <div className={`category-dropdown-bm ${catMenuOpen ? 'show' : ''}`}>
-            {categories.map((cat) => (
-              <Link 
-                key={cat.id}
-                to={`/products?category=${cat.id}`} 
-                className="category-drop-item"
-                onClick={() => setCatMenuOpen(false)}
-              >
-                <div className="category-icon-wrapper" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  {getCategoryIcon(cat.icon)}
-                </div>
-                <div className="category-content">
-                  <span className="category-name">{cat.name}</span>
-                  <span className="category-desc">{cat.desc || ''}</span>
-                </div>
+          <div className={`horizontal-cat-menu-bm ${catMenuOpen ? 'show' : ''}`}>
+            {/* Top Accent Gradient Bar */}
+            <div className="mega-top-gradient-bar"></div>
+
+            {/* Header inside Mega Menu */}
+            <div className="mega-menu-top-header">
+              <div className="mega-menu-title-area">
+                <span className="mega-badge">Explore Store</span>
+                <h3 className="mega-main-heading">All Product Categories & Building Materials</h3>
+              </div>
+              <Link to="/products" className="mega-quick-all-link" onClick={() => setCatMenuOpen(false)}>
+                Browse Full Catalog →
               </Link>
-            ))}
+            </div>
+
+            {/* Categories & Subcategories Grid */}
+            <div className="horizontal-cat-grid">
+              {(categories || []).map((cat) => (
+                <div key={cat.id} className="horizontal-cat-card">
+                  <Link 
+                    to={`/products?category=${cat.id}`}
+                    className="horizontal-cat-header"
+                    onClick={() => setCatMenuOpen(false)}
+                  >
+                    <div className="horizontal-cat-icon">
+                      {getCategoryIcon(cat.icon)}
+                    </div>
+                    <div className="horizontal-cat-header-info">
+                      <span className="horizontal-cat-title">{cat.name}</span>
+                      <span className="horizontal-cat-count">{cat.subcategories?.length || 0} Subcategories</span>
+                    </div>
+                  </Link>
+
+                  {cat.subcategories && cat.subcategories.length > 0 && (
+                    <div className="horizontal-subcat-list">
+                      {cat.subcategories.map((subcat) => (
+                        <Link
+                          key={subcat.id}
+                          to={`/products?category=${cat.id}&subcat=${subcat.id}`}
+                          className="horizontal-subcat-link"
+                          onClick={() => setCatMenuOpen(false)}
+                        >
+                          <span className="subcat-dot"></span>
+                          <span className="subcat-text">{subcat.name}</span>
+                          <span className="subcat-arrow">→</span>
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+
+            {/* Bottom Promo Footer inside Menu */}
+            <div className="mega-menu-bottom-footer">
+              <div className="mega-footer-left">
+                <span className="mega-footer-icon">⚡</span>
+                <span>Direct Site Delivery Across Pan-India</span>
+              </div>
+              <div className="mega-footer-right">
+                <Link to="/guides" onClick={() => setCatMenuOpen(false)} className="mega-footer-link">Buying Guides</Link>
+                <span className="dot-sep">•</span>
+                <span onClick={openEstimator} className="mega-footer-link" style={{ cursor: 'pointer' }}>Material Calculator</span>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -184,6 +246,7 @@ export default function Navbar() {
           <Link to="/guides" className="menu-link">Buying Guide</Link>
           <Link to="/products" className="menu-link">Best Selling</Link>
           <span className="menu-link" onClick={openEstimator} style={{ cursor: 'pointer' }}>Material Calculator</span>
+          <Link to="/build-your-home" className="menu-link" style={{ color: '#ea580c', fontWeight: '700' }}>🏠 Build Your Home</Link>
           <Link to="/interior-designers" className="menu-link">Interior Designers</Link>
           <Link to="/builders" className="menu-link">Builders</Link>
         </div>
@@ -214,10 +277,6 @@ export default function Navbar() {
             <Link to="/products?category=tiles" className="quick-tag-link">Tiles</Link>
             <span className="divider">,</span>
             <Link to="/products?category=electrical" className="quick-tag-link">Lighting & Fixtures</Link>
-            
-            
-            
-            
           </div>
         </div>
       </div>

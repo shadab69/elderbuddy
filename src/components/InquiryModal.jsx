@@ -102,8 +102,20 @@ export default function InquiryModal() {
                   <option value="sourcing">Bulk Sourcing & Delivery</option>
                   <option value="estimation">Architectural Layout & Estimation</option>
                   <option value="structural">Structural Design & Engineering</option>
-                  <option value="execution">Turnkey Construction Execution</option>
+                  <option value="build-your-home">Build Your Home (Complete Turnkey Construction)</option>
                 </select>
+                {service === 'build-your-home' && (
+                  <div style={{ marginTop: '8px', padding: '8px 12px', background: 'rgba(234, 88, 12, 0.08)', borderRadius: '8px', border: '1px solid rgba(234, 88, 12, 0.2)', fontSize: '0.8rem', color: '#ea580c', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <span>Want to view our packages & 108-point checklist?</span>
+                    <a 
+                      href="#/build-your-home" 
+                      onClick={closeModal} 
+                      style={{ color: '#ea580c', fontWeight: '700', textDecoration: 'underline' }}
+                    >
+                      Visit Build Your Home →
+                    </a>
+                  </div>
+                )}
               </div>
 
               <div className="form-row">

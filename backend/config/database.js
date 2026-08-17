@@ -82,20 +82,48 @@ async function seedDatabase() {
         const Guide = mongoose.model('Guide');
         const Builder = mongoose.model('Builder');
 
+        // Always sync products from products.json
+        const productsJsonPath = path.join(__dirname, '..', 'data', 'products.json');
+        let seedProducts = [];
+        if (fs.existsSync(productsJsonPath)) {
+            try {
+                seedProducts = JSON.parse(fs.readFileSync(productsJsonPath, 'utf8'));
+            } catch (e) {
+                console.error('[Database seeder] Error reading products.json:', e);
+            }
+        }
+        if (seedProducts.length === 0) {
+            seedProducts = parseJsArray('INITIAL_PRODUCTS') || [];
+        }
+
         const productCount = await Product.countDocuments();
-        if (productCount === 0) {
-            console.log('[Database seeder] Seeding products...');
-            const seedProducts = parseJsArray('INITIAL_PRODUCTS') || [];
+        if (productCount < seedProducts.length || productCount === 0) {
+            console.log(`[Database seeder] Syncing ${seedProducts.length} products to database...`);
+            await Product.deleteMany({});
             if (seedProducts.length > 0) {
                 await Product.insertMany(seedProducts);
                 console.log(`[Database seeder] Successfully seeded ${seedProducts.length} products.`);
             }
         }
 
-        const categoryCount = await Category.countDocuments();
-        if (categoryCount === 0) {
-            console.log('[Database seeder] Seeding categories...');
-            const seedCats = parseJsArray('INITIAL_CATEGORIES') || [];
+        // Always sync categories from categories.json
+        const categoriesJsonPath = path.join(__dirname, '..', 'data', 'categories.json');
+        let seedCats = [];
+        if (fs.existsSync(categoriesJsonPath)) {
+            try {
+                seedCats = JSON.parse(fs.readFileSync(categoriesJsonPath, 'utf8'));
+            } catch (e) {
+                console.error('[Database seeder] Error reading categories.json:', e);
+            }
+        }
+        if (seedCats.length === 0) {
+            seedCats = parseJsArray('INITIAL_CATEGORIES') || [];
+        }
+
+        const catWithSub = await Category.findOne({ 'subcategories.0': { $exists: true } });
+        if (!catWithSub || (await Category.countDocuments()) < seedCats.length) {
+            console.log(`[Database seeder] Syncing ${seedCats.length} categories with subcategories to database...`);
+            await Category.deleteMany({});
             if (seedCats.length > 0) {
                 await Category.insertMany(seedCats);
                 console.log(`[Database seeder] Successfully seeded ${seedCats.length} categories.`);
@@ -122,9 +150,11 @@ async function seedDatabase() {
             }
         }
 
+        const guideWithBacklink = await Guide.findOne({ content: { $regex: 'guardian|build-review|fongprean', $options: 'i' } });
         const guideCount = await Guide.countDocuments();
-        if (guideCount === 0) {
-            console.log('[Database seeder] Seeding guides...');
+        if (guideWithBacklink || guideCount === 0) {
+            console.log('[Database seeder] Syncing clean guides without backlinks...');
+            await Guide.deleteMany({});
             const seedGuides = parseJsArray('INITIAL_GUIDE_POSTS') || [];
             if (seedGuides.length > 0) {
                 await Guide.insertMany(seedGuides);

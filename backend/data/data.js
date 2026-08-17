@@ -3,15 +3,115 @@
 // ==========================================================================
 
 const INITIAL_CATEGORIES = [
-    { id: 'cement', name: 'Cement & Concrete', icon: 'boxes', desc: 'OPC & PPC Cements, Ready Mix Concrete' },
-    { id: 'steel', name: 'TMT Steel Bars', icon: 'anvil', desc: 'Reinforcement bars for columns & slabs' },
-    { id: 'bricks', name: 'Bricks & Blocks', icon: 'layers', desc: 'Red clay bricks, fly ash & AAC blocks' },
-    { id: 'tiles', name: 'Tiles & Flooring', icon: 'grid', desc: 'Ceramic, vitrified tiles & natural stones' },
-    { id: 'plumbing', name: 'Plumbing & Pipes', icon: 'droplet', desc: 'CPVC, PVC pipes & bathroom fittings' },
-    { id: 'electrical', name: 'Electricals & Wires', icon: 'zap', desc: 'FRLS wires, modular switches & lights' },
-    { id: 'paints', name: 'Paints & Finishes', icon: 'paint-bucket', desc: 'Interior, exterior paints & primers' },
-    { id: 'hardware', name: 'Hardware & Fixtures', icon: 'wrench', desc: 'Locks, hinges, screws & steel fixtures' },
-    { id: 'interior', name: 'Interior & Living', icon: 'sofa', desc: 'Luxury furniture, lighting, decor & interior furnishings' }
+    {
+        id: 'cement',
+        name: 'Cement & Concrete',
+        icon: 'boxes',
+        desc: 'OPC & PPC Cements, Ready Mix Concrete',
+        subcategories: [
+            { id: 'opc-cement', name: 'OPC 53 Grade Cement' },
+            { id: 'ppc-cement', name: 'PPC Pozzolana Cement' },
+            { id: 'rmc-concrete', name: 'Ready Mix Concrete (RMC)' },
+            { id: 'white-cement', name: 'White Cement & Wall Care' }
+        ]
+    },
+    {
+        id: 'steel',
+        name: 'TMT Steel Bars',
+        icon: 'anvil',
+        desc: 'Reinforcement bars for columns & slabs',
+        subcategories: [
+            { id: 'fe500d', name: 'Fe 500D TMT Steel Bars' },
+            { id: 'fe550d', name: 'Fe 550D TMT Steel Bars' },
+            { id: 'structural-steel', name: 'Structural Beams & Channels' },
+            { id: 'binding-wire', name: 'Binding Wires & Stirrups' }
+        ]
+    },
+    {
+        id: 'bricks',
+        name: 'Bricks & Blocks',
+        icon: 'layers',
+        desc: 'Red clay bricks, fly ash & AAC blocks',
+        subcategories: [
+            { id: 'red-clay-bricks', name: 'Red Clay Kiln Bricks' },
+            { id: 'fly-ash-bricks', name: 'Fly Ash Bricks' },
+            { id: 'aac-blocks', name: 'AAC Lightweight Blocks' },
+            { id: 'solid-blocks', name: 'Concrete Solid & Hollow Blocks' }
+        ]
+    },
+    {
+        id: 'tiles',
+        name: 'Tiles & Flooring',
+        icon: 'grid',
+        desc: 'Ceramic, vitrified tiles & natural stones',
+        subcategories: [
+            { id: 'vitrified-tiles', name: 'Vitrified Floor Tiles' },
+            { id: 'ceramic-tiles', name: 'Ceramic Wall Tiles' },
+            { id: 'granite-marble', name: 'Granite & Natural Marble' },
+            { id: 'wooden-flooring', name: 'Laminate Wooden Flooring' }
+        ]
+    },
+    {
+        id: 'plumbing',
+        name: 'Plumbing & Pipes',
+        icon: 'droplet',
+        desc: 'CPVC, PVC pipes & bathroom fittings',
+        subcategories: [
+            { id: 'cpvc-pipes', name: 'CPVC & UPVC Water Pipes' },
+            { id: 'pipe-fittings', name: 'Pipes Bends & Coupling Fittings' },
+            { id: 'sanitaryware', name: 'Sanitaryware & Wash Basins' },
+            { id: 'faucets-taps', name: 'Bathroom Faucets & Showers' }
+        ]
+    },
+    {
+        id: 'electrical',
+        name: 'Electricals & Wires',
+        icon: 'zap',
+        desc: 'FRLS wires, modular switches & lights',
+        subcategories: [
+            { id: 'frls-wires', name: 'FRLS Copper Wires' },
+            { id: 'modular-switches', name: 'Modular Switches & Sockets' },
+            { id: 'led-lights', name: 'LED Ceiling & Panel Lights' },
+            { id: 'mcb-boards', name: 'MCB & Distribution Boards' }
+        ]
+    },
+    {
+        id: 'paints',
+        name: 'Paints & Finishes',
+        icon: 'paint-bucket',
+        desc: 'Interior, exterior paints & primers',
+        subcategories: [
+            { id: 'interior-paints', name: 'Interior Emulsion Paints' },
+            { id: 'exterior-paints', name: 'Exterior Weatherproof Paints' },
+            { id: 'wall-putty', name: 'Acrylic Wall Putty & Primers' },
+            { id: 'wood-finishes', name: 'Wood Polish & Metal Enamels' }
+        ]
+    },
+    {
+        id: 'hardware',
+        name: 'Hardware & Fixtures',
+        icon: 'wrench',
+        desc: 'Locks, hinges, screws & steel fixtures',
+        subcategories: [
+            { id: 'digital-locks', name: 'Smart Digital & Mortise Locks' },
+            { id: 'door-hinges', name: 'Stainless Steel Hinges & Handles' },
+            { id: 'screws-fasteners', name: 'Screws, Bolts & Fasteners' },
+            { id: 'cabinet-hardware', name: 'Cabinet Fittings & Channels' }
+        ]
+    },
+    {
+        id: 'interior',
+        name: 'Interior & Living',
+        icon: 'sofa',
+        desc: 'Luxury furniture, lighting, decor & interior furnishings',
+        subcategories: [
+            { id: 'sofas-seating', name: 'Luxury Sofas & Living Seating' },
+            { id: 'center-tables', name: 'Center Coffee & Dining Tables' },
+            { id: 'wall-decor', name: 'Wall Decor & Art Frames' },
+            { id: 'lighting-lamps', name: 'Modern Lighting & Pendant Lamps' },
+            { id: 'rugs-carpets', name: 'Plush Area Rugs & Floor Carpets' }
+        ]
+    }
 ];
 
 const INITIAL_BANNERS = [
@@ -631,74 +731,183 @@ const INITIAL_PRODUCTS = [
             'Material': 'Ceramic',
             'Brand': 'Generic'
         },
-        imageSrc: '<img src="assets/ceramic_tile.png" alt="Ceramic Wall Tile">'
+        specs: { 'Modules': '6 Module', 'Color': 'White', 'Brand': 'Anchor Roma' },
+        imageSrc: 'assets/modular_switch.jpg'
     },
     {
-        id: 'tr4',
-        name: "Leo's AAC Blocks - 4\"",
-        brand: 'Leo Mintech',
-        category: 'bricks',
-        price: 60,
+        id: 'e3',
+        name: 'Syska 12W Slim Concealed LED Ceiling Light',
+        brand: 'Syska LED',
+        category: 'electrical',
+        subcategory: 'led-lights',
+        price: 290,
+        originalPrice: 450,
+        discountLabel: '35% OFF',
         unit: 'Piece',
-        description: 'Lightweight and durable 4-inch AAC blocks by Leo Mintech for fast-track wall construction.',
-        rating: 4.5,
-        ratingCount: 76,
-        specs: {
-            'Thickness': '4 Inch',
-            'Brand': 'Leo Mintech'
-        },
-        imageSrc: '<img src="assets/leo_aac_block.png" alt="Leo AAC Blocks">'
+        description: 'Energy efficient cool day white round concealed LED ceiling panel light fixture.',
+        rating: 4.6,
+        ratingCount: 130,
+        specs: { 'Wattage': '12W', 'Color': 'Cool White', 'Brand': 'Syska' },
+        imageSrc: 'assets/led_bulb.png'
     },
     {
-        id: 'tr5',
-        name: 'Maharashtra Red Brick - 9 x 4 x 3',
-        brand: 'Maharashtra Red Brick',
-        category: 'bricks',
-        price: 15,
+        id: 'e4',
+        name: 'Schneider 4-Pole MCB & Distribution Board',
+        brand: 'Schneider Electric',
+        category: 'electrical',
+        subcategory: 'mcb-boards',
+        price: 1420,
+        originalPrice: 1850,
+        discountLabel: '23% OFF',
         unit: 'Piece',
-        description: 'Robust red clay bricks sourced from Maharashtra regions, offering high structural load capacity.',
-        rating: 4.3,
-        ratingCount: 94,
-        specs: {
-            'Size': '9x4x3 inches',
-            'Brand': 'Maharashtra Red Brick'
-        },
-        imageSrc: '<img src="assets/maharashtra_brick.png" alt="Maharashtra Red Brick">'
+        description: 'Double door metal distribution board with 4-pole 32A Miniature Circuit Breaker for safety.',
+        rating: 4.8,
+        ratingCount: 44,
+        specs: { 'Current': '32A', 'Poles': '4 Pole', 'Brand': 'Schneider' },
+        imageSrc: 'assets/mcb_board.jpg'
     },
     {
-        id: 'tr6',
-        name: 'Digital Smart Door Lock - VN G111',
+        id: 'pt1',
+        name: 'Asian Paints Royale Luxury Interior Emulsion (20L)',
+        brand: 'Asian Paints',
+        category: 'paints',
+        subcategory: 'interior-paints',
+        price: 6450,
+        originalPrice: 7800,
+        discountLabel: '17% OFF',
+        unit: 'Tin',
+        description: 'Washable Teflon surface protected interior acrylic emulsion paint with sheen finish.',
+        rating: 4.9,
+        ratingCount: 160,
+        specs: { 'Quantity': '20 Liters', 'Finish': 'Soft Sheen', 'Brand': 'Asian Paints' },
+        imageSrc: 'assets/paint_bucket.jpg'
+    },
+    {
+        id: 'pt2',
+        name: 'Dulux WeatherShield Exterior Paint (20L)',
+        brand: 'Dulux',
+        category: 'paints',
+        subcategory: 'exterior-paints',
+        price: 5900,
+        originalPrice: 7200,
+        discountLabel: '18% OFF',
+        unit: 'Tin',
+        description: 'Anti-fungal weather proof exterior acrylic emulsion wall paint with sun-reflect tech.',
+        rating: 4.8,
+        ratingCount: 92,
+        specs: { 'Quantity': '20 Liters', 'Finish': 'Matte Exterior', 'Brand': 'Dulux' },
+        imageSrc: 'assets/paint_bucket.jpg'
+    },
+    {
+        id: 'pt3',
+        name: 'Magic Acrylic Smooth Wall Putty - 20 Ltr',
+        brand: 'Shalimar Paints',
+        category: 'paints',
+        subcategory: 'wall-putty',
+        price: 1350,
+        originalPrice: 1700,
+        discountLabel: '20% OFF',
+        unit: 'Tin',
+        description: 'Heavy duty acrylic wall putty for smoothing interior wall surfaces before painting.',
+        rating: 4.6,
+        ratingCount: 87,
+        specs: { 'Quantity': '20 Liters', 'Type': 'Acrylic Putty', 'Brand': 'Shalimar' },
+        imageSrc: 'assets/wall_putty.png'
+    },
+    {
+        id: 'pt4',
+        name: 'Melamyne Clear Gloss Wood Polish Enamel (4L)',
+        brand: 'Asian Paints',
+        category: 'paints',
+        subcategory: 'wood-finishes',
+        price: 1280,
+        originalPrice: 1600,
+        discountLabel: '20% OFF',
+        unit: 'Tin',
+        description: 'Acid curing transparent polyurethane wood finish polish for doors and wooden furniture.',
+        rating: 4.7,
+        ratingCount: 51,
+        specs: { 'Quantity': '4 Liters', 'Finish': 'High Gloss', 'Brand': 'Asian Paints' },
+        imageSrc: 'assets/paint_bucket.jpg'
+    },
+    {
+        id: 'h1',
+        name: 'VN G111 Digital Smart Fingerprint Door Lock',
         brand: 'Kshema Technos',
         category: 'hardware',
+        subcategory: 'digital-locks',
         price: 27998,
+        originalPrice: 35000,
+        discountLabel: '20% OFF',
         unit: 'Piece',
-        description: 'Premium keyless smart door lock featuring fingerprint scanner, digital keypad, and remote access.',
+        description: 'Keyless smart biometric door lock with fingerprint scanner, PIN keypad, RFID card & mobile app.',
+        rating: 4.9,
+        ratingCount: 40,
+        specs: { 'Access': 'Fingerprint & PIN', 'Finish': 'Gold & Black', 'Brand': 'Kshema Technos' },
+        imageSrc: 'assets/digital_lock.png'
+    },
+    {
+        id: 'h2',
+        name: 'Stainless Steel Ball Bearing Door Hinges (4 Inch)',
+        brand: 'Godrej Hardware',
+        category: 'hardware',
+        subcategory: 'door-hinges',
+        price: 340,
+        originalPrice: 450,
+        discountLabel: '24% OFF',
+        unit: 'Pair',
+        description: 'Heavy gauge SS 304 anti-rust ball bearing door hinges for main wooden doors.',
         rating: 4.8,
-        ratingCount: 34,
-        specs: {
-            'Model': 'VN G111',
-            'Finish': 'Gold & Black',
-            'Brand': 'Kshema Technos'
-        },
-        imageSrc: '<img src="assets/digital_lock.png" alt="Digital Smart Door Lock">'
+        ratingCount: 78,
+        specs: { 'Size': '4 Inches', 'Material': 'SS 304 Steel', 'Brand': 'Godrej' },
+        imageSrc: 'assets/door_hinge.jpg'
+    },
+    {
+        id: 'h3',
+        name: 'Steel Anchor Fasteners & Self Tapping Screws Box',
+        brand: 'Hilti',
+        category: 'hardware',
+        subcategory: 'screws-fasteners',
+        price: 450,
+        originalPrice: 600,
+        discountLabel: '25% OFF',
+        unit: 'Box',
+        description: 'Assorted zinc plated steel wood screws and wall anchor expansion bolts (Box of 200 pcs).',
+        rating: 4.6,
+        ratingCount: 65,
+        specs: { 'Quantity': '200 Pieces', 'Material': 'Zinc Plated Steel', 'Brand': 'Hilti' },
+        imageSrc: 'assets/screws_bolts.jpg'
+    },
+    {
+        id: 'h4',
+        name: 'Soft-Close Telescopic Drawer Channels (18 Inch)',
+        brand: 'Hettich',
+        category: 'hardware',
+        subcategory: 'cabinet-hardware',
+        price: 620,
+        originalPrice: 800,
+        discountLabel: '22% OFF',
+        unit: 'Pair',
+        description: 'Full extension soft-close ball bearing drawer runner channels for kitchen modular drawers.',
+        rating: 4.9,
+        ratingCount: 82,
+        specs: { 'Size': '18 Inches', 'Load': '45 Kg', 'Brand': 'Hettich' },
+        imageSrc: 'assets/screws_bolts.jpg'
     },
     {
         id: 'int1',
         name: 'Luxury Velvet 3-Seater Living Room Sofa',
         brand: 'Urban Living',
         category: 'interior',
+        subcategory: 'sofas-seating',
         price: 24999,
         originalPrice: 32999,
         discountLabel: '24% OFF',
         unit: 'Piece',
-        description: 'Ergonomic 3-seater plush velvet sofa with high-density foam cushioning and premium hardwood frame for living rooms.',
+        description: 'Ergonomic 3-seater plush velvet sofa with high-density foam cushioning for living rooms.',
         rating: 4.8,
         ratingCount: 42,
-        specs: {
-            'Material': 'Velvet & Solid Wood',
-            'Seating Capacity': '3 Seater',
-            'Warranty': '3 Years'
-        },
+        specs: { 'Material': 'Velvet & Solid Wood', 'Seating': '3 Seater', 'Brand': 'Urban Living' },
         imageSrc: 'assets/interior_sofa.jpg'
     },
     {
@@ -706,18 +915,15 @@ const INITIAL_PRODUCTS = [
         name: 'Nordic Solid Oak Wood Coffee Table',
         brand: 'WoodCraft',
         category: 'interior',
+        subcategory: 'center-tables',
         price: 8499,
         originalPrice: 11999,
         discountLabel: '29% OFF',
         unit: 'Piece',
-        description: 'Minimalist Scandinavian design coffee table with natural grain finish and scratch-resistant matte coat.',
+        description: 'Minimalist Scandinavian design coffee table with natural grain finish and scratch-resistant coat.',
         rating: 4.7,
         ratingCount: 38,
-        specs: {
-            'Dimensions': '110 x 60 x 45 cm',
-            'Material': 'Solid Oak Wood',
-            'Finish': 'Natural Matte'
-        },
+        specs: { 'Size': '110x60 cm', 'Material': 'Solid Oak Wood', 'Brand': 'WoodCraft' },
         imageSrc: 'assets/interior_table.jpg'
     },
     {
@@ -725,18 +931,15 @@ const INITIAL_PRODUCTS = [
         name: 'Modern Industrial Pendant Ceiling Light',
         brand: 'Lumina Decor',
         category: 'interior',
+        subcategory: 'lighting-lamps',
         price: 3299,
         originalPrice: 4999,
         discountLabel: '34% OFF',
         unit: 'Set',
-        description: 'Aesthetic metal pendant hanging lamp fixture with warm LED filament illumination for dining and living areas.',
+        description: 'Aesthetic metal pendant hanging lamp fixture with warm LED filament illumination.',
         rating: 4.6,
         ratingCount: 54,
-        specs: {
-            'Bulb Base': 'E27',
-            'Voltage': '220V',
-            'Material': 'Matte Black Metal'
-        },
+        specs: { 'Material': 'Matte Black Metal', 'Bulb': 'E27 LED', 'Brand': 'Lumina' },
         imageSrc: 'assets/interior_pendant_light.jpg'
     },
     {
@@ -744,18 +947,15 @@ const INITIAL_PRODUCTS = [
         name: 'Ergonomic Velvet Accent Lounge Chair',
         brand: 'Urban Living',
         category: 'interior',
+        subcategory: 'sofas-seating',
         price: 12999,
         originalPrice: 17500,
         discountLabel: '25% OFF',
         unit: 'Piece',
-        description: 'Comfortable lounge accent arm chair with brass metallic legs and soft upholstery for modern homes.',
+        description: 'Comfortable lounge accent arm chair with brass metallic legs and soft upholstery.',
         rating: 4.9,
         ratingCount: 61,
-        specs: {
-            'Leg Finish': 'Gold Plated Brass',
-            'Upholstery': 'Premium Velvet',
-            'Weight Capacity': '150 kg'
-        },
+        specs: { 'Legs': 'Gold Plated Brass', 'Upholstery': 'Velvet', 'Brand': 'Urban Living' },
         imageSrc: 'assets/interior_accent_chair.jpg'
     },
     {
@@ -763,18 +963,15 @@ const INITIAL_PRODUCTS = [
         name: 'Abstract Canvas Wall Art Frame (Set of 3)',
         brand: 'Artisan Gallery',
         category: 'interior',
+        subcategory: 'wall-decor',
         price: 4199,
         originalPrice: 5999,
         discountLabel: '30% OFF',
         unit: 'Set',
-        description: 'HD gallery wrap canvas prints with wooden inner frame for modern living room wall decor.',
+        description: 'HD gallery wrap canvas prints with wooden inner frame for modern wall decor.',
         rating: 4.8,
         ratingCount: 29,
-        specs: {
-            'Frame Size': '24 x 36 Inches Each',
-            'Frame Material': 'Synthetic Wood',
-            'Print': 'Waterproof Canvas'
-        },
+        specs: { 'Size': '24x36 Inches Each', 'Material': 'Canvas', 'Brand': 'Artisan Gallery' },
         imageSrc: 'assets/interior_wall_art.jpg'
     },
     {
@@ -782,18 +979,15 @@ const INITIAL_PRODUCTS = [
         name: 'Handwoven Boho Plush Area Rug (6 x 9 ft)',
         brand: 'RugArt Studio',
         category: 'interior',
+        subcategory: 'rugs-carpets',
         price: 7999,
         originalPrice: 10999,
         discountLabel: '27% OFF',
         unit: 'Piece',
-        description: 'Ultra-soft micro-fiber handwoven carpet rug with anti-skid backing and stain-resistant fabric.',
+        description: 'Ultra-soft micro-fiber handwoven carpet rug with anti-skid backing.',
         rating: 4.7,
         ratingCount: 46,
-        specs: {
-            'Dimensions': '6 x 9 Feet',
-            'Material': 'Microfiber & Cotton',
-            'Backing': 'Anti-Skid Rubber'
-        },
+        specs: { 'Size': '6x9 Feet', 'Material': 'Microfiber & Cotton', 'Brand': 'RugArt' },
         imageSrc: 'assets/interior_area_rug.jpg'
     },
     {
@@ -801,18 +995,15 @@ const INITIAL_PRODUCTS = [
         name: 'Modular Engineered Wood Bookshelf Unit',
         brand: 'WoodCraft',
         category: 'interior',
+        subcategory: 'center-tables',
         price: 9499,
         originalPrice: 13999,
         discountLabel: '32% OFF',
         unit: 'Piece',
-        description: 'Multi-tier display open shelf cabinet for organizing books, planters, and decorative items.',
+        description: 'Multi-tier display open shelf cabinet for organizing books and planters.',
         rating: 4.6,
         ratingCount: 33,
-        specs: {
-            'Tiers': '5 Shelves',
-            'Material': 'Engineered Wood',
-            'Height': '6 Feet'
-        },
+        specs: { 'Tiers': '5 Shelves', 'Material': 'Engineered Wood', 'Brand': 'WoodCraft' },
         imageSrc: 'assets/interior_bookshelf.jpg'
     },
     {
@@ -820,18 +1011,15 @@ const INITIAL_PRODUCTS = [
         name: 'Handcrafted Ceramic Decorative Table Vase Set',
         brand: 'Artisan Gallery',
         category: 'interior',
+        subcategory: 'wall-decor',
         price: 2199,
         originalPrice: 3499,
         discountLabel: '37% OFF',
         unit: 'Set',
-        description: 'Set of 2 modern minimalist ceramic flower vases with matte textured finish for tabletop decoration.',
+        description: 'Set of 2 modern minimalist ceramic flower vases with matte finish.',
         rating: 4.9,
         ratingCount: 50,
-        specs: {
-            'Quantity': '2 Vases',
-            'Material': 'Handmade Ceramic',
-            'Finish': 'Matte Beige'
-        },
+        specs: { 'Quantity': '2 Vases', 'Material': 'Ceramic', 'Brand': 'Artisan Gallery' },
         imageSrc: 'assets/interior_vase.jpg'
     }
 ];
@@ -1419,34 +1607,19 @@ Opt for secondary tier certified brands that offer similar grades at competitive
         imageSrc: 'assets/guide_trends.png',
         content: `# The Latest Trends in Sustainable Building Materials (2025–2026)
 
-As the construction industry works to reduce carbon emissions and improve resource efficiency, sustainable building materials are moving from niche applications to mainstream adoption. The biggest trend is the shift toward **low-carbon, renewable, recycled, and carbon-storing materials** that reduce a building's environmental impact throughout its lifecycle. ([BUILD Magazine][1])
+As the construction industry works to reduce carbon emissions and improve resource efficiency, sustainable building materials are moving from niche applications to mainstream adoption. The biggest trend is the shift toward **low-carbon, renewable, recycled, and carbon-storing materials** that reduce a building's environmental impact throughout its lifecycle.
 
 ## 1. Mass Timber and Cross-Laminated Timber (CLT)
-
-![Image](https://images.openai.com/static-rsc-4/Zl2fGkM94LwMNOLXlSZkcvqArZmTC6RxusYRdqRnUEUGJRFQrIR_031uR8_L-MsWWju0yYY8i7reqJnb6tnKgtyaqamPg3TdKXoBL_vyaB5GTjmAfyehZMQkM_FD4hhFTTuN1GLbl3ZBtBfn998pCvwXIDEpO_r7rdJ-wkI16ZP6fwMMdk8-QJZDRnpdDn9N?purpose=fullsize)
-
-![Image](https://images.openai.com/static-rsc-4/raSXEJjjbGk7UnWJi5CI0kIcaope8O_YZgAPjf0TmCyxbUKcZytzGGoOamAsEnZrDnPXLIbLm6HkVGJT5hXX0RLBzYMwof7uOYacGWl5acAk-CShSaxOv5XJ6gr1_uyxJ5-rUcIOIHWCzGK_GJnwPX8vtiees1JiG1RLdTWs_mEDu9BeIeVjMGmdOSGf85NF?purpose=fullsize)
-
-![Image](https://images.openai.com/static-rsc-4/GVfXoe-2CoUAk1QjivcEHU8iGmr6xSgpAperMM-folL9ZQ21YYlkdxnAQzSkBqAQGSyAr3evJTOg0ovdZ0OUdZjj-Wn2_11MM25lsRYIYO7wnt1m_GqtY4F-UrA-TS3vELYevkKmQZCTR5b6Q4x1HC8LbWtLHfliwsE8OLwFgAXO-SFcaxD15qnSp8K8wwrB?purpose=fullsize)
-
-![Image](https://images.openai.com/static-rsc-4/Dv8n4j7Er96GMW1iL0hCnNzfRkbsGoKlQys2UXfR43AIpWhZy1-FWt4MBA95R3GIhmDe5H16zCVKxDOmL6yf90pcgwagqUnafil3S2YIFsjEqSw-Q6yz1Cn1MNvph8Sx7w07ZWi3KNFdBi6uo_VyJvLjpYP0S_qFskrEcqcgWIAfvV-iMR6XvanVIsKc3Ws0?purpose=fullsize)
-
-![Image](https://images.openai.com/static-rsc-4/WU3j1o-EoSgUWMYPXCUCKmNv4SLV6EH_XVqoXRxcOluakLvdyNh8wwZ5peCAOdY0BHKB-5AE4ROrZTkzem2RDPcFsCCnyrojvM9wICJTS3Y2QDSo6otSmQrDrK-3yQ_OMsjoViDepHonsjctvKD2to0hrVOAkITYEAqXYedDV_doJ77_fM4_L1Ye_-orJqHt?purpose=fullsize)
-
-![Image](https://images.openai.com/static-rsc-4/X7xEPKVVCS2GRs5ZYbuqLf9oPHKPqVon2Qg4Q4ms9RQgUm7cf6Nn88CFAgbMsla6l58R0FScx7-3oHtZXpHXejCUDF30NHVyCscz_fLoaTagdaQqiTim6TDnyvRJsR08wdJSQOp0k5sEZvmkbI66STvyLAlba2d0cYhfPzhc0bR7Hgp9wzIz1ECkM2tkHnmR?purpose=fullsize)
-
-![Image](https://images.openai.com/static-rsc-4/Bc_bOo85CfgdHmGzPQk7WsMGLHX4qUJmBfppqT7aeaN6c5ZJSjs7JKhs299-LwggtBLdgPRhMdgQ6r_DL2fSSZrS0fgB0n_OhDourr-cm62YiVKl1rxvpDv5vavd7UwuaxceMHV5PvYM08fCp9RYRoZ2Z39MU08NSs0cbH4Clq9Pc92XTa4KyWQyAmtKQbua?purpose=fullsize)
 
 Mass timber products such as Cross-Laminated Timber (CLT) are becoming a preferred alternative to steel and concrete in many mid-rise and commercial projects.
 
 **Why it's trending:**
-
 * Stores carbon instead of emitting it.
 * Faster construction through prefabrication.
 * Reduced construction waste.
 * Strong structural performance with growing code acceptance.
 
-Many jurisdictions now permit taller timber structures, accelerating adoption worldwide. ([Salisbury & Landolt Construction Group][2])
+Many jurisdictions now permit taller timber structures, accelerating adoption worldwide.
 
 ---
 
@@ -1455,45 +1628,27 @@ Many jurisdictions now permit taller timber structures, accelerating adoption wo
 Concrete remains essential, but manufacturers are developing greener alternatives.
 
 **Innovations include:**
-
 * Cement replacement using fly ash, slag, and calcined clay.
 * Carbon-capture technologies during production.
 * Bio-cement produced using bacteria.
 * Carbon-mineralized concrete that stores CO₂.
 
-These technologies can significantly reduce the embodied carbon of construction projects. ([Firas Engineering Consultancy][3])
+These technologies can significantly reduce the embodied carbon of construction projects.
 
 ---
 
 ## 3. Hempcrete and Bio-Based Materials
 
-![Image](https://images.openai.com/static-rsc-4/lHv7PZ6a4jUzPFT3Mhern8ttGEZho40CwChgwWBDZghepamjLMeGe7bvgjk38MfahvW7f_YTVgqrHqgNgdCMX1-oNo-0gOJrIFXaCqWfnjClX6T5SPRRtvlSDfmnjqMsrk4dk3YH-ITEnd-JIPbHoSsHvTvbNwVvraf_3Tu28S2ohaPLKm_KRn4DZAnKt8Mn?purpose=fullsize)
-
-![Image](https://images.openai.com/static-rsc-4/Eo8vfY3EyMKVittyJ_gNc4shjRycjds00vJHhOkQdqFo9rCTHMgifiW9GfenzwdDZxhQ_9XQo6ljjvn1EKBLH9FnO_Dp0I2bvu05WDeIlsSb40SOgDftEvlD8vRzGfKJ9SVkciZPjteWLkO63s3cOEkMEYHvoS5bp5mbT1OJMIquGxi4wzVwYqQbd9CBwJmD?purpose=fullsize)
-
-![Image](https://images.openai.com/static-rsc-4/I_6rM2xe4fOODWYI0jR40D4LgaL4WbSaoRJc88tf7pygtUiv3AuliDJNad-iDuAuixSGC8m0fNcjuq4APXdm23pfTnaHey0OThv4B-TfCrx-ZMaT7FsanC54s1QgOiU5QrgHTFzsiSCg7-yS8evhkO7R0lxTPsn_iVM7viv17xWq3Y7oIIvI_WmwP4i0opaY?purpose=fullsize)
-
-![Image](https://images.openai.com/static-rsc-4/81ay4kHCKiHuhPDwrN34S57YsH373T022xRK7uzPGMViObHitYvey_z_vQlEk2r9zg42NujOsC0AI7v65NAueUIPDbME3o0P2BOVrhF_mEn1x-tRzks35dXJ8yhlQ-DFVUONzk3sin8lJwM9TOjKDtYVZ1D7TUaA1Dki1BSB8jGP9GC0gsBFCm68NdYU5A-1?purpose=fullsize)
-
-![Image](https://images.openai.com/static-rsc-4/Uqz9eevYz2a88qBwImB2I5N0YEc7pdi9s6y89gMSrY_p1Ae6iEUtmwsfrJ2fwYpRS12L53lMEsMkies6C529l2lE5XHhl9CSYukTroSfoG4Y0XH4Z2636Ro2O2lMB9cu_iPldnadPgCh8zN3W_xAABUyVIiVXLrNLmppZBkO9LRxoUUTi6DwZjNjKWA-8GSh?purpose=fullsize)
-
-![Image](https://images.openai.com/static-rsc-4/ioBjCehZNa574rMHLQCHXVfhnqbf-3Sr7P7ITaAgLF4byTZk7aam8BEVuv_gqL5VjEhDbX3-8acl2040NjO-e7Hlj4P1ZNR54q0zLx6mvXDJ0Szqsu5-70hhbYAIKQgzpEDBPC1u33Ae0OxEYBteKSjE3amtITPr5JdBO0l6To7IyzbSWmzTZ867jtKJI6D1?purpose=fullsize)
-
-![Image](https://images.openai.com/static-rsc-4/KrVLdB2y6CaEfVZPKGRemdQG0cXgocDzWiZvEuUS6AYbd97HALTOIyEeLZTcdMKgReLDSP7Mil4uhiOxihhFkh0G4uZYDkumeXzP7_BPP75fQO-Sva7tjfs1CSix5B8Jv6uyVHEU1npiweAkwapxld1AlDvC3oLTUu6ps7rwb-QP7JGGG0SawvoK9E0U5WgH?purpose=fullsize)
-
-![Image](https://images.openai.com/static-rsc-4/2ModEASKczwN8-zCvD2_vnZ9u-ksxmx_s7ivXCtbiI_5IJGpX-PVFU_GX38cAefHFLZ-8AR44pBWuIiyQ4At8FUypC7dsd44OErmazgQAXVRLOoxsQjBtJ0UWhd6xY3T1sXW4dCVVqOQXpiS3gNtZIVd5w4ALA6Y-NDym4NKClZUX1P3gEvMuzqv2TgoY9Oc?purpose=fullsize)
-
 Hempcrete is gaining popularity for residential and sustainable building projects.
 
 **Benefits:**
-
 * Carbon-negative potential.
 * Excellent thermal insulation.
 * Moisture regulation.
 * Improved indoor air quality.
 * Renewable agricultural source.
 
-Although not typically load-bearing, it is increasingly used as wall infill and insulation material. ([Springer][4])
+Although not typically load-bearing, it is increasingly used as wall infill and insulation material.
 
 ---
 
@@ -1501,45 +1656,27 @@ Although not typically load-bearing, it is increasingly used as wall infill and 
 
 The circular economy is becoming a major driver in construction.
 
-Popular recycled materials include:
-
+**Popular recycled materials include:**
 * Recycled steel
 * Recycled concrete aggregates
 * Reclaimed wood
 * Recycled bricks and masonry
 
-These materials reduce landfill waste while lowering demand for virgin resources. Major building-material companies are investing heavily in recycling infrastructure. ([zigron.com][5])
+These materials reduce landfill waste while lowering demand for virgin resources. Major building-material companies are investing heavily in recycling infrastructure.
 
 ---
 
 ## 5. Bamboo-Based Construction
 
-![Image](https://images.openai.com/static-rsc-4/MZ8Lf4hRZIVVwLLKjw6RHd7v1zxF4pVW9hBY3JT0R0X15R4EmtW04BxOXsrueP138IBE0qV9EztAgI3GI_xDTpFEtAO3WEPrIGdCY-aN1kSdluO1rlr_ZiEfCt0fI7Y1T1ehJEx0b8WjHmK2BRM9l9sP4QK-mS4tL8iDomhVE_ctZrSK6nl8BjYM0bjIN70Q?purpose=fullsize)
-
-![Image](https://images.openai.com/static-rsc-4/uPNlItDSMyBHyN70aThG7qib6P4kHAAyoEWhe_g5kjCt2LFxa6L85iCoSVB76dP9113_4ESd0RmPmksqcogYLml6yiTwlUUdNbh0OVrWucrTytY6boaN0LjLnVxd6FyQPdyUD7QL6KDTRLUq1oph3HSOKseH6mff6pveC-jztYoS5qFvH6P7QGwMlsjb1e8i?purpose=fullsize)
-
-![Image](https://images.openai.com/static-rsc-4/Elf94ISEAYojhNO-7lJigksdJPD4J4esnOu1RM5D1-rwByimRasCow7GegNi5P4xtxXHkGFNvDxS0hmCyU7-GGX7MtJhm0hVl_BHreJ6olLE6tRBfhDsHWow9B6ozeEvsK9cCIsGnmExfX9sX746CaG-MzQsSzeMyhuOugNVRFPOeZQP_aUgVg65lAXqQffg?purpose=fullsize)
-
-![Image](https://images.openai.com/static-rsc-4/pMxYlSbkhfad4GA7CHuaU7hGmi-x5VnS_y11UB9_JS5QT4msUH3xJL3dbhfb6orcp5usTDvjppYrYL-cRshGLN9qQQMphGTtzIW78ppP2iX_VvYC2CYRSlWECscnTvpGHn1zb9pzUZ9j-ufEdmRH13Ktrifx51uqGY7V0HQAXam6RLJ1OGVDc0IaRlKM-57D?purpose=fullsize)
-
-![Image](https://images.openai.com/static-rsc-4/VT9-Zmw0olqMkMH_F4QM53KPKitd486yJOAOQ-xXvxuQEJR71o_QbGEvAnGsrU9BYGoLlJEGUdiVncTMVwhkmUi9hNRWPvUCcFoQCFIF7zCBNzVniJdDjMWMwiUS52TkEu2HStdAelSZmKibaDyXXgxpmaBJkYl-tJeSBHQbUJ1kUNcqs2zSgLt5hcQv0tiQ?purpose=fullsize)
-
-![Image](https://images.openai.com/static-rsc-4/9mL5YsV20y9Mrbo5Hsx0H8R6EN_maYT-tzQ-PaPouLsR4tEbx5tLdPqe1imckRMWo0GU0pBPPH6oS74RMRIJh4K2iZUyCmZ3plpkHoX0GGfx_NnT1RtM26xTCM_4ODmSzB20jEBD_GV-QjhaaU5QzAiQr5T2avlykMVfBNUrdIgqEWrVMCumrh642U0bUfSu?purpose=fullsize)
-
-![Image](https://images.openai.com/static-rsc-4/1Fmsgg_shAG8qX3wv7OMUWjLzY0Aoc_uKzjVbCdXB4WX48nQoZcjIxc_DTFo-TbWCLuErhm-Rj03M2XygUMWEMqhf48rvlHMhd8k-4m1FcgLrsSv49bJ8nTKOl_ZmxpSLi31vi48x70BF4ahG5yBLlH97XzMp3e-ZD-tB41_dB0rY1Gb8W5wfHw7yOuu6YVj?purpose=fullsize)
-
-![Image](https://images.openai.com/static-rsc-4/c1xt4_vEGoRWnD8GdvR17KN4zhNFTajRQmhLkRbjMQyR7mIJ7oSdPQiL4aLMIL3lyeBf9x6h2t2UrzDeO5T0MvFKawWZW91GDLvtHvHHx7mo2OOsNwDjkoutXuuPYe5mpknT7XVK225KB_tdNqWmjlCLJpcRWQjgQ80o7JHpo5P2RwVXZmaq0VQh4NdK24ZB?purpose=fullsize)
-
 Bamboo is emerging as a viable low-carbon alternative for many structural and finishing applications.
 
 **Advantages:**
-
 * Extremely fast-growing renewable resource.
 * High strength-to-weight ratio.
 * Earthquake resilience.
 * Carbon sequestration during growth.
 
-Engineered bamboo products are increasingly being used in modern architecture and infrastructure projects. ([Verger Group][6])
+Engineered bamboo products are increasingly being used in modern architecture and infrastructure projects.
 
 ---
 
@@ -1548,20 +1685,18 @@ Engineered bamboo products are increasingly being used in modern architecture an
 Mycelium (the root structure of mushrooms) is one of the most innovative sustainable materials entering the market.
 
 **Applications:**
-
 * Insulation panels
 * Interior partitions
 * Acoustic products
 * Packaging and temporary structures
 
-Benefits include biodegradability, fire resistance, and very low embodied energy. ([Verger Group][6])
+Benefits include biodegradability, fire resistance, and very low embodied energy.
 
 ---
 
 ## 7. Natural and Regenerative Materials
 
 Growing interest in regenerative construction has increased the use of:
-
 * Straw bale systems
 * Rammed earth
 * Clay plasters
@@ -1569,7 +1704,7 @@ Growing interest in regenerative construction has increased the use of:
 * Natural fiber insulation
 * Lime-based finishes
 
-These materials are valued for low embodied carbon, healthy indoor environments, and local sourcing opportunities. ([The Guardian][7])
+These materials are valued for low embodied carbon, healthy indoor environments, and local sourcing opportunities.
 
 ---
 
@@ -1578,20 +1713,18 @@ These materials are valued for low embodied carbon, healthy indoor environments,
 Sustainability is no longer only about materials; it's also about how buildings are assembled.
 
 **Benefits of prefabrication:**
-
 * Less waste.
 * Faster construction.
 * Improved quality control.
 * Reduced transportation and labor impacts.
 
-Mass timber and other sustainable materials pair particularly well with modular construction methods. ([Fong Prean Industrial Co., Ltd.][8])
+Mass timber and other sustainable materials pair particularly well with modular construction methods.
 
 ---
 
 ## Key Takeaway
 
 The most influential sustainable building material trends today are:
-
 1. **Mass Timber (CLT)**
 2. **Low-Carbon Concrete**
 3. **Hempcrete**
@@ -1601,16 +1734,7 @@ The most influential sustainable building material trends today are:
 7. **Natural Insulation and Earth-Based Materials**
 8. **Modular and Prefabricated Construction**
 
-For builders, developers, and homeowners, the future is increasingly focused on materials that not only reduce emissions but actively **store carbon, support circular economies, and improve building performance over the long term**. ([BUILD Magazine][1])
-
-[1]: https://www.build-review.com/top-trends-in-sustainable-building-materials-for-2025/?utm_source=chatgpt.com "Top Trends in Sustainable Building Materials for 2025 - BUILD Magazine"
-[2]: https://www.slconstructiongroup.com/news/top-eco-friendly-building-materials-for-2025?utm_source=chatgpt.com "Top Eco-Friendly Building Materials for 2025: Sustainable Solutions for Modern Construction — Salisbury & Landolt Construction Group"
-[3]: https://firas-eng.com/low-carbon-materials-2025/?utm_source=chatgpt.com "Top 7 Low-Carbon Construction Materials for Sustainable Homes in 2025"
-[4]: https://link.springer.com/article/10.1007/s41062-025-01906-1?utm_source=chatgpt.com "A comprehensive review of hempcrete as a sustainable building material | Innovative Infrastructure Solutions | Springer Nature Link"
-[5]: https://www.zigron.com/blog/sustainable-materials-civil-engineering-2025?utm_source=chatgpt.com "6 Sustainable Materials Every Civil Engineer Should Know for a Greener Future in 2025 | Zigron"
-[6]: https://verger-group.com/sustainable-building-materials-trends-2025/?utm_source=chatgpt.com "New Sustainable Building Materials to Incorporate into Your Next Project (2025) - Verger Group"
-[7]: https://www.theguardian.com/artanddesign/2025/apr/08/material-cultures-radical-designers-let-nothing-go-to-waste-bark-cactus-plaster-straw?utm_source=chatgpt.com "'Bark is the original dampproof membrane!' Meet the radical designers who let nothing go to waste"
-[8]: https://www.fongprean.com/blog/faq-6/building-for-a-greener-future-top-sustainable-materials-and-fastener-trends-for-2025-construction-projects-68?utm_source=chatgpt.com "Sustainable Building Materials and Fastener Innovations for 2025 Projects | Fong Prean Industrial Co., Ltd."`
+For builders, developers, and homeowners, the future is increasingly focused on materials that not only reduce emissions but actively **store carbon, support circular economies, and improve building performance over the long term**.`
     },
     {
         id: 'g5',

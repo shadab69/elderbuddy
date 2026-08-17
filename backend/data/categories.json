@@ -3,54 +3,109 @@
     "id": "cement",
     "name": "Cement & Concrete",
     "icon": "boxes",
-    "desc": "OPC & PPC Cements, Ready Mix Concrete"
+    "desc": "OPC & PPC Cements, Ready Mix Concrete",
+    "subcategories": [
+      { "id": "opc-cement", "name": "OPC 53 Grade Cement" },
+      { "id": "ppc-cement", "name": "PPC Pozzolana Cement" },
+      { "id": "rmc-concrete", "name": "Ready Mix Concrete (RMC)" },
+      { "id": "white-cement", "name": "White Cement & Wall Care" }
+    ]
   },
   {
     "id": "steel",
     "name": "TMT Steel Bars",
     "icon": "anvil",
-    "desc": "Reinforcement bars for columns & slabs"
+    "desc": "Reinforcement bars for columns & slabs",
+    "subcategories": [
+      { "id": "fe500d", "name": "Fe 500D TMT Steel Bars" },
+      { "id": "fe550d", "name": "Fe 550D TMT Steel Bars" },
+      { "id": "structural-steel", "name": "Structural Beams & Channels" },
+      { "id": "binding-wire", "name": "Binding Wires & Stirrups" }
+    ]
   },
   {
     "id": "bricks",
     "name": "Bricks & Blocks",
     "icon": "layers",
-    "desc": "Red clay bricks, fly ash & AAC blocks"
+    "desc": "Red clay bricks, fly ash & AAC blocks",
+    "subcategories": [
+      { "id": "red-clay-bricks", "name": "Red Clay Kiln Bricks" },
+      { "id": "fly-ash-bricks", "name": "Fly Ash Bricks" },
+      { "id": "aac-blocks", "name": "AAC Lightweight Blocks" },
+      { "id": "solid-blocks", "name": "Concrete Solid & Hollow Blocks" }
+    ]
   },
   {
     "id": "tiles",
     "name": "Tiles & Flooring",
     "icon": "grid",
-    "desc": "Ceramic, vitrified tiles & natural stones"
+    "desc": "Ceramic, vitrified tiles & natural stones",
+    "subcategories": [
+      { "id": "vitrified-tiles", "name": "Vitrified Floor Tiles" },
+      { "id": "ceramic-tiles", "name": "Ceramic Wall Tiles" },
+      { "id": "granite-marble", "name": "Granite & Natural Marble" },
+      { "id": "wooden-flooring", "name": "Laminate Wooden Flooring" }
+    ]
   },
   {
     "id": "plumbing",
     "name": "Plumbing & Pipes",
     "icon": "droplet",
-    "desc": "CPVC, PVC pipes & bathroom fittings"
+    "desc": "CPVC, PVC pipes & bathroom fittings",
+    "subcategories": [
+      { "id": "cpvc-pipes", "name": "CPVC & UPVC Water Pipes" },
+      { "id": "pipe-fittings", "name": "Pipes Bends & Coupling Fittings" },
+      { "id": "sanitaryware", "name": "Sanitaryware & Wash Basins" },
+      { "id": "faucets-taps", "name": "Bathroom Faucets & Showers" }
+    ]
   },
   {
     "id": "electrical",
     "name": "Electricals & Wires",
     "icon": "zap",
-    "desc": "FRLS wires, modular switches & lights"
+    "desc": "FRLS wires, modular switches & lights",
+    "subcategories": [
+      { "id": "frls-wires", "name": "FRLS Copper Wires" },
+      { "id": "modular-switches", "name": "Modular Switches & Sockets" },
+      { "id": "led-lights", "name": "LED Ceiling & Panel Lights" },
+      { "id": "mcb-boards", "name": "MCB & Distribution Boards" }
+    ]
   },
   {
     "id": "paints",
     "name": "Paints & Finishes",
     "icon": "paint-bucket",
-    "desc": "Interior, exterior paints & primers"
+    "desc": "Interior, exterior paints & primers",
+    "subcategories": [
+      { "id": "interior-paints", "name": "Interior Emulsion Paints" },
+      { "id": "exterior-paints", "name": "Exterior Weatherproof Paints" },
+      { "id": "wall-putty", "name": "Acrylic Wall Putty & Primers" },
+      { "id": "wood-finishes", "name": "Wood Polish & Metal Enamels" }
+    ]
   },
   {
     "id": "hardware",
     "name": "Hardware & Fixtures",
     "icon": "wrench",
-    "desc": "Locks, hinges, screws & steel fixtures"
+    "desc": "Locks, hinges, screws & steel fixtures",
+    "subcategories": [
+      { "id": "digital-locks", "name": "Smart Digital & Mortise Locks" },
+      { "id": "door-hinges", "name": "Stainless Steel Hinges & Handles" },
+      { "id": "screws-fasteners", "name": "Screws, Bolts & Fasteners" },
+      { "id": "cabinet-hardware", "name": "Cabinet Fittings & Channels" }
+    ]
   },
   {
     "id": "interior",
     "name": "Interior & Living",
     "icon": "sofa",
-    "desc": "Luxury furniture, lighting, decor & interior furnishings"
+    "desc": "Luxury furniture, lighting, decor & interior furnishings",
+    "subcategories": [
+      { "id": "sofas-seating", "name": "Luxury Sofas & Living Seating" },
+      { "id": "center-tables", "name": "Center Coffee & Dining Tables" },
+      { "id": "wall-decor", "name": "Wall Decor & Art Frames" },
+      { "id": "lighting-lamps", "name": "Modern Lighting & Pendant Lamps" },
+      { "id": "rugs-carpets", "name": "Plush Area Rugs & Floor Carpets" }
+    ]
   }
 ]

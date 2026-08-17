@@ -4,7 +4,8 @@ const categorySchema = new mongoose.Schema({
     id: { type: String, required: true, unique: true },
     name: { type: String, required: true },
     icon: { type: String, default: 'boxes' },
-    desc: { type: String, default: '' }
+    desc: { type: String, default: '' },
+    subcategories: { type: Array, default: [] }
 });
 
 const Category = mongoose.model('Category', categorySchema);
