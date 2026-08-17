@@ -8051,63 +8051,89 @@ body.dark-theme .agentic-input-bar input {
         border-radius: 20px 20px 0 0;
     }
 
-    /* Mobile Subcategories Grid in Drawer */
-    .mobile-subcat-drawer-grid {
-        padding: 8px 10px 10px 10px;
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 6px;
-        background: #ffffff;
-        border-top: 1px solid #f1f5f9;
+    /* Mobile Subcategories in Navigation Drawer */
+    .mobile-subcat-drawer-list {
+        padding: 6px 8px 10px 8px;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        background: #f8fafc;
+        border-top: 1px solid #e2e8f0;
     }
 
-    body.dark-theme .mobile-subcat-drawer-grid {
-        background: #1e293b;
+    body.dark-theme .mobile-subcat-drawer-list {
+        background: #0f172a;
         border-top-color: #334155;
     }
 
-    .mobile-subcat-chip {
+    .mobile-subcat-row {
         display: flex;
         align-items: center;
-        gap: 6px;
-        padding: 7px 9px;
-        background: #f8fafc;
-        border: 1px solid #e2e8f0;
+        justify-content: space-between;
+        padding: 9px 12px;
         border-radius: 8px;
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
         text-decoration: none;
-        color: #334155;
-        font-size: 0.74rem;
+        color: #1e293b;
+        font-size: 0.82rem;
         font-weight: 600;
         transition: all 0.15s ease;
     }
 
-    body.dark-theme .mobile-subcat-chip {
-        background: #0f172a;
+    body.dark-theme .mobile-subcat-row {
+        background: #1e293b;
         border-color: #334155;
-        color: #cbd5e1;
+        color: #f1f5f9;
     }
 
-    .mobile-subcat-chip.all-chip {
-        grid-column: span 2;
-        background: rgba(234, 88, 12, 0.08);
-        border-color: rgba(234, 88, 12, 0.3);
+    .mobile-subcat-row:hover, .mobile-subcat-row:active {
+        border-color: #ea580c;
+        background: rgba(234, 88, 12, 0.05);
+    }
+
+    .mobile-subcat-row.all-row {
+        background: linear-gradient(135deg, rgba(234, 88, 12, 0.12), rgba(234, 88, 12, 0.04));
+        border-color: rgba(234, 88, 12, 0.35);
         color: #ea580c;
         font-weight: 700;
-        justify-content: space-between;
     }
 
-    .subcat-chip-dot {
-        width: 5px;
-        height: 5px;
+    .subcat-row-left {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex: 1;
+        min-width: 0;
+    }
+
+    .subcat-row-dot {
+        width: 6px;
+        height: 6px;
         border-radius: 50%;
         background: #ea580c;
         flex-shrink: 0;
     }
 
-    .subcat-chip-text {
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+    .subcat-row-star {
+        color: #ea580c;
+        font-size: 0.9rem;
+        flex-shrink: 0;
+    }
+
+    .subcat-row-title {
+        white-space: normal;
+        word-break: break-word;
+        line-height: 1.35;
+        color: inherit;
+    }
+
+    .subcat-row-arrow {
+        color: #94a3b8;
+        font-size: 1.1rem;
+        font-weight: 700;
+        margin-left: 8px;
+        flex-shrink: 0;
     }
 
     /* Product Listing Mobile Filter & Pills */

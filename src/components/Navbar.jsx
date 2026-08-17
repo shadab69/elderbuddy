@@ -369,24 +369,30 @@ export default function Navbar({ mobileDrawerOpen, setMobileDrawerOpen }) {
                       </div>
 
                       {isExpanded && cat.subcategories && (
-                        <div className="mobile-subcat-drawer-grid">
+                        <div className="mobile-subcat-drawer-list">
                           <Link 
                             to={`/products?category=${cat.id}`}
-                            className="mobile-subcat-chip all-chip"
+                            className="mobile-subcat-row all-row"
                             onClick={() => setMobileDrawerOpen(false)}
                           >
-                            <span>Browse All {cat.name}</span>
-                            <span className="chip-arrow">→</span>
+                            <div className="subcat-row-left">
+                              <span className="subcat-row-star">⚡</span>
+                              <span className="subcat-row-title">View All {cat.name}</span>
+                            </div>
+                            <span className="subcat-row-arrow">→</span>
                           </Link>
                           {cat.subcategories.map((subcat) => (
                             <Link 
                               key={subcat.id}
                               to={`/products?category=${cat.id}&subcat=${subcat.id}`}
-                              className="mobile-subcat-chip"
+                              className="mobile-subcat-row"
                               onClick={() => setMobileDrawerOpen(false)}
                             >
-                              <span className="subcat-chip-dot"></span>
-                              <span className="subcat-chip-text">{subcat.name}</span>
+                              <div className="subcat-row-left">
+                                <span className="subcat-row-dot"></span>
+                                <span className="subcat-row-title">{subcat.name}</span>
+                              </div>
+                              <span className="subcat-row-arrow">›</span>
                             </Link>
                           ))}
                         </div>
