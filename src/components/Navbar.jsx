@@ -94,21 +94,23 @@ export default function Navbar({ mobileDrawerOpen, setMobileDrawerOpen }) {
     <header className="app-header-light">
       {/* Main Top Header Row */}
       <div className="container main-header-row">
-        {/* Mobile Hamburger Toggle */}
-        <button 
-          type="button" 
-          className="mobile-hamburger-btn" 
-          onClick={() => setMobileDrawerOpen && setMobileDrawerOpen(!mobileDrawerOpen)}
-          aria-label="Open Navigation Menu"
-        >
-          {mobileDrawerOpen ? <X style={{ width: '22px', height: '22px' }} /> : <Menu style={{ width: '22px', height: '22px' }} />}
-        </button>
+        {/* Left Section: Mobile Hamburger Toggle + Logo */}
+        <div className="header-left-wrap" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <button 
+            type="button" 
+            className="mobile-hamburger-btn" 
+            onClick={() => setMobileDrawerOpen && setMobileDrawerOpen(!mobileDrawerOpen)}
+            aria-label="Open Navigation Menu"
+          >
+            {mobileDrawerOpen ? <X style={{ width: '22px', height: '22px' }} /> : <Menu style={{ width: '22px', height: '22px' }} />}
+          </button>
 
-        {/* Elder-o-Buddy Logo */}
-        <Link to="/" className="logo-area-bm" style={{ textDecoration: 'none' }}>
-          <span className="logo-orange">Elder</span> <span className="logo-blk">-O-</span> <span className="logo-dark">Buddy</span>
-          <sup className="logo-tm">®</sup>
-        </Link>
+          {/* Elder-o-Buddy Logo */}
+          <Link to="/" className="logo-area-bm" style={{ textDecoration: 'none' }}>
+            <span className="logo-orange">Elder</span> <span className="logo-blk">-O-</span> <span className="logo-dark">Buddy</span>
+            <sup className="logo-tm">®</sup>
+          </Link>
+        </div>
         
         {/* Desktop Shop by Categories Hover Dropdown */}
         <div 
@@ -205,61 +207,64 @@ export default function Navbar({ mobileDrawerOpen, setMobileDrawerOpen }) {
           </button>
         </form>
 
-        {/* Action Buttons */}
-        <div className="header-action-buttons-bm">
-          <Link to="/admin" className="btn-price-check desktop-only" style={{ textDecoration: 'none' }}>
-            <span className="check-box-icon">✓</span> Price Check
-          </Link>
+        {/* Right Section: Action Buttons & Cart */}
+        <div className="header-right-wrap" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          {/* Action Buttons */}
+          <div className="header-action-buttons-bm" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <Link to="/admin" className="btn-price-check desktop-only" style={{ textDecoration: 'none' }}>
+              <span className="check-box-icon">✓</span> Price Check
+            </Link>
 
-          {/* AI Copilot Badge */}
-          <button 
-            type="button" 
-            className="btn-ai-header desktop-only"
-            onClick={triggerAIAssistant}
-            title="Ask AI Assistant"
-            style={{
-              background: 'linear-gradient(135deg, #0f172a, #1e293b)',
-              color: '#fdba74',
-              border: '1px solid #ea580c',
-              borderRadius: '20px',
-              padding: '6px 12px',
-              fontSize: '0.78rem',
-              fontWeight: '700',
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '5px',
-              cursor: 'pointer'
-            }}
-          >
-            <Sparkles style={{ width: '14px', height: '14px', color: '#f97316' }} />
-            <span>AI Copilot</span>
-          </button>
+            {/* AI Copilot Badge */}
+            <button 
+              type="button" 
+              className="btn-ai-header desktop-only"
+              onClick={triggerAIAssistant}
+              title="Ask AI Assistant"
+              style={{
+                background: 'linear-gradient(135deg, #0f172a, #1e293b)',
+                color: '#fdba74',
+                border: '1px solid #ea580c',
+                borderRadius: '20px',
+                padding: '6px 12px',
+                fontSize: '0.78rem',
+                fontWeight: '700',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '5px',
+                cursor: 'pointer'
+              }}
+            >
+              <Sparkles style={{ width: '14px', height: '14px', color: '#f97316' }} />
+              <span>AI Copilot</span>
+            </button>
 
-          {/* Premium Theme Switcher */}
-          <button 
-            type="button" 
-            className="theme-toggle-btn"
-            onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
-            aria-label="Toggle Light/Dark Theme"
-            title="Toggle Light/Dark Theme"
-          >
-            {theme === 'light' ? <Moon style={{ width: '18px', height: '18px' }} /> : <Sun style={{ width: '18px', height: '18px', color: '#f59e0b' }} />}
-          </button>
+            {/* Premium Theme Switcher */}
+            <button 
+              type="button" 
+              className="theme-toggle-btn"
+              onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
+              aria-label="Toggle Light/Dark Theme"
+              title="Toggle Light/Dark Theme"
+            >
+              {theme === 'light' ? <Moon style={{ width: '18px', height: '18px' }} /> : <Sun style={{ width: '18px', height: '18px', color: '#f59e0b' }} />}
+            </button>
 
-          <button 
-            type="button" 
-            className="btn-become-seller desktop-only"
-            onClick={() => navigate('/admin')}
-          >
-            Become a Seller
-          </button>
-        </div>
+            <button 
+              type="button" 
+              className="btn-become-seller desktop-only"
+              onClick={() => navigate('/admin')}
+            >
+              Become a Seller
+            </button>
+          </div>
 
-        {/* Cart Trigger */}
-        <div className="cart-trigger-bm" onClick={openCartDrawer} style={{ cursor: 'pointer' }} aria-label="Shopping Cart">
-          <ShoppingCart className="cart-icon" style={{ width: '20px', height: '20px' }} />
-          <span className="desktop-only">Cart</span>
-          <span className="cart-badge-bm">{totalItems}</span>
+          {/* Cart Trigger */}
+          <div className="cart-trigger-bm" onClick={openCartDrawer} style={{ cursor: 'pointer' }} aria-label="Shopping Cart">
+            <ShoppingCart className="cart-icon" style={{ width: '20px', height: '20px' }} />
+            <span className="desktop-only">Cart</span>
+            <span className="cart-badge-bm">{totalItems}</span>
+          </div>
         </div>
       </div>
 
