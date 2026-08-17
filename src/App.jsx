@@ -19,6 +19,8 @@ import Footer from './components/Footer.jsx';
 import CartDrawer from './components/CartDrawer.jsx';
 import MaterialEstimatorModal from './components/MaterialEstimatorModal.jsx';
 import InquiryModal from './components/InquiryModal.jsx';
+import AgenticAssistant from './components/AgenticAssistant.jsx';
+import MobileBottomNav from './components/MobileBottomNav.jsx';
 import Home from './pages/Home.jsx';
 import ProductList from './pages/ProductList.jsx';
 import ProductDetail from './pages/ProductDetail.jsx';
@@ -46,6 +48,7 @@ export default function App() {
   const [guides, setGuides] = useState([]);
   const [orders, setOrders] = useState([]);
   const [leads, setLeads] = useState([]);
+  const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
   const [cart, setCart] = useState(() => {
     return JSON.parse(localStorage.getItem('builderpro_cart')) || [];
   });
@@ -104,8 +107,15 @@ export default function App() {
       setGuides(fetchedGuides);
       setOrders(ordersRes.data || []);
       setLeads(leadsRes.data || []);
-    } catch (e) {
-      console.error('Error fetching initial data', e);
+    } catch (error) {
+      console.error('Error fetching data, using defaults:', error);
+      setProducts(INITIAL_PRODUCTS);
+      setCategories(INITIAL_CATEGORIES);
+      setUnits(INITIAL_UNITS);
+      setBanners(INITIAL_BANNERS);
+      setDesigners(INITIAL_DESIGNERS);
+      setBuilders(INITIAL_BUILDERS);
+      setGuides(INITIAL_GUIDE_POSTS);
     } finally {
       setLoading(false);
     }
@@ -134,14 +144,14 @@ export default function App() {
     setCart((prevCart) => prevCart.filter((item) => item.product.id !== productId));
   };
 
-  const updateCartQuantity = (productId, qty) => {
-    if (qty <= 0) {
+  const updateCartQuantity = (productId, quantity) => {
+    if (quantity <= 0) {
       removeFromCart(productId);
       return;
     }
     setCart((prevCart) =>
       prevCart.map((item) =>
-        item.product.id === productId ? { ...item, quantity: qty } : item
+        item.product.id === productId ? { ...item, quantity } : item
       )
     );
   };
@@ -171,7 +181,10 @@ export default function App() {
       <HashRouter>
         <ScrollToTop />
         <div className="app-container">
-          <Navbar />
+          <Navbar 
+            mobileDrawerOpen={mobileDrawerOpen} 
+            setMobileDrawerOpen={setMobileDrawerOpen} 
+          />
           <main id="app">
             <Routes>
               <Route path="/" element={<Home />} />
@@ -192,6 +205,8 @@ export default function App() {
           <CartDrawer />
           <MaterialEstimatorModal />
           <InquiryModal />
+          <AgenticAssistant />
+          <MobileBottomNav onOpenCategories={() => setMobileDrawerOpen(true)} />
         </div>
       </HashRouter>
     </AppContext.Provider>

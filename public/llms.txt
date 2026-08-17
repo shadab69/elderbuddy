@@ -1,0 +1,14 @@
+﻿# Elder-O-Buddy - Building Materials Marketplace & Turnkey Construction
+> Complete B2B/B2C marketplace for building materials and Turnkey Home Construction in India.
+
+## Quick Links
+- Homepage: https://elderobuddy.com/
+- Catalog & Products: https://elderobuddy.com/#/products
+- Turnkey Construction: https://elderobuddy.com/#/build-your-home
+- Material Estimator: Available on site
+- Verified Builders: https://elderobuddy.com/#/builders
+- Buying Guides: https://elderobuddy.com/#/guides
+
+## Quality & Standards
+- 108-point QA Checklist based on Indian Standards (IS 456, IS 1786, IS 6313, IS 1892)
+- 10-Year Structural Warranty

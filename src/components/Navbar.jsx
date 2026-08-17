@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AppContext } from '../App.jsx';
-import { ChevronDown, ChevronRight, Search, ShoppingCart, Sun, Moon, Tag } from 'lucide-react';
+import { ChevronDown, ChevronRight, Search, ShoppingCart, Sun, Moon, Menu, X, Sparkles, Building, Calculator, UserCheck, BookOpen, Layers } from 'lucide-react';
 import * as LucideIcons from 'lucide-react';
 
 const getCategoryIcon = (iconName) => {
@@ -26,11 +26,12 @@ const getCategoryIcon = (iconName) => {
   return <IconComponent style={{ width: '18px', height: '18px', strokeWidth: 2 }} />;
 };
 
-export default function Navbar() {
+export default function Navbar({ mobileDrawerOpen, setMobileDrawerOpen }) {
   const { categories = [], cart = [], theme, setTheme } = useContext(AppContext);
   const [catMenuOpen, setCatMenuOpen] = useState(false);
   const [activeCatId, setActiveCatId] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
+  const [expandedMobileCat, setExpandedMobileCat] = useState(null);
   const catMenuRef = useRef(null);
   const navigate = useNavigate();
 
@@ -39,8 +40,6 @@ export default function Navbar() {
       setActiveCatId(categories[0].id);
     }
   }, [categories, activeCatId]);
-
-  const currentActiveCat = categories.find((c) => c?.id === activeCatId) || categories[0] || null;
 
   // Close categories menu on clicking outside
   useEffect(() => {
@@ -61,6 +60,7 @@ export default function Navbar() {
   const handleSearchSubmit = (e) => {
     e.preventDefault();
     if (searchQuery.trim()) {
+      if (setMobileDrawerOpen) setMobileDrawerOpen(false);
       navigate(`/products?search=${encodeURIComponent(searchQuery.trim())}`);
     }
   };
@@ -79,24 +79,41 @@ export default function Navbar() {
 
   // Toggle Estimator Modal
   const openEstimator = () => {
+    if (setMobileDrawerOpen) setMobileDrawerOpen(false);
     const modal = document.getElementById('calc-modal-overlay');
     if (modal) modal.classList.add('active');
+  };
+
+  const triggerAIAssistant = () => {
+    if (setMobileDrawerOpen) setMobileDrawerOpen(false);
+    const btn = document.querySelector('.agentic-floating-launcher');
+    if (btn) btn.click();
   };
 
   return (
     <header className="app-header-light">
       {/* Main Top Header Row */}
       <div className="container main-header-row">
+        {/* Mobile Hamburger Toggle */}
+        <button 
+          type="button" 
+          className="mobile-hamburger-btn" 
+          onClick={() => setMobileDrawerOpen && setMobileDrawerOpen(!mobileDrawerOpen)}
+          aria-label="Open Navigation Menu"
+        >
+          {mobileDrawerOpen ? <X style={{ width: '22px', height: '22px' }} /> : <Menu style={{ width: '22px', height: '22px' }} />}
+        </button>
+
         {/* Elder-o-Buddy Logo */}
         <Link to="/" className="logo-area-bm" style={{ textDecoration: 'none' }}>
           <span className="logo-orange">Elder</span> <span className="logo-blk">-O-</span> <span className="logo-dark">Buddy</span>
           <sup className="logo-tm">®</sup>
         </Link>
         
-        {/* Shop by Categories Hover Dropdown & Horizontal Mega Menu */}
+        {/* Desktop Shop by Categories Hover Dropdown */}
         <div 
           ref={catMenuRef} 
-          className="category-select-bm" 
+          className="category-select-bm desktop-only" 
           onMouseEnter={() => setCatMenuOpen(true)}
           onMouseLeave={() => setCatMenuOpen(false)}
         >
@@ -110,10 +127,7 @@ export default function Navbar() {
           </button>
           
           <div className={`horizontal-cat-menu-bm ${catMenuOpen ? 'show' : ''}`}>
-            {/* Top Accent Gradient Bar */}
             <div className="mega-top-gradient-bar"></div>
-
-            {/* Header inside Mega Menu */}
             <div className="mega-menu-top-header">
               <div className="mega-menu-title-area">
                 <span className="mega-badge">Explore Store</span>
@@ -124,7 +138,6 @@ export default function Navbar() {
               </Link>
             </div>
 
-            {/* Categories & Subcategories Grid */}
             <div className="horizontal-cat-grid">
               {(categories || []).map((cat) => (
                 <div key={cat.id} className="horizontal-cat-card">
@@ -138,15 +151,15 @@ export default function Navbar() {
                     </div>
                     <div className="horizontal-cat-header-info">
                       <span className="horizontal-cat-title">{cat.name}</span>
-                      <span className="horizontal-cat-count">{cat.subcategories?.length || 0} Subcategories</span>
+                      <span className="horizontal-cat-count">{(cat.subcategories || []).length} Subcategories</span>
                     </div>
                   </Link>
 
                   {cat.subcategories && cat.subcategories.length > 0 && (
                     <div className="horizontal-subcat-list">
                       {cat.subcategories.map((subcat) => (
-                        <Link
-                          key={subcat.id}
+                        <Link 
+                          key={subcat.id} 
                           to={`/products?category=${cat.id}&subcat=${subcat.id}`}
                           className="horizontal-subcat-link"
                           onClick={() => setCatMenuOpen(false)}
@@ -162,7 +175,6 @@ export default function Navbar() {
               ))}
             </div>
 
-            {/* Bottom Promo Footer inside Menu */}
             <div className="mega-menu-bottom-footer">
               <div className="mega-footer-left">
                 <span className="mega-footer-icon">⚡</span>
@@ -178,7 +190,7 @@ export default function Navbar() {
         </div>
 
         {/* Central Search Bar */}
-        <form className="search-form-bm" onSubmit={handleSearchSubmit}>
+        <form className="search-form-bm desktop-only" onSubmit={handleSearchSubmit}>
           <input 
             type="text" 
             placeholder="Search entire store here..." 
@@ -186,36 +198,49 @@ export default function Navbar() {
             onChange={(e) => setSearchQuery(e.target.value)}
             required 
             autoComplete="off"
+            aria-label="Search materials"
           />
-          <button type="submit" className="btn-search-bm">
+          <button type="submit" className="btn-search-bm" aria-label="Submit search">
             <Search style={{ width: '18px', height: '18px' }} />
           </button>
         </form>
 
-        {/* Price Check, Dark Mode, and Seller Portal Buttons */}
-        <div className="header-action-buttons-bm" style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-          <Link to="/admin" className="btn-price-check" style={{ textDecoration: 'none' }}>
+        {/* Action Buttons */}
+        <div className="header-action-buttons-bm">
+          <Link to="/admin" className="btn-price-check desktop-only" style={{ textDecoration: 'none' }}>
             <span className="check-box-icon">✓</span> Price Check
           </Link>
+
+          {/* AI Copilot Badge */}
+          <button 
+            type="button" 
+            className="btn-ai-header desktop-only"
+            onClick={triggerAIAssistant}
+            title="Ask AI Assistant"
+            style={{
+              background: 'linear-gradient(135deg, #0f172a, #1e293b)',
+              color: '#fdba74',
+              border: '1px solid #ea580c',
+              borderRadius: '20px',
+              padding: '6px 12px',
+              fontSize: '0.78rem',
+              fontWeight: '700',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '5px',
+              cursor: 'pointer'
+            }}
+          >
+            <Sparkles style={{ width: '14px', height: '14px', color: '#f97316' }} />
+            <span>AI Copilot</span>
+          </button>
 
           {/* Premium Theme Switcher */}
           <button 
             type="button" 
             className="theme-toggle-btn"
             onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
-            style={{
-              background: 'transparent',
-              border: '1px solid var(--border-color)',
-              borderRadius: '50%',
-              width: '40px',
-              height: '40px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              cursor: 'pointer',
-              color: 'var(--text-color)',
-              transition: 'all 0.2s'
-            }}
+            aria-label="Toggle Light/Dark Theme"
             title="Toggle Light/Dark Theme"
           >
             {theme === 'light' ? <Moon style={{ width: '18px', height: '18px' }} /> : <Sun style={{ width: '18px', height: '18px', color: '#f59e0b' }} />}
@@ -223,7 +248,7 @@ export default function Navbar() {
 
           <button 
             type="button" 
-            className="btn-become-seller"
+            className="btn-become-seller desktop-only"
             onClick={() => navigate('/admin')}
           >
             Become a Seller
@@ -231,15 +256,32 @@ export default function Navbar() {
         </div>
 
         {/* Cart Trigger */}
-        <div className="cart-trigger-bm" onClick={openCartDrawer} style={{ cursor: 'pointer' }}>
+        <div className="cart-trigger-bm" onClick={openCartDrawer} style={{ cursor: 'pointer' }} aria-label="Shopping Cart">
           <ShoppingCart className="cart-icon" style={{ width: '20px', height: '20px' }} />
-          <span>Cart</span>
+          <span className="desktop-only">Cart</span>
           <span className="cart-badge-bm">{totalItems}</span>
         </div>
       </div>
 
-      {/* Middle Menu Row */}
-      <nav className="middle-menu-nav">
+      {/* Mobile Search Bar (Visible on mobile) */}
+      <div className="mobile-search-row">
+        <form className="mobile-search-form" onSubmit={handleSearchSubmit}>
+          <input 
+            type="text" 
+            placeholder="Search cement, steel, tiles, paints..." 
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            required
+            aria-label="Mobile Search"
+          />
+          <button type="submit" className="btn-mobile-search" aria-label="Search">
+            <Search style={{ width: '16px', height: '16px' }} />
+          </button>
+        </form>
+      </div>
+
+      {/* Middle Menu Row (Desktop) */}
+      <nav className="middle-menu-nav desktop-only">
         <div className="container menu-nav-container">
           <Link to="/products?category=cement" className="menu-link">Cement Exchange</Link>
           <Link to="/" className="menu-link">Brands</Link>
@@ -252,34 +294,131 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* Delivery Alert Bar */}
-      <div className="delivery-bar-bm">
-        <div className="container delivery-container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
-          <span>🚚 We deliver across Pan India only</span>
-        </div>
-      </div>
+      {/* Mobile Slideout Navigation Drawer */}
+      {mobileDrawerOpen && (
+        <div className="mobile-drawer-backdrop" onClick={() => setMobileDrawerOpen(false)}>
+          <div className="mobile-drawer-card" onClick={(e) => e.stopPropagation()}>
+            <div className="mobile-drawer-header">
+              <div className="logo-area-bm" style={{ fontSize: '1.4rem' }}>
+                <span className="logo-orange">Elder</span> <span className="logo-blk">-O-</span> <span className="logo-dark">Buddy</span>
+              </div>
+              <button 
+                type="button" 
+                className="btn-close-drawer"
+                onClick={() => setMobileDrawerOpen(false)}
+                aria-label="Close menu"
+              >
+                <X style={{ width: '20px', height: '20px' }} />
+              </button>
+            </div>
 
-      {/* Quick Jump Links Row */}
-      <div className="quick-links-bar">
-        <div className="container quick-links-container">
-          <span className="quick-label">Go Quickly To :</span>
-          <div className="quick-tags">
-            <Link to="/products?category=cement" className="quick-tag-link">Cement</Link>
-            <span className="divider">,</span>
-            <Link to="/products?category=steel" className="quick-tag-link">TMT Steels</Link>
-            <span className="divider">,</span>
-            <Link to="/products?category=bricks" className="quick-tag-link">Bricks & Blocks</Link>
-            <span className="divider">,</span>
-            <Link to="/products?category=paints" className="quick-tag-link">Paints</Link>
-            <span className="divider">,</span>
-            <Link to="/products?category=plumbing" className="quick-tag-link">Plumbing</Link>
-            <span className="divider">,</span>
-            <Link to="/products?category=tiles" className="quick-tag-link">Tiles</Link>
-            <span className="divider">,</span>
-            <Link to="/products?category=electrical" className="quick-tag-link">Lighting & Fixtures</Link>
+            <div className="mobile-drawer-body">
+              {/* Quick Action Highlights */}
+              <div className="mobile-drawer-promos">
+                <Link 
+                  to="/build-your-home" 
+                  className="mobile-promo-card"
+                  onClick={() => setMobileDrawerOpen(false)}
+                  style={{ background: 'linear-gradient(135deg, #0f172a, #ea580c)', color: '#ffffff' }}
+                >
+                  <Building style={{ width: '20px', height: '20px' }} />
+                  <div>
+                    <div style={{ fontWeight: '800', fontSize: '0.85rem' }}>🏠 Build Your Home</div>
+                    <div style={{ fontSize: '0.72rem', opacity: 0.9 }}>Complete Turnkey Construction & QA</div>
+                  </div>
+                </Link>
+
+                <div 
+                  className="mobile-promo-card"
+                  onClick={triggerAIAssistant}
+                  style={{ background: 'linear-gradient(135deg, #1e1b4b, #6366f1)', color: '#ffffff', cursor: 'pointer' }}
+                >
+                  <Sparkles style={{ width: '20px', height: '20px', color: '#fdba74' }} />
+                  <div>
+                    <div style={{ fontWeight: '800', fontSize: '0.85rem' }}>🤖 AI Copilot</div>
+                    <div style={{ fontSize: '0.72rem', opacity: 0.9 }}>Material & Sq.Ft Quantity Estimator</div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Categories Accordion Section */}
+              <div className="mobile-drawer-section-title">
+                <Layers style={{ width: '16px', height: '16px', color: '#ea580c' }} />
+                <span>Shop by Categories</span>
+              </div>
+
+              <div className="mobile-cat-accordion-list">
+                {categories.map((cat) => {
+                  const isExpanded = expandedMobileCat === cat.id;
+                  return (
+                    <div key={cat.id} className="mobile-accordion-item">
+                      <div 
+                        className={`mobile-accordion-header ${isExpanded ? 'active' : ''}`}
+                        onClick={() => setExpandedMobileCat(isExpanded ? null : cat.id)}
+                      >
+                        <div className="mobile-acc-title-wrap">
+                          <span className="mobile-cat-icon">{getCategoryIcon(cat.icon)}</span>
+                          <span className="mobile-cat-name">{cat.name}</span>
+                        </div>
+                        <ChevronDown className={`mobile-acc-chevron ${isExpanded ? 'rotate-180' : ''}`} style={{ width: '16px', height: '16px' }} />
+                      </div>
+
+                      {isExpanded && cat.subcategories && (
+                        <div className="mobile-subcat-drawer-list">
+                          <Link 
+                            to={`/products?category=${cat.id}`}
+                            className="mobile-subcat-drawer-item all-link"
+                            onClick={() => setMobileDrawerOpen(false)}
+                          >
+                            <span>View All {cat.name}</span>
+                            <span>→</span>
+                          </Link>
+                          {cat.subcategories.map((subcat) => (
+                            <Link 
+                              key={subcat.id}
+                              to={`/products?category=${cat.id}&subcat=${subcat.id}`}
+                              className="mobile-subcat-drawer-item"
+                              onClick={() => setMobileDrawerOpen(false)}
+                            >
+                              <span>{subcat.name}</span>
+                            </Link>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* General Navigation Links */}
+              <div className="mobile-drawer-section-title" style={{ marginTop: '18px' }}>
+                <span>Quick Services</span>
+              </div>
+              <div className="mobile-nav-links-list">
+                <div className="mobile-nav-link" onClick={openEstimator} style={{ cursor: 'pointer' }}>
+                  <Calculator style={{ width: '18px', height: '18px', color: '#ea580c' }} />
+                  <span>Material Calculator</span>
+                </div>
+                <Link to="/interior-designers" className="mobile-nav-link" onClick={() => setMobileDrawerOpen(false)}>
+                  <UserCheck style={{ width: '18px', height: '18px', color: '#ea580c' }} />
+                  <span>Interior Designers</span>
+                </Link>
+                <Link to="/builders" className="mobile-nav-link" onClick={() => setMobileDrawerOpen(false)}>
+                  <Building style={{ width: '18px', height: '18px', color: '#ea580c' }} />
+                  <span>Verified Builders</span>
+                </Link>
+                <Link to="/guides" className="mobile-nav-link" onClick={() => setMobileDrawerOpen(false)}>
+                  <BookOpen style={{ width: '18px', height: '18px', color: '#ea580c' }} />
+                  <span>Buying Guides & Blogs</span>
+                </Link>
+                <Link to="/admin" className="mobile-nav-link" onClick={() => setMobileDrawerOpen(false)}>
+                  <span>🏷️ Seller Portal & Admin</span>
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </header>
   );
 }

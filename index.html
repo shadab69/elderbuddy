@@ -2,13 +2,80 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Elder-o-Buddy | Building Materials & Construction Services Online</title>
-    <meta name="description" content="Buy cement, TMT steel, paints, plumbing, tiles, and electrical fittings online at India's leading building materials marketplace.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>Elder-o-Buddy | Building Materials & Turnkey Home Construction Services</title>
+    <meta name="description" content="Buy cement, TMT steel, paints, plumbing, tiles, and electrical fittings online at India's leading building materials marketplace and turnkey home construction service.">
+    <meta name="keywords" content="building materials, construction, turnkey home construction, cement, TMT steel, tiles, paints, electrical, plumbing, India">
+    <meta name="author" content="Elder-O-Buddy">
+    <meta name="theme-color" content="#ea580c">
+
+    <!-- Open Graph & Social Cards -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Elder-o-Buddy | Building Materials & Turnkey Home Construction">
+    <meta property="og:description" content="Pan-India building materials sourcing & complete turnkey construction with 108 Quality Checks.">
+    <meta property="og:image" content="/assets/turnkey_hero_home.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- AI Agent & Semantic Discovery -->
+    <link rel="alternate" type="text/plain" href="/llms.txt" title="LLMs Info">
+    <meta name="ai-agent-ready" content="true">
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Schema.org JSON-LD Structured Data for Agentic Browsing & SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://elderobuddy.com/#website",
+          "url": "https://elderobuddy.com/",
+          "name": "Elder-O-Buddy Building Materials & Construction",
+          "description": "Leading construction marketplace and turnkey home builder in India",
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://elderobuddy.com/#/products?search={search_term_string}",
+            "query-input": "required name=search_term_string"
+          }
+        },
+        {
+          "@type": "Organization",
+          "@id": "https://elderobuddy.com/#organization",
+          "name": "Elder-O-Buddy",
+          "url": "https://elderobuddy.com/",
+          "logo": "https://elderobuddy.com/assets/logo.png",
+          "sameAs": [],
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+91-9876543210",
+            "contactType": "customer service",
+            "areaServed": "IN",
+            "availableLanguage": ["English", "Hindi"]
+          }
+        },
+        {
+          "@type": "Service",
+          "name": "Turnkey Home Construction",
+          "provider": {
+            "@id": "https://elderobuddy.com/#organization"
+          },
+          "serviceType": "Residential House Construction",
+          "areaServed": "India",
+          "offers": {
+            "@type": "Offer",
+            "priceCurrency": "INR",
+            "price": "1650",
+            "unitText": "sq.ft"
+          }
+        }
+      ]
+    }
+    </script>
+
     <!-- Custom CSS -->
     <link rel="stylesheet" href="/index.css">
 </head>
