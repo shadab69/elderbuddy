@@ -39,12 +39,12 @@
     "id": "tiles",
     "name": "Tiles & Flooring",
     "icon": "grid",
-    "desc": "Ceramic, vitrified tiles & natural stones",
+    "desc": "Ceramic, vitrified tiles, wooden flooring & natural stones",
     "subcategories": [
       { "id": "vitrified-tiles", "name": "Vitrified Floor Tiles" },
       { "id": "ceramic-tiles", "name": "Ceramic Wall Tiles" },
-      { "id": "granite-marble", "name": "Granite & Natural Marble" },
-      { "id": "wooden-flooring", "name": "Laminate Wooden Flooring" }
+      { "id": "wooden-flooring", "name": "Laminate & Solid Wooden Flooring" },
+      { "id": "granite-marble", "name": "Granite & Natural Marble" }
     ]
   },
   {
@@ -75,10 +75,11 @@
     "id": "paints",
     "name": "Paints & Finishes",
     "icon": "paint-bucket",
-    "desc": "Interior, exterior paints & primers",
+    "desc": "Interior, exterior paints, wallpapers & primers",
     "subcategories": [
       { "id": "interior-paints", "name": "Interior Emulsion Paints" },
       { "id": "exterior-paints", "name": "Exterior Weatherproof Paints" },
+      { "id": "designer-wallpapers", "name": "Luxury Wallpapers & Textures" },
       { "id": "wall-putty", "name": "Acrylic Wall Putty & Primers" },
       { "id": "wood-finishes", "name": "Wood Polish & Metal Enamels" }
     ]
@@ -87,8 +88,9 @@
     "id": "hardware",
     "name": "Hardware & Fixtures",
     "icon": "wrench",
-    "desc": "Locks, hinges, screws & steel fixtures",
+    "desc": "Lockers, digital locks, hinges, screws & steel fixtures",
     "subcategories": [
+      { "id": "lockers-safes", "name": "Digital Lockers & Security Safes" },
       { "id": "digital-locks", "name": "Smart Digital & Mortise Locks" },
       { "id": "door-hinges", "name": "Stainless Steel Hinges & Handles" },
       { "id": "screws-fasteners", "name": "Screws, Bolts & Fasteners" },
@@ -99,8 +101,11 @@
     "id": "interior",
     "name": "Interior & Living",
     "icon": "sofa",
-    "desc": "Luxury furniture, lighting, decor & interior furnishings",
+    "desc": "PVC panels, wallpapers, wooden flooring, luxury furniture & decor",
     "subcategories": [
+      { "id": "pvc-panels", "name": "PVC Wall Panels & Fluted Louvers" },
+      { "id": "designer-wallpapers", "name": "Designer 3D & Textured Wallpapers" },
+      { "id": "wooden-flooring", "name": "Laminate & Hardwood Flooring" },
       { "id": "sofas-seating", "name": "Luxury Sofas & Living Seating" },
       { "id": "center-tables", "name": "Center Coffee & Dining Tables" },
       { "id": "wall-decor", "name": "Wall Decor & Art Frames" },

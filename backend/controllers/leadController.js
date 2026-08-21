@@ -1,4 +1,5 @@
 const Lead = require('../models/leadModel');
+const emailService = require('../services/emailService');
 
 exports.getLeads = async (req, res) => {
     try {
@@ -15,8 +16,15 @@ exports.createLead = async (req, res) => {
             req.body.id = 'INQ_' + Math.floor(100000 + Math.random() * 900000);
         }
         const lead = await Lead.create(req.body);
+
+        // Asynchronously dispatch email alert to admin
+        emailService.sendLeadEmailNotification(lead).catch(err => {
+            console.error('[leadController] Background email notification error:', err.message);
+        });
+
         res.status(201).json(lead);
     } catch (e) {
         res.status(400).json({ message: 'Error logging inquiry lead', error: e.message });
     }
 };
+

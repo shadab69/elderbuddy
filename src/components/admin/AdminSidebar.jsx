@@ -8,7 +8,8 @@ import {
   FileText,
   Users,
   Building2,
-  BookOpen
+  BookOpen,
+  Mail
 } from 'lucide-react';
 
 export default function AdminSidebar({ activeTab, setActiveTab }) {
@@ -49,6 +50,10 @@ export default function AdminSidebar({ activeTab, setActiveTab }) {
       <button className={`admin-nav-item ${activeTab === 'guides' ? 'active' : ''}`} onClick={() => setActiveTab('guides')}>
         <BookOpen style={{ width: '18px', height: '18px' }} />
         <span>Manage Guides</span>
+      </button>
+      <button className={`admin-nav-item ${activeTab === 'email' ? 'active' : ''}`} onClick={() => setActiveTab('email')}>
+        <Mail style={{ width: '18px', height: '18px', color: '#ea580c' }} />
+        <span>Email & Alerts</span>
       </button>
     </aside>
   );

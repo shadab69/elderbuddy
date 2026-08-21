@@ -1,0 +1,11 @@
+{
+  "adminEmail": "shadab69.official@gmail.com",
+  "service": "gmail",
+  "smtpHost": "smtp.gmail.com",
+  "smtpPort": 465,
+  "smtpSecure": true,
+  "smtpUser": "",
+  "smtpPass": "",
+  "notifyOnInquiry": true,
+  "notifyOnOrder": true
+}

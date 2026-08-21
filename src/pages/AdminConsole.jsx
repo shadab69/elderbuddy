@@ -13,6 +13,7 @@ import AdminLeadPane from '../components/admin/AdminLeadPane.jsx';
 import AdminDesignerPane from '../components/admin/AdminDesignerPane.jsx';
 import AdminBuilderPane from '../components/admin/AdminBuilderPane.jsx';
 import AdminGuidePane from '../components/admin/AdminGuidePane.jsx';
+import AdminEmailPane from '../components/admin/AdminEmailPane.jsx';
 
 // Import modals
 import ProductModal from '../components/admin/modals/ProductModal.jsx';
@@ -523,6 +524,10 @@ export default function AdminConsole() {
               })}
               onDeleteGuide={handleDeleteGuide}
             />
+          )}
+
+          {activeTab === 'email' && (
+            <AdminEmailPane />
           )}
         </div>
       </div>

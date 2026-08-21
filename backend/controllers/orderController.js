@@ -1,4 +1,5 @@
 const Order = require('../models/orderModel');
+const emailService = require('../services/emailService');
 
 exports.getOrders = async (req, res) => {
     try {
@@ -15,8 +16,15 @@ exports.createOrder = async (req, res) => {
             req.body.id = 'ORD_' + Math.floor(100000 + Math.random() * 900000);
         }
         const order = await Order.create(req.body);
+
+        // Asynchronously dispatch email alert to admin
+        emailService.sendOrderEmailNotification(order).catch(err => {
+            console.error('[orderController] Background email notification error:', err.message);
+        });
+
         res.status(201).json(order);
     } catch (e) {
         res.status(400).json({ message: 'Error logging order', error: e.message });
     }
 };
+

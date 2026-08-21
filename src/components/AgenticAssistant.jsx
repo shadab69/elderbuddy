@@ -15,9 +15,11 @@ export default function AgenticAssistant() {
       suggestedChips: [
         '📐 Calculate materials for 1,200 sq.ft',
         '🏠 Turnkey Home packages & pricing',
+        '🔐 Security Lockers & Safes',
+        '🪵 PVC Panels & Wooden Flooring',
+        '🎨 Designer Wallpapers',
         '🔥 Show Hot Deals on Cement & Steel',
-        '📋 108-point QA Checklist overview',
-        '🧱 Find best AAC Blocks & Bricks'
+        '📋 108-point QA Checklist overview'
       ]
     }
   ]);

@@ -11,6 +11,7 @@ const uploadRoutes = require('./uploadRoutes');
 const guideRoutes = require('./guideRoutes');
 const designerRoutes = require('./designerRoutes');
 const builderRoutes = require('./builderRoutes');
+const emailRoutes = require('./emailRoutes');
 
 router.use('/products', productRoutes);
 router.use('/categories', categoryRoutes);
@@ -22,5 +23,6 @@ router.use('/upload', uploadRoutes);
 router.use('/guides', guideRoutes);
 router.use('/designers', designerRoutes);
 router.use('/builders', builderRoutes);
+router.use('/email', emailRoutes);
 
 module.exports = router;
