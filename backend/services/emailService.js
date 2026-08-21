@@ -236,36 +236,159 @@ async function sendOrderEmailNotification(order) {
   const config = getEmailConfig();
   const recipient = config.adminEmail || process.env.ADMIN_EMAIL || config.smtpUser;
 
-  const subject = `🛒 New Order Placed: #${order.id || 'ORD'} (₹${order.total || 0})`;
-  const itemsList = (order.items || []).map(it => `<li>${it.name || 'Product'} × ${it.qty || 1} — ₹${(it.price || 0) * (it.qty || 1)}</li>`).join('');
+  const orderId = order.id || order._id || 'ORD_AUTO';
+  const customerName = order.customer?.name || order.customerName || order.name || 'Valued Customer';
+  const customerPhone = order.customer?.phone || order.phone || 'N/A';
+  const customerEmail = order.customer?.email || order.email || 'N/A';
+  const deliveryAddress = order.customer ? `${order.customer.address || ''}, ${order.customer.city || ''} - ${order.customer.pincode || ''}` : (order.address || 'Site Delivery Location');
+  const totalAmount = (order.total || 0).toLocaleString('en-IN');
+  const subtotalAmount = (order.subtotal || 0).toLocaleString('en-IN');
+  const gstAmount = (order.gst || 0).toLocaleString('en-IN');
+
+  const subject = `🛒 New Material Order Received: #${orderId} (₹${totalAmount}) - ${customerName}`;
+
+  const itemsRows = (order.items || []).map(it => {
+    const qty = it.quantity || it.qty || 1;
+    const price = it.price || 0;
+    const itemTotal = (price * qty).toLocaleString('en-IN');
+    return `
+      <tr>
+        <td style="padding: 10px 8px; border-bottom: 1px solid #f1f5f9; font-size: 14px; color: #0f172a; font-weight: 600;">
+          ${it.name || 'Building Material'}
+        </td>
+        <td style="padding: 10px 8px; border-bottom: 1px solid #f1f5f9; font-size: 14px; text-align: center; color: #475569;">
+          ${qty}
+        </td>
+        <td style="padding: 10px 8px; border-bottom: 1px solid #f1f5f9; font-size: 14px; text-align: right; color: #475569;">
+          ₹${price.toLocaleString('en-IN')}
+        </td>
+        <td style="padding: 10px 8px; border-bottom: 1px solid #f1f5f9; font-size: 14px; text-align: right; font-weight: 700; color: #0f172a;">
+          ₹${itemTotal}
+        </td>
+      </tr>
+    `;
+  }).join('');
 
   const html = `
-    <div style="font-family: sans-serif; padding: 20px; background: #f8fafc; color: #0f172a;">
-      <div style="max-width: 600px; margin: 0 auto; background: #ffffff; padding: 24px; border-radius: 12px; border: 1px solid #e2e8f0;">
-        <h2 style="color: #ea580c; margin-top: 0;">🛒 New Order Received!</h2>
-        <p><strong>Order ID:</strong> ${order.id}</p>
-        <p><strong>Customer:</strong> ${order.customerName || order.name || 'Customer'} (${order.phone || ''})</p>
-        <p><strong>Delivery Address:</strong> ${order.address || order.location || 'N/A'}</p>
-        <p><strong>Total Amount:</strong> ₹${order.total || 0}</p>
-        <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 16px 0;" />
-        <h3>Ordered Items:</h3>
-        <ul>${itemsList || '<li>No items list provided</li>'}</ul>
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <meta charset="utf-8">
+      <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f1f5f9; margin: 0; padding: 20px; color: #0f172a; }
+        .card { max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.08); border: 1px solid #e2e8f0; }
+        .header { background: linear-gradient(135deg, #16a34a, #15803d); padding: 25px 20px; color: #ffffff; text-align: center; }
+        .header h1 { margin: 0; font-size: 22px; font-weight: 700; }
+        .header p { margin: 6px 0 0 0; opacity: 0.9; font-size: 13px; }
+        .badge { display: inline-block; background: rgba(255,255,255,0.25); padding: 4px 14px; border-radius: 20px; font-size: 12px; font-weight: 700; margin-top: 10px; }
+        .content { padding: 25px 20px; }
+        .section-title { font-size: 13px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; border-bottom: 1px solid #f1f5f9; padding-bottom: 6px; }
+        .info-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+        .info-table td { padding: 8px; font-size: 14px; }
+        .info-table td.label { width: 35%; color: #64748b; font-weight: 600; }
+        .info-table td.val { font-weight: 600; color: #0f172a; }
+        .items-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; background: #f8fafc; border-radius: 8px; overflow: hidden; border: 1px solid #e2e8f0; }
+        .items-table th { background: #e2e8f0; padding: 10px 8px; font-size: 12px; text-transform: uppercase; color: #475569; text-align: left; }
+        .summary-box { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px; margin-bottom: 20px; }
+        .summary-row { display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 14px; }
+        .total-row { display: flex; justify-content: space-between; font-size: 18px; font-weight: 800; color: #16a34a; border-top: 1px solid #e2e8f0; padding-top: 8px; margin-top: 6px; }
+        .actions { text-align: center; margin-top: 20px; }
+        .btn { display: inline-block; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 14px; margin: 0 6px; }
+        .btn-call { background: #16a34a; color: #ffffff !important; }
+        .btn-email { background: #0f172a; color: #ffffff !important; }
+        .footer { background: #f8fafc; padding: 15px; text-align: center; font-size: 12px; color: #94a3b8; border-top: 1px solid #f1f5f9; }
+      </style>
+    </head>
+    <body>
+      <div class="card">
+        <div class="header">
+          <h1>🏗️ BuilderPro Marketplace</h1>
+          <p>New Material Delivery Order Received</p>
+          <div class="badge">Order ID: #${orderId}</div>
+        </div>
+        <div class="content">
+          <div class="section-title">Customer & Delivery Details</div>
+          <table class="info-table">
+            <tr>
+              <td class="label">👤 Customer Name:</td>
+              <td class="val">${customerName}</td>
+            </tr>
+            <tr>
+              <td class="label">📞 Phone Number:</td>
+              <td class="val"><a href="tel:${customerPhone}" style="color: #16a34a; text-decoration: none;">${customerPhone}</a></td>
+            </tr>
+            <tr>
+              <td class="label">✉️ Email Address:</td>
+              <td class="val"><a href="mailto:${customerEmail}" style="color: #16a34a; text-decoration: none;">${customerEmail}</a></td>
+            </tr>
+            <tr>
+              <td class="label">📍 Delivery Address:</td>
+              <td class="val">${deliveryAddress}</td>
+            </tr>
+            <tr>
+              <td class="label">💳 Payment Method:</td>
+              <td class="val" style="color: #16a34a;">${order.paymentMethod || 'Cash on Site Delivery'}</td>
+            </tr>
+          </table>
+
+          <div class="section-title">Ordered Materials</div>
+          <table class="items-table">
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th style="text-align: center;">Qty</th>
+                <th style="text-align: right;">Rate</th>
+                <th style="text-align: right;">Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${itemsRows || '<tr><td colspan="4" style="padding: 10px; text-align: center;">No items found</td></tr>'}
+            </tbody>
+          </table>
+
+          <div class="summary-box">
+            <div style="font-size: 14px; margin-bottom: 4px;"><strong>Subtotal:</strong> ₹${subtotalAmount}</div>
+            <div style="font-size: 14px; margin-bottom: 4px;"><strong>GST (18%):</strong> ₹${gstAmount}</div>
+            <div style="font-size: 18px; font-weight: 800; color: #16a34a; border-top: 1px solid #e2e8f0; padding-top: 8px; margin-top: 8px;">
+              <strong>Grand Total:</strong> ₹${totalAmount}
+            </div>
+          </div>
+
+          <div class="actions">
+            ${customerPhone !== 'N/A' ? `<a href="tel:${customerPhone}" class="btn btn-call">📞 Call Customer for Dispatch</a>` : ''}
+            ${customerEmail !== 'N/A' ? `<a href="mailto:${customerEmail}?subject=BuilderPro Order Confirmation #${orderId}" class="btn btn-email">✉️ Email Order Receipt</a>` : ''}
+          </div>
+        </div>
+        <div class="footer">
+          Received via BuilderPro Marketplace Online Store • ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })} IST
+        </div>
       </div>
-    </div>
+    </body>
+    </html>
   `;
 
-  console.log(`[EmailService] Order notification logged for Order #${order.id}`);
+  console.log(`\n======================================================`);
+  console.log(`🛒 [NEW ORDER RECEIVED FOR ADMIN EMAIL]`);
+  console.log(`➡️ Recipient: ${recipient || '(Admin email not configured yet)'}`);
+  console.log(`➡️ Order ID: #${orderId} | Total: ₹${totalAmount}`);
+  console.log(`➡️ Customer: ${customerName} (${customerPhone} / ${customerEmail})`);
+  console.log(`➡️ Delivery: ${deliveryAddress}`);
+  console.log(`======================================================\n`);
 
   const transporter = createTransporter();
-  if (!transporter) return { success: true, logged: true };
+  if (!transporter) {
+    return { success: true, logged: true, message: 'Order logged locally' };
+  }
 
   try {
     const info = await transporter.sendMail({
       from: `"BuilderPro Orders" <${config.smtpUser}>`,
       to: recipient,
+      replyTo: customerEmail !== 'N/A' ? customerEmail : config.smtpUser,
       subject: subject,
       html: html
     });
+    console.log('[EmailService] Order email sent successfully to', recipient, 'MessageId:', info.messageId);
     return { success: true, messageId: info.messageId };
   } catch (err) {
     console.error('[EmailService] Order email error:', err.message);

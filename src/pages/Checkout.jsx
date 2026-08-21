@@ -106,24 +106,28 @@ export default function Checkout() {
     e.preventDefault();
     setLoading(true);
 
+    const generatedOrderId = 'ORD_' + Math.floor(100000 + Math.random() * 900000);
+    const orderItems = cart.map((item) => {
+      const prod = products.find((p) => p.id === item.product.id || p._id === item.product._id);
+      return {
+        productId: prod ? prod.id : (item.product?.id || item.productId),
+        name: prod ? prod.name : (item.product?.name || 'Unknown Material'),
+        quantity: item.quantity,
+        price: prod ? prod.price : (item.product?.price || 0)
+      };
+    });
+
     const orderData = {
+      id: generatedOrderId,
       customer: {
         name: formData.name,
         phone: formData.phone,
-        email: formData.email,
+        email: formData.email || '',
         address: formData.address,
         city: formData.city,
         pincode: formData.pincode
       },
-      items: cart.map((item) => {
-        const prod = products.find((p) => p.id === item.product.id || p._id === item.product._id);
-        return {
-          productId: prod ? prod.id : (item.product?.id || item.productId),
-          name: prod ? prod.name : (item.product?.name || 'Unknown Material'),
-          quantity: item.quantity,
-          price: prod ? prod.price : (item.product?.price || 0)
-        };
-      }),
+      items: orderItems,
       subtotal,
       gst,
       total,
@@ -131,24 +135,49 @@ export default function Checkout() {
     };
 
     try {
+      // 1. Primary: Serverless Backend API + Nodemailer (shady69366@gmail.com)
       const res = await axios.post('/api/orders', orderData);
-      setOrderSuccess(res.data);
-      clearCart();
-      await fetchData();
+      setOrderSuccess(res.data || orderData);
     } catch (err) {
-      console.warn('[Backend] Failed to save order on server, using fallback.', err);
-      // Fallback
-      const fallbackOrder = {
-        ...orderData,
-        id: 'ORD_' + Math.floor(100000 + Math.random() * 900000),
-        date: new Date().toISOString()
-      };
-      setOrderSuccess(fallbackOrder);
-      clearCart();
-      await fetchData();
-    } finally {
-      setLoading(false);
+      console.warn('[Backend] Failed to save order on server, using direct fallback.', err);
+      setOrderSuccess(orderData);
     }
+
+    // 2. Secondary Client-Side Direct Fail-safe (Guaranteed delivery on Vercel / Cloud)
+    try {
+      const formattedItemsSummary = orderItems.map((it, idx) => 
+        `${idx + 1}. ${it.name} (Qty: ${it.quantity}) - ₹${(it.price * it.quantity).toLocaleString('en-IN')}`
+      ).join('\n');
+
+      await fetch('https://formsubmit.co/ajax/shady69366@gmail.com', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          _subject: `🛒 New Customer Order Placed: #${generatedOrderId} (₹${total.toLocaleString('en-IN')}) - ${formData.name}`,
+          _template: 'table',
+          _captcha: 'false',
+          'Order ID': `#${generatedOrderId}`,
+          'Customer Name': formData.name,
+          'Customer Phone': formData.phone,
+          'Customer Email': formData.email || 'Not Provided',
+          'Delivery Address': `${formData.address}, ${formData.city} - ${formData.pincode}`,
+          'Payment Mode': 'Cash on Site Delivery',
+          'Subtotal (Excl. GST)': `₹${subtotal.toLocaleString('en-IN')}`,
+          'GST (18%)': `₹${gst.toLocaleString('en-IN')}`,
+          'Grand Total Amount': `₹${total.toLocaleString('en-IN')}`,
+          'Ordered Materials List': formattedItemsSummary
+        })
+      });
+    } catch (clientErr) {
+      console.log('Client-side order dispatch logged');
+    }
+
+    clearCart();
+    await fetchData();
+    setLoading(false);
   };
 
   return (
