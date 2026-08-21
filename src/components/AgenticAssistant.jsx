@@ -2,6 +2,7 @@ import React, { useState, useContext, useRef, useEffect } from 'react';
 import { AppContext } from '../App.jsx';
 import { useNavigate } from 'react-router-dom';
 import { Sparkles, Bot, Send, X, ShoppingCart, ArrowRight, Calculator, CheckCircle2, Building2 } from 'lucide-react';
+import { getCleanImage } from '../utils/imageHelper.js';
 
 export default function AgenticAssistant() {
   const { products = [], addToCart } = useContext(AppContext);
@@ -63,7 +64,7 @@ export default function AgenticAssistant() {
           sender: 'agent',
           text: `📊 Structural Material Estimate for ${sqft.toLocaleString()} sq.ft Built-Up Area:\n\n- 🏗️ Cement: ~${cementBags} Bags (OPC 53 / PPC)\n- 🏢 TMT Steel: ~${steelTons} Metric Tonnes (Fe 550D)\n- 🧱 Bricks / AAC Blocks: ~${bricksCount.toLocaleString()} Units\n- ⏳ Sand: ~${sandTons} Tonnes\n\n*Estimated based on standard IS 456 RCC slab benchmarks.*`,
           actionType: 'estimator',
-          recommendedProducts: products.filter(p => ['c1', 's1', 'b1', 'c2'].includes(p.id)).slice(0, 3),
+          recommendedProducts: products.filter(p => ['c1', 's1', 'b1', 'c2'].includes(p.id) || p.category === 'cement' || p.category === 'steel').slice(0, 3),
           suggestedChips: [
             '🏠 Explore Turnkey Home Construction',
             '🛒 Add Cement & Steel to Cart',
@@ -98,6 +99,58 @@ export default function AgenticAssistant() {
             '📐 Calculate materials for 1,000 sq.ft'
           ]
         };
+      } else if (q.includes('locker') || q.includes('safe') || q.includes('vault') || q.includes('godrej') || q.includes('yale')) {
+        const lockerProducts = products.filter(p => p.subcategory === 'lockers-safes' || p.category === 'lockers-safes' || p.name.toLowerCase().includes('locker') || p.name.toLowerCase().includes('safe'));
+        agentResponse = {
+          id: Date.now() + 1,
+          sender: 'agent',
+          text: `🔐 Found top heavy-duty Digital & Fireproof Security Lockers:`,
+          recommendedProducts: lockerProducts.length > 0 ? lockerProducts.slice(0, 4) : products.slice(0, 3),
+          suggestedChips: [
+            '🪵 PVC Panels & Wooden Flooring',
+            '🎨 Designer Wallpapers',
+            '🔥 Hot Deals'
+          ]
+        };
+      } else if (q.includes('pvc') || q.includes('panel') || q.includes('wall panel') || q.includes('louvers')) {
+        const pvcProducts = products.filter(p => p.subcategory === 'pvc-panels' || p.category === 'pvc-panels' || p.name.toLowerCase().includes('pvc') || p.name.toLowerCase().includes('panel'));
+        agentResponse = {
+          id: Date.now() + 1,
+          sender: 'agent',
+          text: `🪵 Found waterproof 3D PVC Wall Panels & Decorative Fluted Louvers:`,
+          recommendedProducts: pvcProducts.length > 0 ? pvcProducts.slice(0, 4) : products.slice(0, 3),
+          suggestedChips: [
+            '🪵 Wooden Flooring Options',
+            '🎨 Designer Wallpapers',
+            '📐 Calculate Room Materials'
+          ]
+        };
+      } else if (q.includes('wooden') || q.includes('flooring') || q.includes('wood floor') || q.includes('parquet')) {
+        const woodProducts = products.filter(p => p.subcategory === 'wooden-flooring' || p.category === 'wooden-flooring' || p.name.toLowerCase().includes('wood') || p.name.toLowerCase().includes('floor'));
+        agentResponse = {
+          id: Date.now() + 1,
+          sender: 'agent',
+          text: `🪵 Found premium Engineered Oak & AC4 Waterproof Wooden Flooring:`,
+          recommendedProducts: woodProducts.length > 0 ? woodProducts.slice(0, 4) : products.slice(0, 3),
+          suggestedChips: [
+            '🪵 3D PVC Wall Panels',
+            '🎨 Designer Wallpapers',
+            '🔐 Security Lockers'
+          ]
+        };
+      } else if (q.includes('wallpaper') || q.includes('wall paper') || q.includes('damask') || q.includes('wall mural')) {
+        const wallpaperProducts = products.filter(p => p.subcategory === 'designer-wallpapers' || p.category === 'designer-wallpapers' || p.name.toLowerCase().includes('wallpaper'));
+        agentResponse = {
+          id: Date.now() + 1,
+          sender: 'agent',
+          text: `🎨 Found Luxury Textured & Geometric 3D Designer Wallpapers:`,
+          recommendedProducts: wallpaperProducts.length > 0 ? wallpaperProducts.slice(0, 4) : products.slice(0, 3),
+          suggestedChips: [
+            '🪵 PVC Wall Panels',
+            '🪵 Wooden Flooring',
+            '🏠 Turnkey Home Packages'
+          ]
+        };
       } else {
         const matched = products.filter(p => 
           p.name.toLowerCase().includes(q) || 
@@ -110,7 +163,7 @@ export default function AgenticAssistant() {
           agentResponse = {
             id: Date.now() + 1,
             sender: 'agent',
-            text: `🔎 Found ${matched.length} product(s) matching your request:`,
+            text: `🔎 Found ${matched.length} product(s) matching "${queryText}":`,
             recommendedProducts: matched.slice(0, 4),
             suggestedChips: [
               '🔥 Hot Deals on Building Materials',
@@ -123,7 +176,7 @@ export default function AgenticAssistant() {
             id: Date.now() + 1,
             sender: 'agent',
             text: 'Here are our top featured construction materials & solutions:',
-            recommendedProducts: products.slice(0, 3),
+            recommendedProducts: products.slice(0, 4),
             suggestedChips: [
               '📐 Calculate materials for 1,200 sq.ft',
               '🏠 Turnkey Home Construction',
@@ -209,24 +262,56 @@ export default function AgenticAssistant() {
 
                       {msg.recommendedProducts && msg.recommendedProducts.length > 0 && (
                         <div className="agent-products-grid">
-                          {msg.recommendedProducts.map((p) => (
-                            <div key={p.id} className="agent-mini-product-card">
-                              <img src={p.imageSrc} alt={p.name} className="agent-prod-img" />
-                              <div className="agent-prod-info">
-                                <div className="agent-prod-name">{p.name}</div>
-                                <div className="agent-prod-price">
-                                  ₹{p.price.toLocaleString()} <span className="agent-unit">/ {p.unit}</span>
-                                </div>
-                                <button 
-                                  type="button" 
-                                  className="btn-agent-add-cart"
-                                  onClick={() => addToCart(p, 1)}
+                          {msg.recommendedProducts.map((p) => {
+                            const { isSvg, src } = getCleanImage(p.imageSrc, 'assets/digital_locker.jpg');
+                            return (
+                              <div key={p.id} className="agent-mini-product-card">
+                                <div 
+                                  className="agent-prod-img-wrap"
+                                  onClick={() => {
+                                    setIsOpen(false);
+                                    navigate(`/product/${p.id}`);
+                                  }}
+                                  style={{ cursor: 'pointer', flexShrink: 0 }}
+                                  title="View Product Details"
                                 >
-                                  + Add to Cart
-                                </button>
+                                  {isSvg ? (
+                                    <div dangerouslySetInnerHTML={{ __html: src }} className="raw-svg-wrapper agent-prod-svg" />
+                                  ) : (
+                                    <img 
+                                      src={src} 
+                                      alt={p.name} 
+                                      className="agent-prod-img" 
+                                      onError={(e) => { e.target.src = 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=300&q=80'; }} 
+                                    />
+                                  )}
+                                </div>
+                                <div className="agent-prod-info">
+                                  <div 
+                                    className="agent-prod-name"
+                                    onClick={() => {
+                                      setIsOpen(false);
+                                      navigate(`/product/${p.id}`);
+                                    }}
+                                    style={{ cursor: 'pointer' }}
+                                    title={p.name}
+                                  >
+                                    {p.name}
+                                  </div>
+                                  <div className="agent-prod-price">
+                                    ₹{(p.price || 0).toLocaleString('en-IN')} <span className="agent-unit">/ {p.unit}</span>
+                                  </div>
+                                  <button 
+                                    type="button" 
+                                    className="btn-agent-add-cart"
+                                    onClick={() => addToCart(p, 1)}
+                                  >
+                                    + Add to Cart
+                                  </button>
+                                </div>
                               </div>
-                            </div>
-                          ))}
+                            );
+                          })}
                         </div>
                       )}
 
