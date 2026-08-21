@@ -3,50 +3,81 @@ const path = require('path');
 const nodemailer = require('nodemailer');
 
 const CONFIG_FILE = path.join(__dirname, '../config/emailConfig.json');
+const TMP_CONFIG_FILE = '/tmp/emailConfig.json';
+
+let inMemoryConfig = null;
 
 // Read Email Config
 function getEmailConfig() {
+  if (inMemoryConfig) {
+    return inMemoryConfig;
+  }
+
+  // 1. Try reading from /tmp/ (if updated on serverless)
+  try {
+    if (fs.existsSync(TMP_CONFIG_FILE)) {
+      const data = fs.readFileSync(TMP_CONFIG_FILE, 'utf8');
+      inMemoryConfig = JSON.parse(data);
+      return inMemoryConfig;
+    }
+  } catch (e) {}
+
+  // 2. Try reading from project CONFIG_FILE
   try {
     if (fs.existsSync(CONFIG_FILE)) {
       const data = fs.readFileSync(CONFIG_FILE, 'utf8');
-      return JSON.parse(data);
+      inMemoryConfig = JSON.parse(data);
+      return inMemoryConfig;
     }
   } catch (err) {
     console.error('[EmailService] Failed to read emailConfig.json', err.message);
   }
 
-  // Fallback defaults / environment variables
-  return {
-    adminEmail: process.env.ADMIN_EMAIL || process.env.EMAIL_USER || '',
+  // 3. Fallback defaults / environment variables
+  inMemoryConfig = {
+    adminEmail: process.env.ADMIN_EMAIL || process.env.EMAIL_USER || 'shady69366@gmail.com',
     service: process.env.EMAIL_SERVICE || 'gmail',
     smtpHost: process.env.SMTP_HOST || 'smtp.gmail.com',
     smtpPort: parseInt(process.env.SMTP_PORT, 10) || 465,
     smtpSecure: process.env.SMTP_SECURE !== 'false',
-    smtpUser: process.env.EMAIL_USER || process.env.SMTP_USER || '',
-    smtpPass: process.env.EMAIL_PASS || process.env.SMTP_PASS || '',
+    smtpUser: process.env.EMAIL_USER || process.env.SMTP_USER || 'shady69366@gmail.com',
+    smtpPass: process.env.EMAIL_PASS || process.env.SMTP_PASS || 'viis qemt ueor kxvi',
     notifyOnInquiry: true,
     notifyOnOrder: true
   };
+  return inMemoryConfig;
 }
 
-// Save Email Config
+// Save Email Config (handles both local and Vercel read-only filesystem)
 function saveEmailConfig(newConfig) {
+  const current = getEmailConfig();
+  const updated = { ...current, ...newConfig };
+  inMemoryConfig = updated;
+
+  // Try writing to project directory
   try {
-    const current = getEmailConfig();
-    const updated = { ...current, ...newConfig };
     fs.writeFileSync(CONFIG_FILE, JSON.stringify(updated, null, 2), 'utf8');
-    return updated;
   } catch (err) {
-    console.error('[EmailService] Failed to write emailConfig.json', err.message);
-    throw err;
+    // On Vercel, root is read-only, write to /tmp instead
+    try {
+      fs.writeFileSync(TMP_CONFIG_FILE, JSON.stringify(updated, null, 2), 'utf8');
+    } catch (tmpErr) {
+      console.warn('[EmailService] Read-only filesystem, saved in-memory only');
+    }
   }
+  return updated;
 }
 
 // Create Nodemailer Transporter
 function createTransporter() {
   const config = getEmailConfig();
-  const user = config.smtpUser || process.env.EMAIL_USER;
-  const pass = config.smtpPass || process.env.EMAIL_PASS;
+  const user = (config.smtpUser || process.env.EMAIL_USER || '').trim();
+  let pass = (config.smtpPass || process.env.EMAIL_PASS || '').trim();
+
+  // Strip spaces from Google App Password (e.g. 'viis qemt ueor kxvi' -> 'viisqemtueorkxvi')
+  if (pass) {
+    pass = pass.replace(/\s+/g, '');
+  }
 
   if (!user || !pass) {
     return null;
@@ -58,7 +89,10 @@ function createTransporter() {
       auth: {
         user: user,
         pass: pass
-      }
+      },
+      connectionTimeout: 10000,
+      greetingTimeout: 8000,
+      socketTimeout: 15000
     });
   }
 
@@ -69,7 +103,10 @@ function createTransporter() {
     auth: {
       user: user,
       pass: pass
-    }
+    },
+    connectionTimeout: 10000,
+    greetingTimeout: 8000,
+    socketTimeout: 15000
   });
 }
 
