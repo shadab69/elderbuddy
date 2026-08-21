@@ -148,7 +148,7 @@ async function sendLeadEmailNotification(lead) {
     <body>
       <div class="card">
         <div class="header">
-          <h1>🏗️ BuilderPro Marketplace</h1>
+          <h1>🏗️ Elder-O-Buddy</h1>
           <p>New Customer Inquiry & Quote Request</p>
           <div class="badge">Inquiry ID: ${lead.id || 'INQ_AUTO'}</div>
         </div>
@@ -184,11 +184,11 @@ async function sendLeadEmailNotification(lead) {
 
           <div class="actions">
             ${lead.phone ? `<a href="tel:${lead.phone}" class="btn btn-call">📞 Call Customer Now</a>` : ''}
-            ${lead.email ? `<a href="mailto:${lead.email}?subject=BuilderPro Quote for ${encodeURIComponent(lead.service || 'Your Project')}" class="btn btn-email">✉️ Reply via Email</a>` : ''}
+            ${lead.email ? `<a href="mailto:${lead.email}?subject=Elder-O-Buddy Quote for ${encodeURIComponent(lead.service || 'Your Project')}" class="btn btn-email">✉️ Reply via Email</a>` : ''}
           </div>
         </div>
         <div class="footer">
-          Received via BuilderPro Marketplace Online Form • ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })} IST
+          Received via Elder-O-Buddy Online Form • ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })} IST
         </div>
       </div>
     </body>
@@ -215,7 +215,7 @@ async function sendLeadEmailNotification(lead) {
 
   try {
     const info = await transporter.sendMail({
-      from: `"BuilderPro Alerts" <${config.smtpUser}>`,
+      from: `"Elder-O-Buddy Alerts" <${config.smtpUser}>`,
       to: recipient,
       replyTo: lead.email || config.smtpUser,
       subject: subject,
@@ -302,7 +302,7 @@ async function sendOrderEmailNotification(order) {
     <body>
       <div class="card">
         <div class="header">
-          <h1>🏗️ BuilderPro Marketplace</h1>
+          <h1>🏗️ Elder-O-Buddy</h1>
           <p>New Material Delivery Order Received</p>
           <div class="badge">Order ID: #${orderId}</div>
         </div>
@@ -356,11 +356,11 @@ async function sendOrderEmailNotification(order) {
 
           <div class="actions">
             ${customerPhone !== 'N/A' ? `<a href="tel:${customerPhone}" class="btn btn-call">📞 Call Customer for Dispatch</a>` : ''}
-            ${customerEmail !== 'N/A' ? `<a href="mailto:${customerEmail}?subject=BuilderPro Order Confirmation #${orderId}" class="btn btn-email">✉️ Email Order Receipt</a>` : ''}
+            ${customerEmail !== 'N/A' ? `<a href="mailto:${customerEmail}?subject=Elder-O-Buddy Order Confirmation #${orderId}" class="btn btn-email">✉️ Email Order Receipt</a>` : ''}
           </div>
         </div>
         <div class="footer">
-          Received via BuilderPro Marketplace Online Store • ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })} IST
+          Received via Elder-O-Buddy Online Store • ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })} IST
         </div>
       </div>
     </body>
@@ -382,7 +382,7 @@ async function sendOrderEmailNotification(order) {
 
   try {
     const info = await transporter.sendMail({
-      from: `"BuilderPro Orders" <${config.smtpUser}>`,
+      from: `"Elder-O-Buddy Orders" <${config.smtpUser}>`,
       to: recipient,
       replyTo: customerEmail !== 'N/A' ? customerEmail : config.smtpUser,
       subject: subject,
@@ -413,16 +413,16 @@ async function sendTestEmail(targetEmail) {
   }
 
   const info = await transporter.sendMail({
-    from: `"BuilderPro Marketplace" <${config.smtpUser}>`,
+    from: `"Elder-O-Buddy" <${config.smtpUser}>`,
     to: recipient,
-    subject: '✅ BuilderPro Email Notifications Test - Successful!',
+    subject: '✅ Elder-O-Buddy Email Notifications Test - Successful!',
     html: `
       <div style="font-family: sans-serif; padding: 25px; background: #f8fafc; color: #0f172a;">
         <div style="max-width: 500px; margin: 0 auto; background: #ffffff; padding: 25px; border-radius: 12px; border: 1px solid #e2e8f0; text-align: center;">
           <span style="font-size: 40px;">🎉</span>
           <h2 style="color: #ea580c; margin: 10px 0;">Email Alerts are Working!</h2>
           <p style="color: #64748b; font-size: 14px; line-height: 1.6;">
-            Your BuilderPro store email notification system has been configured properly. All new customer inquiries, quote requests, and orders will now arrive directly at <strong>${recipient}</strong>.
+            Your Elder-O-Buddy store email notification system has been configured properly. All new customer inquiries, quote requests, and orders will now arrive directly at <strong>${recipient}</strong>.
           </p>
         </div>
       </div>

@@ -1159,15 +1159,15 @@ const INITIAL_PRODUCTS = [
 
 // Helper Functions for LocalStorage Persistence
 const DATA_KEYS = {
-    PRODUCTS: 'builderpro_products',
-    ORDERS: 'builderpro_orders',
-    INQUIRIES: 'builderpro_inquiries',
-    CATEGORIES: 'builderpro_categories',
-    UNITS: 'builderpro_units',
-    BANNERS: 'builderpro_banners',
-    GUIDES: 'builderpro_guides',
-    DESIGNERS: 'builderpro_designers',
-    BUILDERS: 'builderpro_builders'
+    PRODUCTS: 'elderobuddy_products',
+    ORDERS: 'elderobuddy_orders',
+    INQUIRIES: 'elderobuddy_inquiries',
+    CATEGORIES: 'elderobuddy_categories',
+    UNITS: 'elderobuddy_units',
+    BANNERS: 'elderobuddy_banners',
+    GUIDES: 'elderobuddy_guides',
+    DESIGNERS: 'elderobuddy_designers',
+    BUILDERS: 'elderobuddy_builders'
 };
 
 const INITIAL_UNITS = [

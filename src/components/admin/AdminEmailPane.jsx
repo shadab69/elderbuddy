@@ -224,8 +224,7 @@ export default function AdminEmailPane() {
           <ol style={{ fontSize: '0.82rem', color: '#475569', paddingLeft: '18px', lineHeight: '1.6', margin: 0 }}>
             <li>Go to your Google Account at <a href="https://myaccount.google.com/security" target="_blank" rel="noreferrer" style={{ color: '#ea580c', fontWeight: '700' }}>Google Security</a>.</li>
             <li>Ensure <strong>2-Step Verification</strong> is enabled.</li>
-            <li>Search for <strong>"App Passwords"</strong> (or visit <a href="https://myaccount.google.com/apppasswords" target="_blank" rel="noreferrer" style={{ color: '#ea580c', fontWeight: '700' }}>App Passwords page</a>).</li>
-            <li>Type an app name like <code>BuilderPro Alerts</code> and click <strong>Create</strong>.</li>
+            <li>Type an app name like <code>Elder-O-Buddy Alerts</code> and click <strong>Create</strong>.</li>
             <li>Copy the <strong>16-digit password</strong> and paste it in the box on the left.</li>
             <li>Click <strong>Save Settings</strong> and then <strong>Send Test Email</strong>!</li>
           </ol>

@@ -1,6 +1,6 @@
-# BuilderPro Marketplace - Project Guide & Instructions (README)
+# Elder-O-Buddy - Building Materials & Turnkey Home Construction Marketplace (README)
 
-elderbuddy ek premium e-commerce portal aur interior designer showcase platform hai. Isko Express/Node backend (MongoDB/Mongoose ke sath) aur vanilla JavaScript (SPA - Single Page Application) frontend ke sath banaya gaya hai.
+Elder-O-Buddy ek premium building materials e-commerce portal aur turnkey home construction platform hai.
 
 ---
 

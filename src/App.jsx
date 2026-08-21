@@ -42,7 +42,7 @@ export default function App() {
   // Instant 0ms Initial State from Cache or Pre-bundled Defaults (Zero blank/half-loaded delay)
   const [products, setProducts] = useState(() => {
     try {
-      const cached = JSON.parse(localStorage.getItem('builderpro_products'));
+      const cached = JSON.parse(localStorage.getItem('elderobuddy_products') || localStorage.getItem('builderpro_products'));
       if (Array.isArray(cached) && cached.length > 0) return cached;
     } catch (e) {}
     return INITIAL_PRODUCTS;
@@ -50,7 +50,7 @@ export default function App() {
 
   const [categories, setCategories] = useState(() => {
     try {
-      const cached = JSON.parse(localStorage.getItem('builderpro_categories'));
+      const cached = JSON.parse(localStorage.getItem('elderobuddy_categories') || localStorage.getItem('builderpro_categories'));
       if (Array.isArray(cached) && cached.length > 0) return cached;
     } catch (e) {}
     return INITIAL_CATEGORIES;
@@ -58,7 +58,7 @@ export default function App() {
 
   const [units, setUnits] = useState(() => {
     try {
-      const cached = JSON.parse(localStorage.getItem('builderpro_units'));
+      const cached = JSON.parse(localStorage.getItem('elderobuddy_units') || localStorage.getItem('builderpro_units'));
       if (Array.isArray(cached) && cached.length > 0) return cached;
     } catch (e) {}
     return INITIAL_UNITS;
@@ -66,7 +66,7 @@ export default function App() {
 
   const [banners, setBanners] = useState(() => {
     try {
-      const cached = JSON.parse(localStorage.getItem('builderpro_banners'));
+      const cached = JSON.parse(localStorage.getItem('elderobuddy_banners') || localStorage.getItem('builderpro_banners'));
       if (Array.isArray(cached) && cached.length > 0) return cached;
     } catch (e) {}
     return INITIAL_BANNERS;
@@ -74,7 +74,7 @@ export default function App() {
 
   const [designers, setDesigners] = useState(() => {
     try {
-      const cached = JSON.parse(localStorage.getItem('builderpro_designers'));
+      const cached = JSON.parse(localStorage.getItem('elderobuddy_designers') || localStorage.getItem('builderpro_designers'));
       if (Array.isArray(cached) && cached.length > 0) return cached;
     } catch (e) {}
     return INITIAL_DESIGNERS;
@@ -82,7 +82,7 @@ export default function App() {
 
   const [builders, setBuilders] = useState(() => {
     try {
-      const cached = JSON.parse(localStorage.getItem('builderpro_builders'));
+      const cached = JSON.parse(localStorage.getItem('elderobuddy_builders') || localStorage.getItem('builderpro_builders'));
       if (Array.isArray(cached) && cached.length > 0) return cached;
     } catch (e) {}
     return INITIAL_BUILDERS;
@@ -90,7 +90,7 @@ export default function App() {
 
   const [guides, setGuides] = useState(() => {
     try {
-      const cached = JSON.parse(localStorage.getItem('builderpro_guides'));
+      const cached = JSON.parse(localStorage.getItem('elderobuddy_guides') || localStorage.getItem('builderpro_guides'));
       if (Array.isArray(cached) && cached.length > 0) return cached;
     } catch (e) {}
     return INITIAL_GUIDE_POSTS;
@@ -100,10 +100,10 @@ export default function App() {
   const [leads, setLeads] = useState([]);
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
   const [cart, setCart] = useState(() => {
-    return JSON.parse(localStorage.getItem('builderpro_cart')) || [];
+    return JSON.parse(localStorage.getItem('elderobuddy_cart') || localStorage.getItem('builderpro_cart')) || [];
   });
   const [theme, setTheme] = useState(() => {
-    return localStorage.getItem('builderpro_theme') || 'light';
+    return localStorage.getItem('elderobuddy_theme') || localStorage.getItem('builderpro_theme') || 'light';
   });
   const [loading, setLoading] = useState(false);
 
@@ -114,12 +114,12 @@ export default function App() {
     } else {
       document.body.classList.remove('dark-theme');
     }
-    localStorage.setItem('builderpro_theme', theme);
+    localStorage.setItem('elderobuddy_theme', theme);
   }, [theme]);
 
   // Sync Cart with LocalStorage
   useEffect(() => {
-    localStorage.setItem('builderpro_cart', JSON.stringify(cart));
+    localStorage.setItem('elderobuddy_cart', JSON.stringify(cart));
   }, [cart]);
 
   // Fetch live server updates in background without UI blocking
@@ -144,31 +144,31 @@ export default function App() {
 
       if (prodsRes.data && prodsRes.data.length > 0) {
         setProducts(prodsRes.data);
-        localStorage.setItem('builderpro_products', JSON.stringify(prodsRes.data));
+        localStorage.setItem('elderobuddy_products', JSON.stringify(prodsRes.data));
       }
       if (catsRes.data && catsRes.data.length > 0) {
         setCategories(catsRes.data);
-        localStorage.setItem('builderpro_categories', JSON.stringify(catsRes.data));
+        localStorage.setItem('elderobuddy_categories', JSON.stringify(catsRes.data));
       }
       if (unitsRes.data && unitsRes.data.length > 0) {
         setUnits(unitsRes.data);
-        localStorage.setItem('builderpro_units', JSON.stringify(unitsRes.data));
+        localStorage.setItem('elderobuddy_units', JSON.stringify(unitsRes.data));
       }
       if (bannersRes.data && bannersRes.data.length > 0) {
         setBanners(bannersRes.data);
-        localStorage.setItem('builderpro_banners', JSON.stringify(bannersRes.data));
+        localStorage.setItem('elderobuddy_banners', JSON.stringify(bannersRes.data));
       }
       if (designersRes.data && designersRes.data.length > 0) {
         setDesigners(designersRes.data);
-        localStorage.setItem('builderpro_designers', JSON.stringify(designersRes.data));
+        localStorage.setItem('elderobuddy_designers', JSON.stringify(designersRes.data));
       }
       if (buildersRes.data && buildersRes.data.length > 0) {
         setBuilders(buildersRes.data);
-        localStorage.setItem('builderpro_builders', JSON.stringify(buildersRes.data));
+        localStorage.setItem('elderobuddy_builders', JSON.stringify(buildersRes.data));
       }
       if (guidesRes.data && guidesRes.data.length > 0) {
         setGuides(guidesRes.data);
-        localStorage.setItem('builderpro_guides', JSON.stringify(guidesRes.data));
+        localStorage.setItem('elderobuddy_guides', JSON.stringify(guidesRes.data));
       }
       if (ordersRes.data) setOrders(ordersRes.data);
       if (leadsRes.data) setLeads(leadsRes.data);
