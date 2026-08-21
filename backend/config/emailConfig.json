@@ -1,11 +1,12 @@
 {
-  "adminEmail": "shadab69.official@gmail.com",
+  "adminEmail": "shady69366@gmail.com",
   "service": "gmail",
   "smtpHost": "smtp.gmail.com",
   "smtpPort": 465,
   "smtpSecure": true,
-  "smtpUser": "",
-  "smtpPass": "",
+  "smtpUser": "shady69366@gmail.com",
+  "smtpPass": "viis qemt ueor kxvi",
   "notifyOnInquiry": true,
-  "notifyOnOrder": true
+  "notifyOnOrder": true,
+  "isConfigured": false
 }

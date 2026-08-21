@@ -44,9 +44,12 @@ app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../dist', 'index.html'));
 });
 
-// Start the server
-app.listen(PORT, () => {
-    console.log(` Active Port: ${PORT}`);
-    console.log(` Web App URL: http://localhost:${PORT}`);
-    
-});
+// Start the server if executed directly
+if (process.env.NODE_ENV !== 'production' || require.main === module) {
+    app.listen(PORT, () => {
+        console.log(` Active Port: ${PORT}`);
+        console.log(` Web App URL: http://localhost:${PORT}`);
+    });
+}
+
+module.exports = app;
