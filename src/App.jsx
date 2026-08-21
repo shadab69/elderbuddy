@@ -39,13 +39,63 @@ import ScrollToTop from './components/ScrollToTop.jsx';
 export const AppContext = createContext();
 
 export default function App() {
-  const [products, setProducts] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [units, setUnits] = useState([]);
-  const [banners, setBanners] = useState([]);
-  const [designers, setDesigners] = useState([]);
-  const [builders, setBuilders] = useState([]);
-  const [guides, setGuides] = useState([]);
+  // Instant 0ms Initial State from Cache or Pre-bundled Defaults (Zero blank/half-loaded delay)
+  const [products, setProducts] = useState(() => {
+    try {
+      const cached = JSON.parse(localStorage.getItem('builderpro_products'));
+      if (Array.isArray(cached) && cached.length > 0) return cached;
+    } catch (e) {}
+    return INITIAL_PRODUCTS;
+  });
+
+  const [categories, setCategories] = useState(() => {
+    try {
+      const cached = JSON.parse(localStorage.getItem('builderpro_categories'));
+      if (Array.isArray(cached) && cached.length > 0) return cached;
+    } catch (e) {}
+    return INITIAL_CATEGORIES;
+  });
+
+  const [units, setUnits] = useState(() => {
+    try {
+      const cached = JSON.parse(localStorage.getItem('builderpro_units'));
+      if (Array.isArray(cached) && cached.length > 0) return cached;
+    } catch (e) {}
+    return INITIAL_UNITS;
+  });
+
+  const [banners, setBanners] = useState(() => {
+    try {
+      const cached = JSON.parse(localStorage.getItem('builderpro_banners'));
+      if (Array.isArray(cached) && cached.length > 0) return cached;
+    } catch (e) {}
+    return INITIAL_BANNERS;
+  });
+
+  const [designers, setDesigners] = useState(() => {
+    try {
+      const cached = JSON.parse(localStorage.getItem('builderpro_designers'));
+      if (Array.isArray(cached) && cached.length > 0) return cached;
+    } catch (e) {}
+    return INITIAL_DESIGNERS;
+  });
+
+  const [builders, setBuilders] = useState(() => {
+    try {
+      const cached = JSON.parse(localStorage.getItem('builderpro_builders'));
+      if (Array.isArray(cached) && cached.length > 0) return cached;
+    } catch (e) {}
+    return INITIAL_BUILDERS;
+  });
+
+  const [guides, setGuides] = useState(() => {
+    try {
+      const cached = JSON.parse(localStorage.getItem('builderpro_guides'));
+      if (Array.isArray(cached) && cached.length > 0) return cached;
+    } catch (e) {}
+    return INITIAL_GUIDE_POSTS;
+  });
+
   const [orders, setOrders] = useState([]);
   const [leads, setLeads] = useState([]);
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
@@ -55,7 +105,7 @@ export default function App() {
   const [theme, setTheme] = useState(() => {
     return localStorage.getItem('builderpro_theme') || 'light';
   });
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   // Sync Theme with DOM
   useEffect(() => {
@@ -72,52 +122,58 @@ export default function App() {
     localStorage.setItem('builderpro_cart', JSON.stringify(cart));
   }, [cart]);
 
-  // Fetch all initial data
+  // Fetch live server updates in background without UI blocking
   const fetchData = async () => {
     try {
+      const apiReq = (url) => axios.get(url, { timeout: 3500 }).catch(() => ({ data: [] }));
+
       const [
         prodsRes, catsRes, unitsRes, bannersRes, 
         designersRes, buildersRes, guidesRes, ordersRes, leadsRes
       ] = await Promise.all([
-        axios.get('/api/products').catch(() => ({ data: [] })),
-        axios.get('/api/categories').catch(() => ({ data: [] })),
-        axios.get('/api/units').catch(() => ({ data: [] })),
-        axios.get('/api/banners').catch(() => ({ data: [] })),
-        axios.get('/api/designers').catch(() => ({ data: [] })),
-        axios.get('/api/builders').catch(() => ({ data: [] })),
-        axios.get('/api/guides').catch(() => ({ data: [] })),
-        axios.get('/api/orders').catch(() => ({ data: [] })),
-        axios.get('/api/leads').catch(() => ({ data: [] }))
+        apiReq('/api/products'),
+        apiReq('/api/categories'),
+        apiReq('/api/units'),
+        apiReq('/api/banners'),
+        apiReq('/api/designers'),
+        apiReq('/api/builders'),
+        apiReq('/api/guides'),
+        apiReq('/api/orders'),
+        apiReq('/api/leads')
       ]);
 
-      const fetchedProducts = prodsRes.data && prodsRes.data.length > 0 ? prodsRes.data : INITIAL_PRODUCTS;
-      const fetchedCategories = catsRes.data && catsRes.data.length > 0 ? catsRes.data : INITIAL_CATEGORIES;
-      const fetchedUnits = unitsRes.data && unitsRes.data.length > 0 ? unitsRes.data : INITIAL_UNITS;
-      const fetchedBanners = bannersRes.data && bannersRes.data.length > 0 ? bannersRes.data : INITIAL_BANNERS;
-      const fetchedDesigners = designersRes.data && designersRes.data.length > 0 ? designersRes.data : INITIAL_DESIGNERS;
-      const fetchedBuilders = buildersRes.data && buildersRes.data.length > 0 ? buildersRes.data : INITIAL_BUILDERS;
-      const fetchedGuides = guidesRes.data && guidesRes.data.length > 0 ? guidesRes.data : INITIAL_GUIDE_POSTS;
-
-      setProducts(fetchedProducts);
-      setCategories(fetchedCategories);
-      setUnits(fetchedUnits);
-      setBanners(fetchedBanners);
-      setDesigners(fetchedDesigners);
-      setBuilders(fetchedBuilders);
-      setGuides(fetchedGuides);
-      setOrders(ordersRes.data || []);
-      setLeads(leadsRes.data || []);
+      if (prodsRes.data && prodsRes.data.length > 0) {
+        setProducts(prodsRes.data);
+        localStorage.setItem('builderpro_products', JSON.stringify(prodsRes.data));
+      }
+      if (catsRes.data && catsRes.data.length > 0) {
+        setCategories(catsRes.data);
+        localStorage.setItem('builderpro_categories', JSON.stringify(catsRes.data));
+      }
+      if (unitsRes.data && unitsRes.data.length > 0) {
+        setUnits(unitsRes.data);
+        localStorage.setItem('builderpro_units', JSON.stringify(unitsRes.data));
+      }
+      if (bannersRes.data && bannersRes.data.length > 0) {
+        setBanners(bannersRes.data);
+        localStorage.setItem('builderpro_banners', JSON.stringify(bannersRes.data));
+      }
+      if (designersRes.data && designersRes.data.length > 0) {
+        setDesigners(designersRes.data);
+        localStorage.setItem('builderpro_designers', JSON.stringify(designersRes.data));
+      }
+      if (buildersRes.data && buildersRes.data.length > 0) {
+        setBuilders(buildersRes.data);
+        localStorage.setItem('builderpro_builders', JSON.stringify(buildersRes.data));
+      }
+      if (guidesRes.data && guidesRes.data.length > 0) {
+        setGuides(guidesRes.data);
+        localStorage.setItem('builderpro_guides', JSON.stringify(guidesRes.data));
+      }
+      if (ordersRes.data) setOrders(ordersRes.data);
+      if (leadsRes.data) setLeads(leadsRes.data);
     } catch (error) {
-      console.error('Error fetching data, using defaults:', error);
-      setProducts(INITIAL_PRODUCTS);
-      setCategories(INITIAL_CATEGORIES);
-      setUnits(INITIAL_UNITS);
-      setBanners(INITIAL_BANNERS);
-      setDesigners(INITIAL_DESIGNERS);
-      setBuilders(INITIAL_BUILDERS);
-      setGuides(INITIAL_GUIDE_POSTS);
-    } finally {
-      setLoading(false);
+      console.warn('Background sync using local defaults');
     }
   };
 
