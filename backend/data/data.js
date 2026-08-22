@@ -40,15 +40,63 @@ const INITIAL_CATEGORIES = [
         ]
     },
     {
+        id: 'lockers-safes',
+        name: 'Digital Lockers & Safes',
+        icon: 'shield-check',
+        desc: 'Biometric, keypad digital security lockers & fireproof cash vaults',
+        subcategories: [
+            { id: 'digital-lockers', name: 'Electronic Digital Keypad Safes' },
+            { id: 'biometric-lockers', name: 'Smart Biometric Fingerprint Lockers' },
+            { id: 'fireproof-safes', name: 'Fire & Burglar Resistant Safes' },
+            { id: 'heavy-vaults', name: 'Heavy Duty Commercial Cash Vaults' }
+        ]
+    },
+    {
+        id: 'pvc-panels',
+        name: 'PVC Wall Panels & Louvers',
+        icon: 'layout-grid',
+        desc: '3D fluted louvers, charcoal panels, UV marble sheets & ceiling panels',
+        subcategories: [
+            { id: '3d-fluted-louvers', name: '3D Fluted Charcoal & Wood Louvers' },
+            { id: 'waterproof-pvc-panels', name: 'Waterproof Decorative Wall Panels' },
+            { id: 'marble-finish-sheets', name: 'UV Marble Sheet Wall Cladding' },
+            { id: 'acoustic-wall-slats', name: 'Acoustic Wooden Slatted Panels' }
+        ]
+    },
+    {
+        id: 'wooden-flooring',
+        name: 'Wooden & Laminate Flooring',
+        icon: 'rows-3',
+        desc: 'AC4 laminate, engineered oak, hardwood parquet & waterproof SPC planks',
+        subcategories: [
+            { id: 'laminate-flooring', name: 'HDF AC4 Scratch-Resistant Laminate' },
+            { id: 'engineered-hardwood', name: 'Engineered Oak & Teak Flooring' },
+            { id: 'spc-vinyl-flooring', name: '100% Waterproof SPC Rigid Core Planks' },
+            { id: 'herringbone-parquet', name: 'Herringbone & Chevron Parquet Planks' }
+        ]
+    },
+    {
+        id: 'designer-wallpapers',
+        name: 'Designer 3D & Luxury Wallpapers',
+        icon: 'sparkles',
+        desc: '3D metallic wallpapers, textured royal damask & nature murals',
+        subcategories: [
+            { id: '3d-geometric-wallpapers', name: '3D Geometric & Metallic Wallpapers' },
+            { id: 'textured-damask', name: 'Royal Damask & Embossed Wallpapers' },
+            { id: 'botanical-nature', name: 'Nature & Floral Mural Wallpapers' },
+            { id: 'brick-stone-textures', name: 'Rustic Stone & Brick Finish Wallpapers' }
+        ]
+    },
+    {
         id: 'tiles',
-        name: 'Tiles & Flooring',
+        name: 'Tiles & Natural Stones',
         icon: 'grid',
-        desc: 'Ceramic, vitrified tiles, wooden flooring & natural stones',
+        desc: 'Ceramic, vitrified tiles, granite slabs & Italian marble',
         subcategories: [
             { id: 'vitrified-tiles', name: 'Vitrified Floor Tiles' },
             { id: 'ceramic-tiles', name: 'Ceramic Wall Tiles' },
-            { id: 'wooden-flooring', name: 'Laminate & Solid Wooden Flooring' },
-            { id: 'granite-marble', name: 'Granite & Natural Marble' }
+            { id: 'granite-marble', name: 'Granite & Natural Marble' },
+            { id: 'parking-outdoor-tiles', name: 'Heavy-Duty Anti-Skid Paver Tiles' }
         ]
     },
     {
@@ -79,11 +127,10 @@ const INITIAL_CATEGORIES = [
         id: 'paints',
         name: 'Paints & Finishes',
         icon: 'paint-bucket',
-        desc: 'Interior, exterior paints, wallpapers & primers',
+        desc: 'Interior, exterior paints, wall putty & wood polish',
         subcategories: [
             { id: 'interior-paints', name: 'Interior Emulsion Paints' },
             { id: 'exterior-paints', name: 'Exterior Weatherproof Paints' },
-            { id: 'designer-wallpapers', name: 'Luxury Wallpapers & Textures' },
             { id: 'wall-putty', name: 'Acrylic Wall Putty & Primers' },
             { id: 'wood-finishes', name: 'Wood Polish & Metal Enamels' }
         ]
@@ -92,24 +139,21 @@ const INITIAL_CATEGORIES = [
         id: 'hardware',
         name: 'Hardware & Fixtures',
         icon: 'wrench',
-        desc: 'Lockers, digital locks, hinges, screws & steel fixtures',
+        desc: 'Smart digital locks, SS hinges, screws, fasteners & drawer channels',
         subcategories: [
-            { id: 'lockers-safes', name: 'Digital Lockers & Security Safes' },
             { id: 'digital-locks', name: 'Smart Digital & Mortise Locks' },
             { id: 'door-hinges', name: 'Stainless Steel Hinges & Handles' },
             { id: 'screws-fasteners', name: 'Screws, Bolts & Fasteners' },
-            { id: 'cabinet-hardware', name: 'Cabinet Fittings & Channels' }
+            { id: 'cabinet-hardware', name: 'Cabinet Fittings & Channels' },
+            { id: 'door-handles-locks', name: 'Mortise Handles & Main Door Locks' }
         ]
     },
     {
         id: 'interior',
         name: 'Interior & Living',
         icon: 'sofa',
-        desc: 'PVC panels, wallpapers, wooden flooring, luxury furniture & decor',
+        desc: 'Luxury living sofas, coffee tables, wall decor & designer lighting',
         subcategories: [
-            { id: 'pvc-panels', name: 'PVC Wall Panels & Fluted Louvers' },
-            { id: 'designer-wallpapers', name: 'Designer 3D & Textured Wallpapers' },
-            { id: 'wooden-flooring', name: 'Laminate & Hardwood Flooring' },
             { id: 'sofas-seating', name: 'Luxury Sofas & Living Seating' },
             { id: 'center-tables', name: 'Center Coffee & Dining Tables' },
             { id: 'wall-decor', name: 'Wall Decor & Art Frames' },
@@ -1073,8 +1117,8 @@ const INITIAL_PRODUCTS = [
         id: 'h_lock1',
         name: 'Godrej Security Forte Pro Digital Electronic Locker (15L)',
         brand: 'Godrej',
-        category: 'hardware',
-        subcategory: 'lockers-safes',
+        category: 'lockers-safes',
+        subcategory: 'digital-lockers',
         price: 7999,
         originalPrice: 9999,
         discountLabel: '20% OFF',
@@ -1089,8 +1133,8 @@ const INITIAL_PRODUCTS = [
         id: 'h_lock2',
         name: 'Yale Touchscreen Biometric & Keypad Home Security Safe Locker',
         brand: 'Yale',
-        category: 'hardware',
-        subcategory: 'lockers-safes',
+        category: 'lockers-safes',
+        subcategory: 'biometric-lockers',
         price: 14499,
         originalPrice: 18999,
         discountLabel: '24% OFF',
@@ -1102,11 +1146,43 @@ const INITIAL_PRODUCTS = [
         imageSrc: 'https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&w=600&q=80'
     },
     {
+        id: 'h_lock3',
+        name: 'Ozone Fireproof Heavy Duty Commercial Cash Safe Locker',
+        brand: 'Ozone',
+        category: 'lockers-safes',
+        subcategory: 'fireproof-safes',
+        price: 21999,
+        originalPrice: 28500,
+        discountLabel: '23% OFF',
+        unit: 'Piece',
+        description: 'Double-walled fire-resistant concrete insulation certified for 1 hour at 1000°C for documents and cash.',
+        rating: 4.9,
+        ratingCount: 45,
+        specs: { 'Fire Resistance': '1 Hour at 1000°C', 'Lock Type': 'Dual Key + PIN', 'Brand': 'Ozone' },
+        imageSrc: 'https://images.unsplash.com/photo-1584438784894-089d6a62b8fa?auto=format&fit=crop&w=600&q=80'
+    },
+    {
+        id: 'h_lock4',
+        name: 'Godrej Rhino Heavy Steel Commercial Cash Vault Safe',
+        brand: 'Godrej',
+        category: 'lockers-safes',
+        subcategory: 'heavy-vaults',
+        price: 34500,
+        originalPrice: 42000,
+        discountLabel: '18% OFF',
+        unit: 'Piece',
+        description: 'High security reinforced solid steel vault safe (100x stronger) with multi-point active drill-proof locking bolts.',
+        rating: 4.9,
+        ratingCount: 39,
+        specs: { 'Weight': '85 Kg', 'Material': 'Armor Steel Plating', 'Brand': 'Godrej Security' },
+        imageSrc: 'https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&w=600&q=80'
+    },
+    {
         id: 'pvc_p1',
         name: 'Eurostar 3D Charcoal Fluted Louver PVC Wall Panel (10ft x 5in)',
         brand: 'Eurostar',
-        category: 'interior',
-        subcategory: 'pvc-panels',
+        category: 'pvc-panels',
+        subcategory: '3d-fluted-louvers',
         price: 480,
         originalPrice: 650,
         discountLabel: '26% OFF',
@@ -1121,8 +1197,8 @@ const INITIAL_PRODUCTS = [
         id: 'pvc_p2',
         name: 'DecoTeak Natural Woodgrain Waterproof PVC Wall & Ceiling Panel',
         brand: 'DecoTeak',
-        category: 'interior',
-        subcategory: 'pvc-panels',
+        category: 'pvc-panels',
+        subcategory: 'waterproof-pvc-panels',
         price: 320,
         originalPrice: 450,
         discountLabel: '29% OFF',
@@ -1134,11 +1210,43 @@ const INITIAL_PRODUCTS = [
         imageSrc: 'https://images.unsplash.com/photo-1615873968403-89e068629265?auto=format&fit=crop&w=600&q=80'
     },
     {
+        id: 'pvc_p3',
+        name: 'Royal Statuario High Gloss UV Marble Sheet PVC Wall Cladding (8ft x 4ft)',
+        brand: 'Eurostar',
+        category: 'pvc-panels',
+        subcategory: 'marble-finish-sheets',
+        price: 1850,
+        originalPrice: 2400,
+        discountLabel: '23% OFF',
+        unit: 'Sheet',
+        description: 'Seamless lightweight UV marble sheet for luxury lobby walls, kitchen backsplashes, and bathroom feature walls.',
+        rating: 4.8,
+        ratingCount: 51,
+        specs: { 'Size': '8ft x 4ft (3mm thickness)', 'Finish': 'High Gloss UV Polish', 'Pattern': 'Statuario Italian White' },
+        imageSrc: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=80'
+    },
+    {
+        id: 'pvc_p4',
+        name: 'Acoustic Slatted Charcoal & Oak Wood Sound-Absorbing Wall Panel',
+        brand: 'DecoTeak',
+        category: 'pvc-panels',
+        subcategory: 'acoustic-wall-slats',
+        price: 1450,
+        originalPrice: 1950,
+        discountLabel: '26% OFF',
+        unit: 'Piece',
+        description: 'Felt backed sound-dampening acoustic wooden wall slats for home theatres, recording spaces, and living lounges.',
+        rating: 4.9,
+        ratingCount: 42,
+        specs: { 'Size': '8ft x 2ft', 'Backing': 'Sound Absorption Felt', 'Slats': 'MDF Woodgrain Veneer' },
+        imageSrc: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=600&q=80'
+    },
+    {
         id: 'wood_fl1',
         name: 'Action TESA AC4 HDF Interlocking Laminate Wooden Flooring (8mm)',
         brand: 'Action TESA',
-        category: 'tiles',
-        subcategory: 'wooden-flooring',
+        category: 'wooden-flooring',
+        subcategory: 'laminate-flooring',
         price: 115,
         originalPrice: 150,
         discountLabel: '23% OFF',
@@ -1153,8 +1261,8 @@ const INITIAL_PRODUCTS = [
         id: 'wood_fl2',
         name: 'Pergo Original Natural Oak Moisture-Resistant Wooden Floor Planks',
         brand: 'Pergo',
-        category: 'interior',
-        subcategory: 'wooden-flooring',
+        category: 'wooden-flooring',
+        subcategory: 'engineered-hardwood',
         price: 165,
         originalPrice: 210,
         discountLabel: '21% OFF',
@@ -1166,11 +1274,43 @@ const INITIAL_PRODUCTS = [
         imageSrc: 'https://images.unsplash.com/photo-1516455590571-18256e5bb9ff?auto=format&fit=crop&w=600&q=80'
     },
     {
+        id: 'wood_fl3',
+        name: 'Armstrong 100% Waterproof SPC Rigid Core Vinyl Wooden Planks',
+        brand: 'Armstrong',
+        category: 'wooden-flooring',
+        subcategory: 'spc-vinyl-flooring',
+        price: 135,
+        originalPrice: 175,
+        discountLabel: '23% OFF',
+        unit: 'sq.ft',
+        description: 'Stone Polymer Composite (SPC) 100% waterproof flooring with acoustic IXPE underlayment.',
+        rating: 4.8,
+        ratingCount: 77,
+        specs: { 'Thickness': '5.5mm + 1.5mm IXPE', 'Waterproof': '100% Guaranteed', 'Brand': 'Armstrong' },
+        imageSrc: 'https://images.unsplash.com/photo-1581858726788-75bc0f6a952d?auto=format&fit=crop&w=600&q=80'
+    },
+    {
+        id: 'wood_fl4',
+        name: 'Quick-Step Classic European Herringbone Parquet Wooden Flooring',
+        brand: 'Quick-Step',
+        category: 'wooden-flooring',
+        subcategory: 'herringbone-parquet',
+        price: 240,
+        originalPrice: 310,
+        discountLabel: '23% OFF',
+        unit: 'sq.ft',
+        description: 'Royal herringbone chevron pattern real hardwood veneer planks with scratch guard top layer.',
+        rating: 4.9,
+        ratingCount: 38,
+        specs: { 'Pattern': 'Herringbone 90°', 'Grade': 'AC5 Commercial', 'Brand': 'Quick-Step' },
+        imageSrc: 'https://images.unsplash.com/photo-1516455590571-18256e5bb9ff?auto=format&fit=crop&w=600&q=80'
+    },
+    {
         id: 'wp_1',
         name: 'Asian Paints Nilaya Luxury Geometric Metallic Wallpaper Roll',
         brand: 'Asian Paints Nilaya',
-        category: 'interior',
-        subcategory: 'designer-wallpapers',
+        category: 'designer-wallpapers',
+        subcategory: '3d-geometric-wallpapers',
         price: 2850,
         originalPrice: 3800,
         discountLabel: '25% OFF',
@@ -1185,8 +1325,8 @@ const INITIAL_PRODUCTS = [
         id: 'wp_2',
         name: 'Excel Modern 3D Botanical Embossed Living Room Wallpaper Roll',
         brand: 'Excel Wallpapers',
-        category: 'paints',
-        subcategory: 'designer-wallpapers',
+        category: 'designer-wallpapers',
+        subcategory: 'botanical-nature',
         price: 1950,
         originalPrice: 2600,
         discountLabel: '25% OFF',
@@ -1196,6 +1336,54 @@ const INITIAL_PRODUCTS = [
         ratingCount: 88,
         specs: { 'Coverage': '10m x 0.53m (57 sq.ft)', 'Finish': 'Textured Matte', 'Brand': 'Excel Wallpapers' },
         imageSrc: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=600&q=80'
+    },
+    {
+        id: 'wp_3',
+        name: 'Grand Versailles Royal Gold Textured Damask Wallpaper Roll',
+        brand: 'Excel Wallpapers',
+        category: 'designer-wallpapers',
+        subcategory: 'textured-damask',
+        price: 3200,
+        originalPrice: 4200,
+        discountLabel: '24% OFF',
+        unit: 'Roll',
+        description: 'Classic Victorian embossed gold velvet texture damask wallpaper for luxury master bedrooms.',
+        rating: 4.9,
+        ratingCount: 64,
+        specs: { 'Coverage': '57 sq.ft', 'Pattern': 'Royal Damask', 'Brand': 'Excel' },
+        imageSrc: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=80'
+    },
+    {
+        id: 'wp_4',
+        name: 'Raw Slate Stone 3D Textured Embossed Accent Wallpaper Roll',
+        brand: 'Asian Paints Nilaya',
+        category: 'designer-wallpapers',
+        subcategory: 'brick-stone-textures',
+        price: 2150,
+        originalPrice: 2900,
+        discountLabel: '26% OFF',
+        unit: 'Roll',
+        description: 'Hyper-realistic stacked natural stone brick effect wallpaper with textured relief printing.',
+        rating: 4.7,
+        ratingCount: 52,
+        specs: { 'Coverage': '57 sq.ft', 'Texture': 'Stone Relief', 'Brand': 'Asian Paints Nilaya' },
+        imageSrc: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=600&q=80'
+    },
+    {
+        id: 'h5',
+        name: 'Godrej Duralock Stainless Steel Heavy Mortise Door Handle Lock Set',
+        brand: 'Godrej Hardware',
+        category: 'hardware',
+        subcategory: 'door-handles-locks',
+        price: 1850,
+        originalPrice: 2400,
+        discountLabel: '23% OFF',
+        unit: 'Set',
+        description: 'High tensile anti-pick brass cylinder mortise lock with dual aesthetic satin steel lever handles.',
+        rating: 4.8,
+        ratingCount: 71,
+        specs: { 'Finish': 'Satin SS 304', 'Keys': '3 Brass Keys', 'Brand': 'Godrej' },
+        imageSrc: 'assets/door_hinge.jpg'
     }
 ];
 

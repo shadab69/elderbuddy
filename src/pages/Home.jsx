@@ -23,7 +23,11 @@ const getCategoryIcon = (iconName) => {
     'zap': 'Zap',
     'paint-bucket': 'PaintBucket',
     'wrench': 'Wrench',
-    'sofa': 'Sofa'
+    'sofa': 'Sofa',
+    'shield-check': 'ShieldCheck',
+    'layout-grid': 'LayoutGrid',
+    'rows-3': 'Rows3',
+    'sparkles': 'Sparkles'
   };
   
   const componentName = nameMap[iconName.toLowerCase()] || 

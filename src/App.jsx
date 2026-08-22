@@ -38,20 +38,42 @@ import ScrollToTop from './components/ScrollToTop.jsx';
 // Create Global Context
 export const AppContext = createContext();
 
+const DATA_SCHEMA_VERSION = 'v2.3';
+
 export default function App() {
+  // Sync schema cache version
+  useEffect(() => {
+    try {
+      const storedVersion = localStorage.getItem('elderobuddy_schema_version');
+      if (storedVersion !== DATA_SCHEMA_VERSION) {
+        localStorage.setItem('elderobuddy_products', JSON.stringify(INITIAL_PRODUCTS));
+        localStorage.setItem('elderobuddy_categories', JSON.stringify(INITIAL_CATEGORIES));
+        localStorage.setItem('elderobuddy_schema_version', DATA_SCHEMA_VERSION);
+        setProducts(INITIAL_PRODUCTS);
+        setCategories(INITIAL_CATEGORIES);
+      }
+    } catch (e) {}
+  }, []);
+
   // Instant 0ms Initial State from Cache or Pre-bundled Defaults (Zero blank/half-loaded delay)
   const [products, setProducts] = useState(() => {
     try {
-      const cached = JSON.parse(localStorage.getItem('elderobuddy_products') || localStorage.getItem('builderpro_products'));
-      if (Array.isArray(cached) && cached.length > 0) return cached;
+      const storedVersion = localStorage.getItem('elderobuddy_schema_version');
+      if (storedVersion === DATA_SCHEMA_VERSION) {
+        const cached = JSON.parse(localStorage.getItem('elderobuddy_products'));
+        if (Array.isArray(cached) && cached.length > 0) return cached;
+      }
     } catch (e) {}
     return INITIAL_PRODUCTS;
   });
 
   const [categories, setCategories] = useState(() => {
     try {
-      const cached = JSON.parse(localStorage.getItem('elderobuddy_categories') || localStorage.getItem('builderpro_categories'));
-      if (Array.isArray(cached) && cached.length > 0) return cached;
+      const storedVersion = localStorage.getItem('elderobuddy_schema_version');
+      if (storedVersion === DATA_SCHEMA_VERSION) {
+        const cached = JSON.parse(localStorage.getItem('elderobuddy_categories'));
+        if (Array.isArray(cached) && cached.length > 0) return cached;
+      }
     } catch (e) {}
     return INITIAL_CATEGORIES;
   });
