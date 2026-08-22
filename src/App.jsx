@@ -38,7 +38,7 @@ import ScrollToTop from './components/ScrollToTop.jsx';
 // Create Global Context
 export const AppContext = createContext();
 
-const DATA_SCHEMA_VERSION = 'v2.3';
+const DATA_SCHEMA_VERSION = 'v2.4';
 
 export default function App() {
   // Sync schema cache version
