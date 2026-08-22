@@ -101,9 +101,11 @@ export default function InquiryModal() {
         </div>
         {submitted ? (
           <div className="modal-body" style={{ textAlign: 'center', padding: '40px 20px' }}>
-            <span style={{ fontSize: '3rem', display: 'block', marginBottom: '15px' }}>✅</span>
             <h4>Inquiry Submitted Successfully!</h4>
-            <p style={{ color: 'var(--text-muted)', marginTop: '10px' }}>Our structural engineering team will review your requirements and get back to you shortly.</p>
+            <p style={{ color: 'var(--text-muted)', marginTop: '10px' }}>
+              Our structural engineering team will review your requirements and get back to you shortly.
+              {email && <span style={{ display: 'block', marginTop: '6px', color: '#16a34a', fontWeight: '600' }}>✉️ A confirmation email has also been sent to {email}.</span>}
+            </p>
             <button 
               type="button" 
               className="btn-primary" 

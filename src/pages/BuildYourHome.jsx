@@ -1345,9 +1345,11 @@ Additional Requirements: ${formData.message || 'Free Site Consultation & Quotati
 
             {submitSuccess ? (
               <div className="form-success-banner">
-                <CheckCircle2 style={{ width: '48px', height: '48px', color: '#16a34a', margin: '0 auto 10px' }} />
                 <h3>Thank You! Consultation Request Received.</h3>
-                <p>Our senior structural architect will call you at <strong>{formData.phone}</strong> shortly to schedule your free site consultation.</p>
+                <p>
+                  Our senior structural architect will call you at <strong>{formData.phone}</strong> shortly to schedule your free site consultation.
+                  {formData.email && <span style={{ display: 'block', marginTop: '8px', color: '#16a34a', fontWeight: '600' }}>✉️ A confirmation email with your reference details has also been sent to {formData.email}.</span>}
+                </p>
                 <button 
                   type="button" 
                   className="btn-turnkey-primary"
