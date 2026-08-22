@@ -1,7 +1,8 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect, useRef } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
 import { AppContext } from '../App.jsx';
 import ProductCard from '../components/ProductCard.jsx';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 export default function ProductList() {
   const { products, categories, addToCart } = useContext(AppContext);
@@ -20,6 +21,15 @@ export default function ProductList() {
   const [priceMax, setPriceMax] = useState('');
   const [sortBy, setSortBy] = useState('featured');
 
+  // Track scrolling & drag states
+  const pillsTrackRef = useRef(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(false);
+  const isDownRef = useRef(false);
+  const startXRef = useRef(0);
+  const scrollLeftRef = useRef(0);
+  const isDraggingRef = useRef(false);
+
   // Sync URL params to local state
   useEffect(() => {
     setSelectedCat(catParam);
@@ -30,6 +40,77 @@ export default function ProductList() {
   const activeCategoryObj = categories.find((c) => c.id === selectedCat);
   const currentSubcategories = activeCategoryObj?.subcategories || [];
   const activeSubcatObj = currentSubcategories.find((s) => s.id === selectedSubcat);
+
+  // Auto-scroll active pill into view and update scroll buttons
+  useEffect(() => {
+    const track = pillsTrackRef.current;
+    if (!track) return;
+
+    const updateScrollIndicators = () => {
+      if (!track) return;
+      setCanScrollLeft(track.scrollLeft > 8);
+      setCanScrollRight(track.scrollLeft + track.clientWidth < track.scrollWidth - 8);
+    };
+
+    updateScrollIndicators();
+    track.addEventListener('scroll', updateScrollIndicators, { passive: true });
+
+    // Scroll active item smoothly into center
+    const timer = setTimeout(() => {
+      const activeBtn = track.querySelector('.subcat-pill-btn.active');
+      if (activeBtn) {
+        const btnLeft = activeBtn.offsetLeft;
+        const btnWidth = activeBtn.offsetWidth;
+        const trackWidth = track.clientWidth;
+        track.scrollTo({
+          left: Math.max(0, btnLeft - (trackWidth / 2) + (btnWidth / 2)),
+          behavior: 'smooth'
+        });
+      }
+      updateScrollIndicators();
+    }, 60);
+
+    return () => {
+      clearTimeout(timer);
+      track.removeEventListener('scroll', updateScrollIndicators);
+    };
+  }, [selectedSubcat, selectedCat, currentSubcategories]);
+
+  // Mouse Drag-to-Scroll Handlers
+  const handleMouseDown = (e) => {
+    const track = pillsTrackRef.current;
+    if (!track) return;
+    isDownRef.current = true;
+    isDraggingRef.current = false;
+    startXRef.current = e.pageX - track.offsetLeft;
+    scrollLeftRef.current = track.scrollLeft;
+  };
+
+  const handleMouseMove = (e) => {
+    if (!isDownRef.current) return;
+    const track = pillsTrackRef.current;
+    if (!track) return;
+    e.preventDefault();
+    const x = e.pageX - track.offsetLeft;
+    const walk = (x - startXRef.current) * 1.5;
+    if (Math.abs(walk) > 4) {
+      isDraggingRef.current = true;
+    }
+    track.scrollLeft = scrollLeftRef.current - walk;
+  };
+
+  const handleMouseUpOrLeave = () => {
+    isDownRef.current = false;
+    setTimeout(() => {
+      isDraggingRef.current = false;
+    }, 50);
+  };
+
+  const scrollPills = (offset) => {
+    if (pillsTrackRef.current) {
+      pillsTrackRef.current.scrollBy({ left: offset, behavior: 'smooth' });
+    }
+  };
 
   // Unique brands in DB
   const uniqueBrands = [...new Set(products.map((p) => p.brand).filter(Boolean))];
@@ -353,29 +434,120 @@ export default function ProductList() {
 
         {/* Product Listing Area */}
         <div className="listing-content">
-          {/* Quick Subcategory Pills at top of page if Category selected */}
-          {currentSubcategories.length > 0 && (
-            <div className="subcategory-pills-track">
-              <button
-                type="button"
-                className={`subcat-pill-btn ${selectedSubcat === '' ? 'active' : ''}`}
-                onClick={() => handleSubcategorySelect('')}
+          {/* Quick Subcategory Pills at top of page */}
+          {currentSubcategories.length > 0 ? (
+            <div className="subcategory-pills-container">
+              {canScrollLeft && (
+                <button 
+                  type="button" 
+                  className="subcat-scroll-arrow left" 
+                  onClick={() => scrollPills(-180)}
+                  aria-label="Scroll Subcategories Left"
+                >
+                  <ChevronLeft style={{ width: '16px', height: '16px' }} />
+                </button>
+              )}
+
+              <div 
+                className={`subcategory-pills-track ${canScrollLeft ? 'has-left-shadow' : ''} ${canScrollRight ? 'has-right-shadow' : ''}`}
+                ref={pillsTrackRef}
+                onMouseDown={handleMouseDown}
+                onMouseMove={handleMouseMove}
+                onMouseUp={handleMouseUpOrLeave}
+                onMouseLeave={handleMouseUpOrLeave}
               >
-                All {activeCategoryObj.name}
-              </button>
-              {currentSubcategories.map((subcat) => {
-                const isSelected = selectedSubcat === subcat.id;
-                return (
+                <button
+                  type="button"
+                  className={`subcat-pill-btn ${selectedSubcat === '' ? 'active' : ''}`}
+                  onClick={() => {
+                    if (!isDraggingRef.current) handleSubcategorySelect('');
+                  }}
+                >
+                  ⚡ All {activeCategoryObj?.name || 'Category'}
+                </button>
+                {currentSubcategories.map((subcat) => {
+                  const isSelected = selectedSubcat === subcat.id;
+                  return (
+                    <button
+                      key={subcat.id}
+                      type="button"
+                      className={`subcat-pill-btn ${isSelected ? 'active' : ''}`}
+                      onClick={() => {
+                        if (!isDraggingRef.current) handleSubcategorySelect(subcat.id);
+                      }}
+                    >
+                      {subcat.name}
+                    </button>
+                  );
+                })}
+              </div>
+
+              {canScrollRight && (
+                <button 
+                  type="button" 
+                  className="subcat-scroll-arrow right" 
+                  onClick={() => scrollPills(180)}
+                  aria-label="Scroll Subcategories Right"
+                >
+                  <ChevronRight style={{ width: '16px', height: '16px' }} />
+                </button>
+              )}
+            </div>
+          ) : (
+            /* If no category is filtered, show top-level Category Pills */
+            <div className="subcategory-pills-container">
+              {canScrollLeft && (
+                <button 
+                  type="button" 
+                  className="subcat-scroll-arrow left" 
+                  onClick={() => scrollPills(-180)}
+                  aria-label="Scroll Categories Left"
+                >
+                  <ChevronLeft style={{ width: '16px', height: '16px' }} />
+                </button>
+              )}
+
+              <div 
+                className={`subcategory-pills-track ${canScrollLeft ? 'has-left-shadow' : ''} ${canScrollRight ? 'has-right-shadow' : ''}`}
+                ref={pillsTrackRef}
+                onMouseDown={handleMouseDown}
+                onMouseMove={handleMouseMove}
+                onMouseUp={handleMouseUpOrLeave}
+                onMouseLeave={handleMouseUpOrLeave}
+              >
+                <button
+                  type="button"
+                  className={`subcat-pill-btn ${selectedCat === '' ? 'active' : ''}`}
+                  onClick={() => {
+                    if (!isDraggingRef.current) handleCategorySelect('');
+                  }}
+                >
+                  ⚡ All Materials
+                </button>
+                {categories.map((cat) => (
                   <button
-                    key={subcat.id}
+                    key={cat.id}
                     type="button"
-                    className={`subcat-pill-btn ${isSelected ? 'active' : ''}`}
-                    onClick={() => handleSubcategorySelect(subcat.id)}
+                    className={`subcat-pill-btn ${selectedCat === cat.id ? 'active' : ''}`}
+                    onClick={() => {
+                      if (!isDraggingRef.current) handleCategorySelect(cat.id);
+                    }}
                   >
-                    {subcat.name}
+                    {cat.name}
                   </button>
-                );
-              })}
+                ))}
+              </div>
+
+              {canScrollRight && (
+                <button 
+                  type="button" 
+                  className="subcat-scroll-arrow right" 
+                  onClick={() => scrollPills(180)}
+                  aria-label="Scroll Categories Right"
+                >
+                  <ChevronRight style={{ width: '16px', height: '16px' }} />
+                </button>
+              )}
             </div>
           )}
 

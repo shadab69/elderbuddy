@@ -2177,18 +2177,161 @@ body.dark-theme .product-card-img-wrapper .raw-svg-wrapper {
     display: grid;
     grid-template-columns: 260px 1fr;
     gap: 30px;
+    min-width: 0;
+    max-width: 100%;
+}
+
+.listing-content {
+    min-width: 0;
+    max-width: 100%;
+    width: 100%;
 }
 
 @media (max-width: 900px) {
     .listing-layout {
         grid-template-columns: 1fr;
+        gap: 15px;
     }
     .filters-sidebar {
         order: 2;
     }
     .listing-content {
         order: 1;
+        min-width: 0;
+        max-width: 100%;
+        width: 100%;
     }
+}
+
+/* Base Subcategory & Category Quick Pills Track */
+.subcategory-pills-container {
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+}
+
+.subcategory-pills-track {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    padding: 4px 4px 8px 4px;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    cursor: grab;
+    user-select: none;
+    touch-action: pan-x;
+}
+
+.subcategory-pills-track:active {
+    cursor: grabbing;
+}
+
+.subcategory-pills-track::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+}
+
+.subcat-pill-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 7px 15px;
+    border-radius: 20px;
+    border: 1px solid #e2e8f0;
+    background: #ffffff;
+    color: #1e293b;
+    font-weight: 600;
+    font-size: 0.8rem;
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: all 0.18s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.subcat-pill-btn:hover {
+    border-color: #ea580c;
+    color: #ea580c;
+    background: rgba(234, 88, 12, 0.04);
+}
+
+.subcat-pill-btn:active {
+    transform: scale(0.96);
+}
+
+.subcat-pill-btn.active {
+    background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%);
+    border-color: #ea580c;
+    color: #ffffff !important;
+    font-weight: 700;
+    box-shadow: 0 3px 10px rgba(234, 88, 12, 0.35);
+}
+
+body.dark-theme .subcat-pill-btn {
+    background: #1e293b;
+    border-color: #334155;
+    color: #cbd5e1;
+}
+
+body.dark-theme .subcat-pill-btn:hover {
+    border-color: #f97316;
+    color: #f97316;
+}
+
+body.dark-theme .subcat-pill-btn.active {
+    background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%);
+    border-color: #ea580c;
+    color: #ffffff !important;
+}
+
+.subcat-scroll-arrow {
+    position: absolute;
+    top: calc(50% - 2px);
+    transform: translateY(-50%);
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #0f172a;
+    cursor: pointer;
+    z-index: 10;
+    transition: all 0.15s ease;
+}
+
+.subcat-scroll-arrow:hover {
+    background: #ea580c;
+    color: #ffffff;
+    border-color: #ea580c;
+}
+
+.subcat-scroll-arrow.left {
+    left: -8px;
+}
+
+.subcat-scroll-arrow.right {
+    right: -8px;
+}
+
+body.dark-theme .subcat-scroll-arrow {
+    background: #1e293b;
+    border-color: #475569;
+    color: #ffffff;
 }
 
 /* Filter Sidebar */
@@ -8224,32 +8367,71 @@ body.dark-theme .agentic-input-bar input {
         color: #ffffff;
     }
 
+    /* Subcategory & Category Draggable Pills */
+    .subcategory-pills-container {
+        position: relative;
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        margin-bottom: 16px;
+        display: flex;
+        align-items: center;
+    }
+
     .subcategory-pills-track {
         display: flex;
         gap: 8px;
         overflow-x: auto;
-        padding-bottom: 10px;
-        margin-bottom: 15px;
+        overflow-y: hidden;
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        padding: 4px 6px 10px 6px;
         -webkit-overflow-scrolling: touch;
+        overscroll-behavior-x: contain;
+        scroll-behavior: smooth;
         scrollbar-width: none;
+        cursor: grab;
+        user-select: none;
+        touch-action: pan-x;
+    }
+
+    .subcategory-pills-track:active {
+        cursor: grabbing;
     }
 
     .subcategory-pills-track::-webkit-scrollbar {
         display: none;
+        width: 0;
+        height: 0;
     }
 
     .subcat-pill-btn {
-        padding: 6px 14px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 7px 15px;
         border-radius: 20px;
         border: 1px solid #e2e8f0;
         background: #ffffff;
-        color: #0f172a;
-        font-weight: 500;
-        font-size: 0.78rem;
+        color: #1e293b;
+        font-weight: 600;
+        font-size: 0.8rem;
         cursor: pointer;
         white-space: nowrap;
         flex-shrink: 0;
-        transition: all 0.15s ease;
+        transition: all 0.18s ease;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    }
+
+    .subcat-pill-btn:hover {
+        border-color: #ea580c;
+        color: #ea580c;
+        background: rgba(234, 88, 12, 0.04);
+    }
+
+    .subcat-pill-btn:active {
+        transform: scale(0.96);
     }
 
     body.dark-theme .subcat-pill-btn {
@@ -8258,12 +8440,77 @@ body.dark-theme .agentic-input-bar input {
         color: #cbd5e1;
     }
 
+    body.dark-theme .subcat-pill-btn:hover {
+        border-color: #f97316;
+        color: #f97316;
+    }
+
     .subcat-pill-btn.active {
-        background: #ea580c;
+        background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%);
         border-color: #ea580c;
-        color: #ffffff;
+        color: #ffffff !important;
         font-weight: 700;
-        box-shadow: 0 2px 8px rgba(234, 88, 12, 0.3);
+        box-shadow: 0 3px 10px rgba(234, 88, 12, 0.35);
+    }
+
+    body.dark-theme .subcat-pill-btn.active {
+        background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%);
+        border-color: #ea580c;
+        color: #ffffff !important;
+    }
+
+    .subcat-scroll-arrow {
+        position: absolute;
+        top: calc(50% - 3px);
+        transform: translateY(-50%);
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        background: #ffffff;
+        border: 1px solid #cbd5e1;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #0f172a;
+        cursor: pointer;
+        z-index: 10;
+        transition: all 0.15s ease;
+    }
+
+    .subcat-scroll-arrow:hover {
+        background: #ea580c;
+        color: #ffffff;
+        border-color: #ea580c;
+    }
+
+    .subcat-scroll-arrow.left {
+        left: -4px;
+    }
+
+    .subcat-scroll-arrow.right {
+        right: -4px;
+    }
+
+    body.dark-theme .subcat-scroll-arrow {
+        background: #1e293b;
+        border-color: #475569;
+        color: #ffffff;
+    }
+
+    .has-left-shadow {
+        mask-image: linear-gradient(to right, transparent, black 25px);
+        -webkit-mask-image: linear-gradient(to right, transparent, black 25px);
+    }
+
+    .has-right-shadow {
+        mask-image: linear-gradient(to left, transparent, black 25px);
+        -webkit-mask-image: linear-gradient(to left, transparent, black 25px);
+    }
+
+    .has-left-shadow.has-right-shadow {
+        mask-image: linear-gradient(to right, transparent, black 25px, black calc(100% - 25px), transparent 100%);
+        -webkit-mask-image: linear-gradient(to right, transparent, black 25px, black calc(100% - 25px), transparent 100%);
     }
 
     /* Mobile Filter Drawer Slide-up */
