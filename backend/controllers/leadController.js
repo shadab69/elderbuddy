@@ -11,23 +11,39 @@ exports.getLeads = async (req, res) => {
 };
 
 exports.createLead = async (req, res) => {
-    try {
-        if (!req.body.id) {
-            req.body.id = 'INQ_' + Math.floor(100000 + Math.random() * 900000);
-        }
-        const lead = await Lead.create(req.body);
-
-        // Await email dispatch so Vercel serverless function doesn't terminate before sending
-        try {
-            await emailService.sendLeadEmailNotification(lead);
-        } catch (err) {
-            console.error('[leadController] Email notification error:', err.message);
-        }
-
-        res.status(201).json(lead);
-    } catch (e) {
-        console.error('[leadController] Error logging inquiry lead:', e.message);
-        res.status(201).json({ success: true, message: 'Inquiry recorded', data: req.body });
+    const leadData = req.body || {};
+    if (!leadData.id) {
+        leadData.id = 'INQ_' + Math.floor(100000 + Math.random() * 900000);
     }
+
+    let savedLead = leadData;
+
+    // 1. Try saving to Database if connected
+    try {
+        const dbResult = await Lead.create(leadData);
+        if (dbResult) {
+            savedLead = dbResult.toObject ? dbResult.toObject() : dbResult;
+        }
+    } catch (dbErr) {
+        console.warn('[leadController] Database write fallback (serverless mode):', dbErr.message);
+    }
+
+    // 2. ALWAYS dispatch Admin Alert Email AND Customer Receipt Confirmation Email
+    try {
+        await emailService.sendLeadEmailNotification(savedLead);
+    } catch (adminEmailErr) {
+        console.error('[leadController] Admin lead notification error:', adminEmailErr.message);
+    }
+
+    try {
+        const customerEmail = savedLead.email;
+        if (customerEmail && customerEmail.includes('@') && !customerEmail.includes('@turnkeyclient.in')) {
+            await emailService.sendCustomerLeadConfirmation(savedLead);
+        }
+    } catch (custEmailErr) {
+        console.error('[leadController] Customer lead confirmation email error:', custEmailErr.message);
+    }
+
+    return res.status(201).json(savedLead);
 };
 

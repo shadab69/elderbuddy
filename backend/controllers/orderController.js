@@ -11,23 +11,39 @@ exports.getOrders = async (req, res) => {
 };
 
 exports.createOrder = async (req, res) => {
-    try {
-        if (!req.body.id) {
-            req.body.id = 'ORD_' + Math.floor(100000 + Math.random() * 900000);
-        }
-        const order = await Order.create(req.body);
-
-        // Await email dispatch so Vercel serverless function doesn't terminate before sending
-        try {
-            await emailService.sendOrderEmailNotification(order);
-        } catch (err) {
-            console.error('[orderController] Email notification error:', err.message);
-        }
-
-        res.status(201).json(order);
-    } catch (e) {
-        console.error('[orderController] Error logging order:', e.message);
-        res.status(201).json({ success: true, message: 'Order recorded', data: req.body });
+    const orderData = req.body || {};
+    if (!orderData.id) {
+        orderData.id = 'ORD_' + Math.floor(100000 + Math.random() * 900000);
     }
+
+    let savedOrder = orderData;
+
+    // 1. Try saving to Database if connected
+    try {
+        const dbResult = await Order.create(orderData);
+        if (dbResult) {
+            savedOrder = dbResult.toObject ? dbResult.toObject() : dbResult;
+        }
+    } catch (dbErr) {
+        console.warn('[orderController] Database write fallback (serverless mode):', dbErr.message);
+    }
+
+    // 2. ALWAYS dispatch Admin Alert Email AND Customer Receipt Confirmation Email
+    try {
+        await emailService.sendOrderEmailNotification(savedOrder);
+    } catch (adminEmailErr) {
+        console.error('[orderController] Admin email notification error:', adminEmailErr.message);
+    }
+
+    try {
+        const customerEmail = savedOrder.customer?.email || savedOrder.email;
+        if (customerEmail && customerEmail.includes('@') && !customerEmail.includes('@turnkeyclient.in')) {
+            await emailService.sendCustomerOrderConfirmation(savedOrder);
+        }
+    } catch (custEmailErr) {
+        console.error('[orderController] Customer order confirmation email error:', custEmailErr.message);
+    }
+
+    return res.status(201).json(savedOrder);
 };
 

@@ -18,6 +18,8 @@ export default function Checkout() {
   const [loading, setLoading] = useState(false);
 
   if (orderSuccess) {
+    const cust = orderSuccess.customer || {};
+    const items = orderSuccess.items || [];
     return (
       <div className="container animate-fade-in" style={{ padding: '40px 0' }}>
         <div className="checkout-success-view">
@@ -26,11 +28,77 @@ export default function Checkout() {
           </div>
           <h2>Order Placed Successfully!</h2>
           <p>
-            Thank you, <strong>{orderSuccess.customer.name}</strong>. Your order{' '}
+            Thank you, <strong>{cust.name}</strong>. Your order{' '}
             <strong>#{orderSuccess.id || orderSuccess._id}</strong> has been received. Our
-            sales engineer will call you on <strong>{orderSuccess.customer.phone}</strong>{' '}
+            sales engineer will call you on <strong>{cust.phone}</strong>{' '}
             within 30 minutes to confirm the site location and delivery dispatch time.
           </p>
+
+          {/* Email Confirmation Notification */}
+          <div
+            style={{
+              background: 'rgba(22, 163, 74, 0.08)',
+              border: '1px solid #86efac',
+              borderRadius: '8px',
+              padding: '12px 16px',
+              fontSize: '0.88rem',
+              color: '#166534',
+              marginBottom: '20px',
+              textAlign: 'left'
+            }}
+          >
+            ✉️ <strong>Order Receipt Sent!</strong> An itemized invoice with all your ordered building materials has been sent to your email (<strong>{cust.email || 'your email'}</strong>).
+          </div>
+
+          {/* Ordered Materials Summary Box */}
+          <div
+            style={{
+              background: 'var(--bg-surface)',
+              border: '1px solid var(--border-color)',
+              borderRadius: '8px',
+              padding: '16px',
+              textAlign: 'left',
+              marginBottom: '20px'
+            }}
+          >
+            <h4 style={{ margin: '0 0 10px 0', fontSize: '0.92rem', color: 'var(--text-main)' }}>
+              📦 Ordered Materials Summary
+            </h4>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              {items.map((it, idx) => (
+                <div 
+                  key={idx} 
+                  style={{ 
+                    display: 'flex', 
+                    justifyContent: 'space-between', 
+                    fontSize: '0.82rem', 
+                    paddingBottom: '6px', 
+                    borderBottom: '1px solid var(--border-color)' 
+                  }}
+                >
+                  <span>
+                    <strong>{it.quantity}x</strong> {it.name}
+                  </span>
+                  <span style={{ fontWeight: '600' }}>
+                    ₹{((it.price || 0) * (it.quantity || 1)).toLocaleString('en-IN')}
+                  </span>
+                </div>
+              ))}
+            </div>
+            <div 
+              style={{ 
+                display: 'flex', 
+                justifyContent: 'space-between', 
+                marginTop: '10px', 
+                fontSize: '0.95rem', 
+                fontWeight: '700', 
+                color: 'var(--primary-color, #ea580c)' 
+              }}
+            >
+              <span>Total Payable Amount (COD):</span>
+              <span>₹{(orderSuccess.total || 0).toLocaleString('en-IN')}</span>
+            </div>
+          </div>
 
           <div
             style={{
@@ -46,8 +114,7 @@ export default function Checkout() {
           >
             <strong>Site Delivery Location:</strong>
             <br />
-            {orderSuccess.customer.address}, {orderSuccess.customer.city} -{' '}
-            {orderSuccess.customer.pincode}
+            {cust.address}, {cust.city} - {cust.pincode}
           </div>
 
           <Link to="/" className="btn-primary w-full" style={{ display: 'block', textAlign: 'center' }}>
@@ -157,6 +224,8 @@ export default function Checkout() {
         },
         body: JSON.stringify({
           _subject: `🛒 New Customer Order Placed: #${generatedOrderId} (₹${total.toLocaleString('en-IN')}) - ${formData.name}`,
+          _replyto: formData.email || 'shady69366@gmail.com',
+          _autoresponse: `Namaste ${formData.name}! Thank you for placing your order with Elder-O-Buddy.\n\nYour Order #${generatedOrderId} (Total Amount: ₹${total.toLocaleString('en-IN')}) has been received successfully.\n\nOrdered Items:\n${formattedItemsSummary}\n\nDelivery Address:\n${formData.address}, ${formData.city} - ${formData.pincode}\n\nOur logistics manager will call you at ${formData.phone} to confirm the delivery truck schedule.`,
           _template: 'table',
           _captcha: 'false',
           'Order ID': `#${generatedOrderId}`,
