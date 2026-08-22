@@ -33,15 +33,13 @@ exports.createLead = async (req, res) => {
         await emailService.sendLeadEmailNotification(savedLead);
     } catch (adminEmailErr) {
         console.error('[leadController] Admin lead notification error:', adminEmailErr.message);
-    }
-
-    try {
-        const customerEmail = savedLead.email;
-        if (customerEmail && customerEmail.includes('@') && !customerEmail.includes('@turnkeyclient.in')) {
-            await emailService.sendCustomerLeadConfirmation(savedLead);
-        }
-    } catch (custEmailErr) {
-        console.error('[leadController] Customer lead confirmation email error:', custEmailErr.message);
+        // Fallback: Try customer confirmation directly if admin email failed
+        try {
+            const customerEmail = savedLead.email;
+            if (customerEmail && customerEmail.includes('@') && !customerEmail.includes('@turnkeyclient.in')) {
+                await emailService.sendCustomerLeadConfirmation(savedLead);
+            }
+        } catch (custErr) {}
     }
 
     return res.status(201).json(savedLead);

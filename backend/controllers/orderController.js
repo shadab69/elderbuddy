@@ -33,15 +33,13 @@ exports.createOrder = async (req, res) => {
         await emailService.sendOrderEmailNotification(savedOrder);
     } catch (adminEmailErr) {
         console.error('[orderController] Admin email notification error:', adminEmailErr.message);
-    }
-
-    try {
-        const customerEmail = savedOrder.customer?.email || savedOrder.email;
-        if (customerEmail && customerEmail.includes('@') && !customerEmail.includes('@turnkeyclient.in')) {
-            await emailService.sendCustomerOrderConfirmation(savedOrder);
-        }
-    } catch (custEmailErr) {
-        console.error('[orderController] Customer order confirmation email error:', custEmailErr.message);
+        // Fallback: Try customer confirmation directly if admin email failed
+        try {
+            const customerEmail = savedOrder.customer?.email || savedOrder.email;
+            if (customerEmail && customerEmail.includes('@') && !customerEmail.includes('@turnkeyclient.in')) {
+                await emailService.sendCustomerOrderConfirmation(savedOrder);
+            }
+        } catch (custErr) {}
     }
 
     return res.status(201).json(savedOrder);
