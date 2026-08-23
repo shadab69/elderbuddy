@@ -525,15 +525,6 @@ async function sendOrderEmailNotification(order) {
     });
     console.log('[EmailService] Admin order email sent successfully to', recipient, 'MessageId:', info.messageId);
 
-    // Also send automated Order Confirmation Email to the Customer
-    if (customerEmail && customerEmail.includes('@') && !customerEmail.includes('@turnkeyclient.in')) {
-      try {
-        await sendCustomerOrderConfirmation(order);
-      } catch (custErr) {
-        console.warn('[EmailService] Customer order confirmation dispatch note:', custErr.message);
-      }
-    }
-
     return { success: true, messageId: info.messageId };
   } catch (err) {
     console.error('[EmailService] Order email error:', err.message);
