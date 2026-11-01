@@ -78,9 +78,9 @@ export default function Footer() {
         <div className="container footer-bottom-inner">
           <p>&copy; 2026 Elder-o-Buddy Marketplace Private Limited. All rights reserved.</p>
           <div className="bottom-links">
-            <a href="#">Privacy Policy</a>
-            <a href="#">Terms & Conditions</a>
-            <a href="#">Refund Policy</a>
+            <Link to="/privacy-policy">Privacy Policy</Link>
+            <Link to="/terms-and-conditions">Terms & Conditions</Link>
+            <Link to="/refund-policy">Refund Policy</Link>
           </div>
         </div>
       </div>
