@@ -8,7 +8,7 @@ Elder-O-Buddy ek premium building materials e-commerce portal aur turnkey home c
 
 ### 1. Prerequisites (Zaroori cheezein)
 - **Node.js** (v18 ya usse upar) installed hona chahiye.
-- **MongoDB** local machine par chal raha hona chahiye (default roop se `mongodb://127.0.0.1:27017/builderpro` par).
+- **MongoDB** (optional) — agar MongoDB available hai to data wahan se serve hota hai. **MongoDB na ho tab bhi project chalta hai:** catalogue APIs (`/api/products`, `/api/categories`, `/api/banners`, `/api/builders`, `/api/guides`, `/api/units`) automatically `backend/data/` ki JSON seed files se data serve kar dete hain (JSON fallback). Sirf admin writes ke liye live MongoDB chahiye.
 
 ### 2. Installation (Dependencies install karein)
 Project ke root folder mein jaakar dependencies install karein:
@@ -17,18 +17,42 @@ npm install
 ```
 
 ### 3. Environment Variables (Environment setup)
-Root directory mein ek `.env` file banayein (ya pehle se bani file ko check karein):
-```env
-PORT=3000
-MONGODB_URI=mongodb://127.0.0.1:27017/builderpro
-```
+Root directory mein `.env.example` ko copy karke `.env` file banayein aur real values bharein. **`.env` ko git mein kabhi commit na karein** (yeh `.gitignore` mein hai). Har variable ki detail `.env.example` mein documented hai:
+
+| Variable | Kaam |
+|---|---|
+| `PORT` | Backend port (default 3000) |
+| `NODE_ENV` | `development` / `production` (admin-token rule neeche dekhein) |
+| `MONGODB_URI` | MongoDB connection string (optional — JSON fallback upar dekhein) |
+| `ADMIN_TOKEN` | Admin/write API calls ke liye shared secret (`x-admin-token` header) |
+| `ALLOWED_ORIGINS` | CORS ke liye comma-separated browser origins (default: `http://localhost:5173,http://localhost:3000`) |
+| `ADMIN_EMAIL` | Order/inquiry notifications jis email par jayengi |
+| `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_SERVICE`, `SMTP_USER`, `SMTP_PASS` | Email bhejne ki SMTP settings. `EMAIL_SERVICE` / `EMAIL_USER` / `EMAIL_PASS` legacy aliases ke roop mein bhi supported hain. Credentials sirf env mein rehte hain — code ya git mein kabhi nahi. |
+| `NOTIFY_ON_INQUIRY`, `NOTIFY_ON_ORDER` | Email notification switches (`true`/`false`) |
 
 ### 4. Project Chalana (Running the Project)
-Development server ko shuru karne ke liye niche di gayi command chalayein:
 ```bash
 npm start
 ```
-Yeh command **Nodemon** ke sath backend server ko shuru karegi jo auto-reload support karta hai. Server chalne ke baad aap browser mein **http://localhost:3000** par project dekh sakte hain.
+Yeh command `node backend/server.js` chalati hai — yahi `package.json` ka `start` script hai (koi Nodemon nahi hai; `start` production-style plain Node run hai). Server chalne ke baad browser mein **http://localhost:3000** par project dekh sakte hain (pehle `npm run build` karne par backend `dist/` se frontend bhi serve karta hai).
+
+Dono (backend + Vite frontend) ek sath development mode mein chalane ke liye:
+```bash
+npm run dev:all
+```
+Yeh `concurrently` se `npm run server` (port 3000) aur `npm run dev` (Vite, port 5173) dono start karta hai.
+
+### 5. Admin API Security (Admin Token & CORS)
+- Saari **write/admin API calls** (products, categories, units, banners, builders, designers, guides par POST/PUT/DELETE; `POST /api/email/config`; file upload) aur **`/api/leads` / `/api/orders` ki GET (read) calls** ke liye `ADMIN_TOKEN` env variable se match karta hua token bhejna zaroori hai: header `x-admin-token: <token>` (ya `Authorization: Bearer <token>`).
+- Agar `ADMIN_TOKEN` set nahi hai to production mein write calls **reject (401)** hoti hain. Sirf `NODE_ENV=development` mein bina token ke allow hoti hain, ek console warning ke sath — local development ke liye hi yeh exception hai.
+- Customer-facing public actions (lead/inquiry banana, order place karna, catalogue dekhna) bina token ke chalte hain.
+- **CORS** sirf `ALLOWED_ORIGINS` mein listed origins ko allow karta hai; production deploy par apni site ka origin wahan zaroor add karein.
+
+### 6. Payments Note
+Checkout abhi **Cash on Delivery / Cash on Site Delivery by design** hai — is market (building materials, site delivery) mein yahi standard practice hai. Online payments (UPI/cards/payment gateway) roadmap par hain, current scope mein jaan-boojh kar included nahi hain.
+
+### 7. Deployment (Vercel)
+Live deployment Vercel par hai: `api/index.js` Express app ko serverless function ke roop mein export karta hai aur `vercel.json` `/api/(.*)` ko usi par rewrite karta hai. Production env variables (upar wali table) Vercel project settings mein set karein — khaas taur par `ADMIN_TOKEN`, `ALLOWED_ORIGINS` (apni site ka origin), SMTP variables aur `MONGODB_URI`.
 
 ---
 
@@ -142,7 +166,7 @@ Backend APIs/Database handler run karne ke liye:
 ```bash
 npm run server
 ```
-- Nodemon backend codes auto-refresh ensure karta hai.
+- Yeh `node backend/server.js` chalata hai (`package.json` ka `server` script). Code change ke baad server ko manually restart karein — auto-reload/Nodemon is project mein configured nahi hai.
 
 ### 3. Production Build Compilation
 Build generate karne ke liye:
