@@ -1,354 +1,538 @@
 [
   {
-    "id": "c1",
-    "name": "UltraTech 53 Grade OPC Cement - 50kg Bag",
-    "brand": "UltraTech",
-    "category": "cement",
-    "subcategory": "opc-cement",
-    "price": 385,
-    "originalPrice": 450,
-    "discountLabel": "14% OFF",
-    "unit": "Bag",
-    "description": "High early strength Ordinary Portland Cement (53 Grade) for heavy reinforced concrete structures.",
-    "rating": 4.8,
-    "ratingCount": 120,
-    "specs": { "Grade": "OPC 53", "Weight": "50 Kg", "Brand": "UltraTech" },
-    "imageSrc": "assets/cci_cement.png"
-  },
-  {
-    "id": "c2",
-    "name": "CCI Premium PPC Pozzolana Cement - 50kg",
-    "brand": "CCI",
-    "category": "cement",
-    "subcategory": "ppc-cement",
-    "price": 345,
-    "originalPrice": 420,
-    "discountLabel": "18% OFF",
-    "unit": "Bag",
-    "description": "Portland Pozzolana Cement with chemical corrosion resistance and superior crack prevention.",
-    "rating": 4.6,
-    "ratingCount": 98,
-    "specs": { "Grade": "PPC", "Weight": "50 Kg", "Brand": "CCI" },
-    "imageSrc": "assets/cci_cement.png"
-  },
-  {
-    "id": "c3",
-    "name": "Ready Mix Concrete (RMC) M25 Grade",
-    "brand": "ACC Concrete",
-    "category": "cement",
-    "subcategory": "rmc-concrete",
-    "price": 4200,
-    "originalPrice": 4800,
-    "discountLabel": "12% OFF",
-    "unit": "Cu.m",
-    "description": "Pre-mixed high strength concrete delivered via transit mixer for slabs and foundation casting.",
-    "rating": 4.7,
-    "ratingCount": 45,
-    "specs": { "Grade": "M25", "Delivery": "Transit Mixer", "Brand": "ACC" },
-    "imageSrc": "assets/cci_cement.png"
-  },
-  {
-    "id": "c4",
-    "name": "JK White Cement Wall Care - 25kg",
-    "brand": "JK Cement",
-    "category": "cement",
-    "subcategory": "white-cement",
-    "price": 680,
-    "originalPrice": 750,
-    "discountLabel": "9% OFF",
-    "unit": "Bag",
-    "description": "Super white cement base coat for smooth marble flooring grouting and wall surface preparation.",
-    "rating": 4.9,
-    "ratingCount": 76,
-    "specs": { "Color": "Super White", "Weight": "25 Kg", "Brand": "JK Cement" },
-    "imageSrc": "assets/cci_cement.png"
-  },
-  {
-    "id": "s1",
-    "name": "Tata Tiscon 12mm Fe 500D TMT Steel Rebar",
-    "brand": "Tata Tiscon",
-    "category": "steel",
-    "subcategory": "fe500d",
-    "price": 64500,
-    "originalPrice": 72000,
-    "discountLabel": "10% OFF",
-    "unit": "MT",
-    "description": "High ductility earthquake-resistant TMT steel reinforcement bars for home construction.",
-    "rating": 4.9,
-    "ratingCount": 140,
-    "specs": { "Diameter": "12mm", "Grade": "Fe 500D", "Brand": "Tata Tiscon" },
-    "imageSrc": "assets/steel_tmt.jpg"
-  },
-  {
-    "id": "s2",
-    "name": "Jindal Panther 16mm Fe 550D TMT Bars",
-    "brand": "Jindal Steel",
-    "category": "steel",
-    "subcategory": "fe550d",
-    "price": 66800,
-    "originalPrice": 74000,
-    "discountLabel": "10% OFF",
-    "unit": "MT",
-    "description": "Heavy load capacity Fe 550D high tensile steel bars for pillars, beams and multi-story structures.",
-    "rating": 4.8,
-    "ratingCount": 115,
-    "specs": { "Diameter": "16mm", "Grade": "Fe 550D", "Brand": "Jindal Panther" },
-    "imageSrc": "assets/steel_tmt.jpg"
-  },
-  {
-    "id": "s3",
-    "name": "Heavy Duty ISMB 150 Structural Steel I-Beam",
-    "brand": "SAIL",
-    "category": "steel",
-    "subcategory": "structural-steel",
-    "price": 68500,
-    "originalPrice": 76000,
-    "discountLabel": "10% OFF",
-    "unit": "MT",
-    "description": "Hot rolled structural ISMB steel joist I-beams for industrial framing and heavy roof sheds.",
-    "rating": 4.7,
-    "ratingCount": 62,
-    "specs": { "Type": "ISMB 150", "Material": "MS Steel", "Brand": "SAIL" },
-    "imageSrc": "assets/steel_beam.jpg"
-  },
-  {
-    "id": "s4",
-    "name": "GI Steel Binding Wire Roll - 18 Gauge",
-    "brand": "TATA Wiron",
-    "category": "steel",
-    "subcategory": "binding-wire",
-    "price": 85,
-    "originalPrice": 105,
-    "discountLabel": "19% OFF",
-    "unit": "Kg",
-    "description": "Soft annealed galvanized steel binding wire for tying TMT rebars and stirrup cages.",
-    "rating": 4.6,
-    "ratingCount": 88,
-    "specs": { "Gauge": "18 SWG", "Type": "GI Wire", "Brand": "TATA Wiron" },
-    "imageSrc": "assets/steel_beam.jpg"
-  },
-  {
-    "id": "b1",
-    "name": "Kiln Fired Red Clay Solid Masonry Bricks",
-    "brand": "Maharashtra Red Brick",
-    "category": "bricks",
-    "subcategory": "red-clay-bricks",
-    "price": 12,
-    "originalPrice": 16,
-    "discountLabel": "25% OFF",
-    "unit": "Piece",
-    "description": "First class red clay kiln fired bricks for load bearing exterior and interior wall construction.",
-    "rating": 4.5,
-    "ratingCount": 110,
-    "specs": { "Size": "9x4x3 Inches", "Type": "Red Clay", "Brand": "Local Kiln" },
-    "imageSrc": "assets/red_bricks.jpg"
-  },
-  {
-    "id": "b2",
-    "name": "Eco Fly Ash Masonry Bricks",
-    "brand": "FlyAsh Pro",
-    "category": "bricks",
-    "subcategory": "fly-ash-bricks",
-    "price": 7.5,
-    "originalPrice": 10,
-    "discountLabel": "25% OFF",
-    "unit": "Piece",
-    "description": "Uniform shape eco-friendly fly ash cement bricks requiring less plastering mortar.",
-    "rating": 4.6,
-    "ratingCount": 94,
-    "specs": { "Size": "230x110x75 mm", "Material": "Fly Ash & Cement", "Brand": "FlyAsh Pro" },
-    "imageSrc": "assets/fly_ash_brick.png"
-  },
-  {
-    "id": "b3",
-    "name": "Greenstone 6-Inch AAC Lightweight Blocks",
+    "id": "hd7",
+    "name": "Greenstone's AAC Brick - 600mmX200mmX150mm (6\")",
     "brand": "Greenstone",
     "category": "bricks",
     "subcategory": "aac-blocks",
     "price": 65,
-    "originalPrice": 80,
-    "discountLabel": "18% OFF",
-    "unit": "Piece",
-    "description": "Autoclaved Aerated Concrete lightweight blocks offering high thermal insulation and fire safety.",
-    "rating": 4.8,
-    "ratingCount": 85,
-    "specs": { "Size": "600x200x150 mm", "Thickness": "6 Inch", "Brand": "Greenstone" },
-    "imageSrc": "assets/aac_brick.png"
-  },
-  {
-    "id": "b4",
-    "name": "Heavy Duty Concrete Solid Masonry Blocks",
-    "brand": "UltraBlock",
-    "category": "bricks",
-    "subcategory": "solid-blocks",
-    "price": 38,
-    "originalPrice": 48,
-    "discountLabel": "20% OFF",
-    "unit": "Piece",
-    "description": "Pre-cast dense concrete solid blocks for boundary walls, basements and foundation work.",
-    "rating": 4.7,
+    "unit": "Nos",
+    "description": "Autoclaved Aerated Concrete bricks by Greenstone (6 Inch thickness) for robust masonry.",
+    "rating": 4.6,
     "ratingCount": 52,
-    "specs": { "Size": "400x200x150 mm", "Material": "Dense Concrete", "Brand": "UltraBlock" },
-    "imageSrc": "assets/leo_aac_block.png"
+    "specs": {
+      "Size": "600x200x150mm",
+      "Brand": "Greenstone"
+    },
+    "imageSrc": "<img src=\"assets/aac_brick.png\" alt=\"Greenstone AAC Brick\">"
   },
   {
-    "id": "t1",
-    "name": "Glossy Vitrified Marble Floor Tiles (2x2 ft)",
-    "brand": "Kajaria",
-    "category": "tiles",
-    "subcategory": "vitrified-tiles",
-    "price": 58,
-    "originalPrice": 75,
-    "discountLabel": "22% OFF",
-    "unit": "Sq.ft",
-    "description": "Stain resistant double charged vitrified floor tiles with high gloss Italian marble print.",
-    "rating": 4.8,
-    "ratingCount": 132,
-    "specs": { "Size": "600x600 mm", "Finish": "High Gloss", "Brand": "Kajaria" },
-    "imageSrc": "assets/vitrified_tiles.jpg"
+    "id": "hd8",
+    "name": "CCI PPC Cement",
+    "brand": "CCI",
+    "category": "cement",
+    "subcategory": "ppc-cement",
+    "price": 295,
+    "originalPrice": 430,
+    "discountLabel": "UPTO 31% OFF",
+    "unit": "Bag",
+    "description": "CCI Portland Pozzolana Cement (PPC), offering premium resistance to environmental factors.",
+    "rating": 4.5,
+    "ratingCount": 88,
+    "specs": {
+      "Grade": "PPC Grade",
+      "Weight": "50 Kg",
+      "Brand": "Cement Corporation of India"
+    },
+    "imageSrc": "<img src=\"assets/cci_cement.png\" alt=\"CCI PPC Cement\">"
   },
   {
-    "id": "t2",
-    "name": "Decorative Kitchen Ceramic Wall Tiles",
-    "brand": "Somany",
-    "category": "tiles",
-    "subcategory": "ceramic-tiles",
-    "price": 42,
-    "originalPrice": 55,
-    "discountLabel": "23% OFF",
-    "unit": "Sq.ft",
-    "description": "Waterproof ceramic digital wall tiles with modern mosaic patterns for kitchens and bathrooms.",
-    "rating": 4.7,
-    "ratingCount": 89,
-    "specs": { "Size": "300x450 mm", "Finish": "Glossy Ceramic", "Brand": "Somany" },
-    "imageSrc": "assets/ceramic_tile.png"
-  },
-  {
-    "id": "t3",
-    "name": "Polished Jet Black Granite Stone Slab",
-    "brand": "Natural Stone",
-    "category": "tiles",
-    "subcategory": "granite-marble",
-    "price": 145,
-    "originalPrice": 180,
-    "discountLabel": "19% OFF",
-    "unit": "Sq.ft",
-    "description": "Premium mirror finish natural black granite slab for kitchen countertops and staircases.",
-    "rating": 4.9,
-    "ratingCount": 67,
-    "specs": { "Thickness": "18 mm", "Color": "Jet Black Granite", "Brand": "Natural Stone" },
-    "imageSrc": "assets/granite_slab.jpg"
-  },
-  {
-    "id": "t4",
-    "name": "Waterproof Oak Laminate Wooden Flooring",
-    "brand": "Pergo",
-    "category": "tiles",
-    "subcategory": "wooden-flooring",
-    "price": 115,
-    "originalPrice": 150,
-    "discountLabel": "23% OFF",
-    "unit": "Sq.ft",
-    "description": "AC4 scratch resistant click-lock laminate wooden flooring planks for bedroom and living interiors.",
-    "rating": 4.8,
-    "ratingCount": 54,
-    "specs": { "Thickness": "8 mm", "Finish": "Natural Oak Wood", "Brand": "Pergo" },
-    "imageSrc": "assets/wooden_floor.jpg"
-  },
-  {
-    "id": "p1",
-    "name": "Supreme CPVC Hot & Cold Water Pipes (1 Inch)",
-    "brand": "Supreme",
-    "category": "plumbing",
-    "subcategory": "cpvc-pipes",
-    "price": 320,
-    "originalPrice": 410,
-    "discountLabel": "22% OFF",
-    "unit": "Piece",
-    "description": "SDR 11 heavy pressure hot and cold water CPVC plumbing pipes (3 meter length).",
-    "rating": 4.7,
-    "ratingCount": 105,
-    "specs": { "Diameter": "1 Inch", "Length": "3 Meters", "Brand": "Supreme" },
-    "imageSrc": "assets/cpvc_pipes.jpg"
-  },
-  {
-    "id": "p2",
-    "name": "Finolex PVC Long Bends & Elbow Fittings",
+    "id": "hd9",
+    "name": "Finolex Pipes 1\" PVC Long Bends",
     "brand": "Finolex Pipes",
     "category": "plumbing",
     "subcategory": "pipe-fittings",
     "price": 25.6,
-    "originalPrice": 35,
-    "discountLabel": "26% OFF",
     "unit": "Piece",
-    "description": "Heavy duty PVC long bend fittings for smooth water flow and drainage plumbing.",
+    "description": "Heavy duty PVC long bend fittings (1 inch diameter) for seamless irrigation and building flow systems.",
+    "rating": 4.4,
+    "ratingCount": 104,
+    "specs": {
+      "Diameter": "1 Inch",
+      "Material": "PVC",
+      "Brand": "Finolex"
+    },
+    "imageSrc": "<img src=\"assets/pvc_bend.png\" alt=\"Finolex PVC Long Bend\">"
+  },
+  {
+    "id": "hd10",
+    "name": "Magic Acrylic Wall Putty - 20 Ltr",
+    "brand": "Shalimar Paints",
+    "category": "paints",
+    "subcategory": "wall-putty",
+    "price": 1350,
+    "unit": "Tin",
+    "description": "Premium acrylic wall putty by Shalimar Paints, providing a smooth finish for wall coatings.",
+    "rating": 4.7,
+    "ratingCount": 65,
+    "specs": {
+      "Volume": "20 Liters",
+      "Finish": "Super White",
+      "Brand": "Shalimar"
+    },
+    "imageSrc": "<img src=\"assets/wall_putty.png\" alt=\"Shalimar Wall Putty\">"
+  },
+  {
+    "id": "hd11",
+    "name": "ACB Grey Fly Ash Cement Brick - 9in x 3in x 2in",
+    "brand": "ACB Bricks",
+    "category": "bricks",
+    "subcategory": "fly-ash-bricks",
+    "price": 9,
+    "unit": "Piece",
+    "description": "Fly ash concrete bricks by ACB Bricks, offering high durability and dimensional accuracy.",
+    "rating": 4.3,
+    "ratingCount": 154,
+    "specs": {
+      "Size": "9x3x2 inches",
+      "Material": "Fly Ash Concrete",
+      "Brand": "ACB"
+    },
+    "imageSrc": "<img src=\"assets/fly_ash_brick.png\" alt=\"ACB Fly Ash Cement Brick\">"
+  },
+  {
+    "id": "hd12",
+    "name": "Philips Master LED Bulb",
+    "brand": "Philips",
+    "category": "electrical",
+    "subcategory": "led-lights",
+    "price": 112,
+    "unit": "Piece",
+    "description": "Philips Master LED bulb offering bright white illumination and power-saving operations.",
+    "rating": 4.8,
+    "ratingCount": 312,
+    "specs": {
+      "Wattage": "9W",
+      "Cap type": "B22",
+      "Brand": "Philips"
+    },
+    "imageSrc": "<img src=\"assets/led_bulb.png\" alt=\"Philips Master LED Bulb\">"
+  },
+  {
+    "id": "hd1",
+    "name": "Greenstone's AAC Brick - 600mmX200mmX100mm (4\")",
+    "brand": "Greenstone",
+    "category": "bricks",
+    "subcategory": "aac-blocks",
+    "price": 40,
+    "unit": "Nos",
+    "description": "High quality Autoclaved Aerated Concrete bricks by Greenstone. Durable, lightweight, and thermal insulating.",
+    "rating": 4.5,
+    "ratingCount": 38,
+    "specs": {
+      "Size": "600x200x100mm",
+      "Compressive Strength": "4 N/mm²",
+      "Brand": "Greenstone"
+    },
+    "imageSrc": "<img src=\"assets/aac_brick.png\" alt=\"Greenstone AAC Brick\">"
+  },
+  {
+    "id": "hd2",
+    "name": "Aerobild - 600 x 200 x 230(9\")",
+    "brand": "Aerobild",
+    "category": "bricks",
+    "subcategory": "solid-blocks",
+    "price": 135,
+    "unit": "Piece",
+    "description": "Heavy-duty concrete blocks by Aerobild, ideal for external load-bearing wall construction.",
     "rating": 4.6,
-    "ratingCount": 94,
-    "specs": { "Diameter": "1 Inch", "Material": "PVC", "Brand": "Finolex" },
-    "imageSrc": "assets/pvc_bend.png"
+    "ratingCount": 47,
+    "specs": {
+      "Size": "600x200x230mm",
+      "Type": "Hollow Block",
+      "Brand": "Aerobild"
+    },
+    "imageSrc": "<img src=\"assets/leo_aac_block.png\" alt=\"Aerobild AAC Block\">"
+  },
+  {
+    "id": "hd3",
+    "name": "Sugna TMT Fe-550 Grade - 16mm",
+    "brand": "Sugna TMT",
+    "category": "steel",
+    "subcategory": "fe550d",
+    "price": 53800,
+    "originalPrice": 92115,
+    "discountLabel": "UPTO 41% OFF",
+    "unit": "Ton",
+    "description": "High tensile Fe-550 grade TMT reinforcement steel bars by Sugna Steel, offering superior earthquake resistance.",
+    "rating": 4.8,
+    "ratingCount": 110,
+    "specs": {
+      "Grade": "Fe-550",
+      "Diameter": "16mm",
+      "Brand": "Sugna Steel"
+    },
+    "imageSrc": "<img src=\"assets/promo_steel.png\" alt=\"Sugna TMT Steel Bars\">"
+  },
+  {
+    "id": "hd4",
+    "name": "Local Red Brick - 8-10 x 3.8 x 2.9",
+    "brand": "Karnataka Red Brick",
+    "category": "bricks",
+    "subcategory": "red-clay-bricks",
+    "price": 14,
+    "unit": "Piece",
+    "description": "High quality standard red clay bricks sourced from trusted local kilns.",
+    "rating": 4.2,
+    "ratingCount": 220,
+    "specs": {
+      "Size": "9\" x 4\" x 3\"",
+      "Class": "Class I",
+      "Brand": "Local"
+    },
+    "imageSrc": "<img src=\"assets/maharashtra_brick.png\" alt=\"Local Red Brick\">"
+  },
+  {
+    "id": "hd5",
+    "name": "CCI OPC Cement",
+    "brand": "CCI",
+    "category": "cement",
+    "subcategory": "opc-cement",
+    "price": 265,
+    "originalPrice": 450,
+    "discountLabel": "UPTO 41% OFF",
+    "unit": "Bag",
+    "description": "CCI Ordinary Portland Cement (OPC) 53 Grade, offering fast setting and high ultimate strength.",
+    "rating": 4.7,
+    "ratingCount": 165,
+    "specs": {
+      "Grade": "OPC 53 Grade",
+      "Weight": "50 Kg",
+      "Brand": "Cement Corporation of India"
+    },
+    "imageSrc": "<img src=\"assets/cci_cement.png\" alt=\"CCI OPC Cement\">"
+  },
+  {
+    "id": "hd6",
+    "name": "Birla.A1 StrongCrete",
+    "brand": "Birla A1",
+    "category": "cement",
+    "subcategory": "opc-cement",
+    "price": 290,
+    "originalPrice": 470,
+    "discountLabel": "UPTO 38% OFF",
+    "unit": "Bag",
+    "description": "Birla.A1 StrongCrete cement is specially engineered for concrete structures, offering water resistance and high durability.",
+    "rating": 4.9,
+    "ratingCount": 294,
+    "specs": {
+      "Grade": "PPC (Special)",
+      "Weight": "50 Kg",
+      "Brand": "Birla"
+    },
+    "imageSrc": "<img src=\"assets/raasi_cement.png\" alt=\"Birla A1 StrongCrete\">"
+  },
+  {
+    "id": "p1",
+    "name": "UltraTech OPC 53 Grade Cement",
+    "brand": "UltraTech",
+    "category": "cement",
+    "subcategory": "opc-cement",
+    "price": 430,
+    "unit": "Bag",
+    "description": "UltraTech OPC 53 is a high strength cement designed for core structural components like foundations, columns, beams, and slabs. Offers fast setting times and excellent compressive strength.",
+    "rating": 4.8,
+    "ratingCount": 154,
+    "specs": {
+      "Grade": "OPC 53",
+      "Weight": "50 Kg",
+      "Material": "Ordinary Portland Cement",
+      "Packaging": "Paper/PP Bag",
+      "Usage": "Foundations, Beams, Pillars"
+    },
+    "imageSrc": "<img src=\"assets/cci_cement.png\" alt=\"UltraTech OPC 53 Grade Cement\">"
+  },
+  {
+    "id": "p2",
+    "name": "ACC Gold Water Shield Cement",
+    "brand": "ACC",
+    "category": "cement",
+    "subcategory": "ppc-cement",
+    "price": 455,
+    "unit": "Bag",
+    "description": "ACC Gold is a premium water-repellent cement formulated with active water-resisting agents. Protects your home from dampness and water ingress, suitable for brickwork and plastering.",
+    "rating": 4.7,
+    "ratingCount": 92,
+    "specs": {
+      "Grade": "PPC (Premium)",
+      "Weight": "50 Kg",
+      "Special Feature": "Water Shield Formula",
+      "Packaging": "Laminated Bag",
+      "Usage": "Plastering, Brick Jointing, Damp-prone slabs"
+    },
+    "imageSrc": "<img src=\"assets/raasi_cement.png\" alt=\"ACC Gold Water Shield Cement\">"
   },
   {
     "id": "p3",
-    "name": "Ceramic Wall Hung Wash Basin & Closet Set",
-    "brand": "Hindware",
-    "category": "plumbing",
-    "subcategory": "sanitaryware",
-    "price": 4850,
-    "originalPrice": 6200,
-    "discountLabel": "21% OFF",
-    "unit": "Set",
-    "description": "Vitreous china ceramic sanitaryware wash basin and wall mounted water closet combo.",
-    "rating": 4.8,
-    "ratingCount": 63,
-    "specs": { "Color": "White", "Type": "Wall Mounted", "Brand": "Hindware" },
-    "imageSrc": "assets/sanitaryware.jpg"
+    "name": "Birla Gold Premium PPC Cement",
+    "brand": "Birla Gold",
+    "category": "cement",
+    "subcategory": "ppc-cement",
+    "price": 395,
+    "unit": "Bag",
+    "description": "Birla Gold PPC Cement is made by blending high quality clinker with active fly ash. Ideal for general concrete construction, masonry, and plastering with smoother finishes.",
+    "rating": 4.5,
+    "ratingCount": 78,
+    "specs": {
+      "Grade": "PPC",
+      "Weight": "50 Kg",
+      "Material": "Portland Pozzolana Cement",
+      "Packaging": "HDPE Bag",
+      "Usage": "Masonry, Plastering, Brickwork"
+    },
+    "imageSrc": "<img src=\"assets/cci_cement.png\" alt=\"Birla Gold Premium PPC Cement\">"
   },
   {
     "id": "p4",
-    "name": "Chrome Plated Brass Single Lever Faucet Tap",
-    "brand": "Jaquar",
-    "category": "plumbing",
-    "subcategory": "faucets-taps",
-    "price": 1890,
-    "originalPrice": 2400,
-    "discountLabel": "21% OFF",
-    "unit": "Piece",
-    "description": "High shine chrome brass single lever basin mixer tap with foam flow aerator.",
+    "name": "Tata Tiscon 550SD TMT Steel Bars",
+    "brand": "Tata Tiscon",
+    "category": "steel",
+    "subcategory": "fe500d",
+    "price": 68500,
+    "unit": "Ton",
+    "description": "Tata Tiscon 550SD (Super Ductile) TMT steel bars are India's leading reinforcement steel. Built with superior earthquake resistance, high bendability, and premium bonding with concrete.",
     "rating": 4.9,
-    "ratingCount": 78,
-    "specs": { "Material": "Forged Brass", "Finish": "Chrome", "Brand": "Jaquar" },
-    "imageSrc": "assets/faucet_tap.jpg"
+    "ratingCount": 210,
+    "specs": {
+      "Grade": "Fe 550D",
+      "Sizes Available": "8mm, 10mm, 12mm, 16mm, 20mm",
+      "Process": "Thermo-Mechanically Treated (TMT)",
+      "Standards": "IS 1786 Certified",
+      "Resistance": "Earthquake & Corrosion resistant"
+    },
+    "imageSrc": "<img src=\"assets/promo_steel.png\" alt=\"Tata Tiscon TMT Steel Bars\">"
   },
   {
-    "id": "e1",
-    "name": "Havells FRLS Copper House Wire (1.5 sq.mm - 90m)",
+    "id": "p5",
+    "name": "JSW Neosteel Fe 550D TMT Bars",
+    "brand": "JSW Steel",
+    "category": "steel",
+    "subcategory": "fe550d",
+    "price": 67200,
+    "unit": "Ton",
+    "description": "JSW Neosteel TMT bars are manufactured using clean steel with lowest impurity levels (Sulphur and Phosphorus). High strength, fatigue-resistant steel bars ideal for residential high-rises.",
+    "rating": 4.6,
+    "ratingCount": 118,
+    "specs": {
+      "Grade": "Fe 550D",
+      "Process": "TMT Tempcore Process",
+      "Ductility": "High Elongation",
+      "Bonding": "Superior Rib Pattern",
+      "Usage": "Multi-story frames, Bridge decks"
+    },
+    "imageSrc": "<img src=\"assets/promo_steel.png\" alt=\"JSW Neosteel TMT Bars\">"
+  },
+  {
+    "id": "p6",
+    "name": "Premium Red Clay Bricks (Class I)",
+    "brand": "Local Clay Kilns",
+    "category": "bricks",
+    "subcategory": "red-clay-bricks",
+    "price": 8,
+    "unit": "Piece",
+    "description": "Standard size class-I red clay bricks baked in modern kiln chambers. Offers uniform size, sharp edges, and excellent compressive strength, ideal for load-bearing walls.",
+    "rating": 4.3,
+    "ratingCount": 340,
+    "specs": {
+      "Material": "Baked Clay",
+      "Dimensions": "9\" x 4\" x 3\"",
+      "Compressive Strength": "7.5 N/mm²",
+      "Water Absorption": "< 15%",
+      "Weight": "approx 3.2 Kg"
+    },
+    "imageSrc": "<img src=\"assets/maharashtra_brick.png\" alt=\"Premium Red Clay Bricks\">"
+  },
+  {
+    "id": "p7",
+    "name": "Autoclaved Aerated Concrete (AAC) Blocks",
+    "brand": "Aerocon",
+    "category": "bricks",
+    "subcategory": "aac-blocks",
+    "price": 65,
+    "unit": "Piece",
+    "description": "Aerocon lightweight AAC Blocks are modern green building blocks that replace traditional clay bricks. Lightweight, thermal insulating, fire resistant, and reduces steel cost.",
+    "rating": 4.6,
+    "ratingCount": 89,
+    "specs": {
+      "Material": "Autoclaved Aerated Concrete",
+      "Size": "600mm x 200mm x 150mm (6\")",
+      "Density": "approx 650 kg/m³",
+      "Thermal Conductivity": "0.16 W/mK",
+      "Weight": "approx 11 Kg"
+    },
+    "imageSrc": "<img src=\"assets/aac_brick.png\" alt=\"Autoclaved Aerated Concrete Blocks\">"
+  },
+  {
+    "id": "p8",
+    "name": "Kajaria Pietra Vitrified Floor Tiles",
+    "brand": "Kajaria",
+    "category": "tiles",
+    "subcategory": "vitrified-tiles",
+    "price": 62,
+    "unit": "SqFt",
+    "description": "High gloss vitrified floor tiles with marble grain finish. Double-charge technology ensures long-lasting polish, stain resistance, and high load capacity, perfect for living spaces.",
+    "rating": 4.7,
+    "ratingCount": 64,
+    "specs": {
+      "Material": "Double Charge Vitrified",
+      "Size": "600mm x 600mm (2ft x 2ft)",
+      "Finish": "Polished Glazed (Marble Pattern)",
+      "Thickness": "9.5 mm",
+      "Box Contents": "4 Pieces (15.5 SqFt total)"
+    },
+    "imageSrc": "<img src=\"assets/ceramic_tile.png\" alt=\"Kajaria Pietra Vitrified Floor Tiles\">"
+  },
+  {
+    "id": "p9",
+    "name": "Somany Wood-Grain Ceramic Wall Tiles",
+    "brand": "Somany",
+    "category": "tiles",
+    "subcategory": "ceramic-tiles",
+    "price": 48,
+    "unit": "SqFt",
+    "description": "Matte-finish ceramic wall tiles with natural wood texture. Waterproof, easy to clean, and slip-proof, making it suitable for bathroom walls and kitchen splashbacks.",
+    "rating": 4.4,
+    "ratingCount": 42,
+    "specs": {
+      "Material": "Ceramic",
+      "Size": "300mm x 600mm",
+      "Finish": "Matte / Textured",
+      "Usage": "Bathroom & Kitchen Walls",
+      "Waterproofing": "High resistance"
+    },
+    "imageSrc": "<img src=\"assets/ceramic_tile.png\" alt=\"Somany Wood-Grain Ceramic Wall Tiles\">"
+  },
+  {
+    "id": "p10",
+    "name": "Astral CPVC Pro Pipes 1 Inch",
+    "brand": "Astral",
+    "category": "plumbing",
+    "subcategory": "cpvc-pipes",
+    "price": 490,
+    "unit": "Piece",
+    "description": "Astral CPVC Pro pipes are engineered for hot and cold water plumbing distribution. Made from lead-free, non-toxic materials, holding pressure up to 28 kg/cm².",
+    "rating": 4.8,
+    "ratingCount": 95,
+    "specs": {
+      "Material": "CPVC Pro (Lead Free)",
+      "Diameter": "1 Inch (25mm)",
+      "Length": "3 Meters (approx 10ft)",
+      "SDR Class": "SDR 11",
+      "Temperature Resistance": "Up to 93°C"
+    },
+    "imageSrc": "<img src=\"assets/pvc_bend.png\" alt=\"Astral CPVC Pro Pipes 1 Inch\">"
+  },
+  {
+    "id": "p11",
+    "name": "Havells LifeLine FRLS Wire 2.5 Sq mm",
     "brand": "Havells",
     "category": "electrical",
     "subcategory": "frls-wires",
-    "price": 1650,
-    "originalPrice": 2100,
-    "discountLabel": "21% OFF",
-    "unit": "Box",
-    "description": "Flame retardant low smoke (FRLS) 100% electrolytic pure copper wire for house wiring.",
+    "price": 2450,
+    "unit": "Coil",
+    "description": "Havells LifeLine FRLS (Flame Retardant Low Smoke) copper wire. Rated for high electrical loads, ensures safety against short circuits, and has standard 90-meter coil length.",
     "rating": 4.9,
-    "ratingCount": 150,
-    "specs": { "Gauge": "1.5 sq.mm", "Length": "90 Meters", "Brand": "Havells" },
-    "imageSrc": "assets/frls_wires.jpg"
+    "ratingCount": 142,
+    "specs": {
+      "Conductor": "99.97% Pure Electrolytic Copper",
+      "Gauge / Thickness": "2.5 Sq. mm",
+      "Insulation": "PVC (FRLS Spec)",
+      "Length": "90 Meters Coil",
+      "Current Rating": "Up to 22 Amps"
+    },
+    "imageSrc": "<img src=\"assets/led_bulb.png\" alt=\"Havells LifeLine FRLS Wire 2.5 Sq mm\">"
+  },
+  {
+    "id": "p12",
+    "name": "Asian Paints Apex Ultima Exterior Paint",
+    "brand": "Asian Paints",
+    "category": "paints",
+    "subcategory": "exterior-paints",
+    "price": 4800,
+    "unit": "Bucket",
+    "description": "Apex Ultima is a premium water-based exterior wall finish featuring advanced anti-algal and dirt pickup resistance. Backed by a 7-year performance warranty.",
+    "rating": 4.8,
+    "ratingCount": 88,
+    "specs": {
+      "Type": "Exterior Emulsion",
+      "Volume": "20 Liters",
+      "Finish": "Sheen",
+      "Coverage": "approx 55-60 sq.ft per liter (2 coats)",
+      "Base": "Water-based acrylic"
+    },
+    "imageSrc": "<img src=\"assets/wall_putty.png\" alt=\"Asian Paints Apex Ultima Exterior Paint\">"
+  },
+  {
+    "id": "tr1",
+    "name": "Greenstone's AAC Brick - 600mmx200mmx100mm (4\")",
+    "brand": "Greenstone",
+    "category": "bricks",
+    "subcategory": "aac-blocks",
+    "price": 40,
+    "unit": "Nos",
+    "description": "High quality Autoclaved Aerated Concrete bricks by Greenstone (4 Inch thickness).",
+    "rating": 4.5,
+    "ratingCount": 38,
+    "specs": {
+      "Size": "600x200x100mm",
+      "Brand": "Greenstone"
+    },
+    "imageSrc": "<img src=\"assets/aac_brick.png\" alt=\"Greenstone AAC Brick\">"
+  },
+  {
+    "id": "tr2",
+    "name": "Raasi Gold PPC Cement",
+    "brand": "Raasi Gold",
+    "category": "cement",
+    "subcategory": "ppc-cement",
+    "price": 460,
+    "unit": "Bag",
+    "description": "Premium PPC cement offering high durability for concrete and plaster applications.",
+    "rating": 4.6,
+    "ratingCount": 112,
+    "specs": {
+      "Grade": "PPC",
+      "Weight": "50 Kg",
+      "Brand": "Raasi Gold"
+    },
+    "imageSrc": "<img src=\"assets/raasi_cement.png\" alt=\"Raasi Gold PPC Cement\">"
+  },
+  {
+    "id": "tr3",
+    "name": "3011 Ceramic Wall Tile - 100mm x 150mm",
+    "brand": "Ceramic Tiles",
+    "category": "tiles",
+    "subcategory": "ceramic-tiles",
+    "price": 75,
+    "unit": "SqFt",
+    "description": "Textured ceramic wall tiles suitable for kitchens and bathroom wall displays.",
+    "rating": 4.4,
+    "ratingCount": 48,
+    "specs": {
+      "Size": "100x150mm",
+      "Material": "Ceramic",
+      "Brand": "Generic"
+    },
+    "imageSrc": "<img src=\"assets/ceramic_tile.png\" alt=\"Ceramic Wall Tile\">"
   },
   {
     "id": "e2",
-    "name": "Anchor Roma Modular Switch & Socket Plate",
-    "brand": "Anchor Panasonic",
+    "name": "Anchor Roma Classic 6-Module Switch Plate & Modular Switches",
+    "brand": "Anchor Roma",
     "category": "electrical",
     "subcategory": "modular-switches",
-    "price": 380,
-    "originalPrice": 490,
-    "discountLabel": "22% OFF",
+    "price": 480,
+    "originalPrice": 650,
+    "discountLabel": "26% OFF",
     "unit": "Set",
-    "description": "White polycarbonate 6-module switch board plate with 6A modular switches and 3-pin socket.",
-    "rating": 4.7,
-    "ratingCount": 112,
-    "specs": { "Modules": "6 Module", "Color": "White", "Brand": "Anchor Roma" },
+    "description": "Premium flame-retardant polycarbonate 6-module grid plate with silver cadmium contact switches.",
+    "rating": 4.8,
+    "ratingCount": 95,
+    "specs": {
+      "Modules": "6 Module",
+      "Color": "Glossy White",
+      "Brand": "Anchor Roma"
+    },
     "imageSrc": "assets/modular_switch.jpg"
   },
   {
@@ -364,7 +548,11 @@
     "description": "Energy efficient cool day white round concealed LED ceiling panel light fixture.",
     "rating": 4.6,
     "ratingCount": 130,
-    "specs": { "Wattage": "12W", "Color": "Cool White", "Brand": "Syska" },
+    "specs": {
+      "Wattage": "12W",
+      "Color": "Cool White",
+      "Brand": "Syska"
+    },
     "imageSrc": "assets/led_bulb.png"
   },
   {
@@ -380,7 +568,11 @@
     "description": "Double door metal distribution board with 4-pole 32A Miniature Circuit Breaker for safety.",
     "rating": 4.8,
     "ratingCount": 44,
-    "specs": { "Current": "32A", "Poles": "4 Pole", "Brand": "Schneider" },
+    "specs": {
+      "Current": "32A",
+      "Poles": "4 Pole",
+      "Brand": "Schneider"
+    },
     "imageSrc": "assets/mcb_board.jpg"
   },
   {
@@ -396,7 +588,11 @@
     "description": "Washable Teflon surface protected interior acrylic emulsion paint with sheen finish.",
     "rating": 4.9,
     "ratingCount": 160,
-    "specs": { "Quantity": "20 Liters", "Finish": "Soft Sheen", "Brand": "Asian Paints" },
+    "specs": {
+      "Quantity": "20 Liters",
+      "Finish": "Soft Sheen",
+      "Brand": "Asian Paints"
+    },
     "imageSrc": "assets/paint_bucket.jpg"
   },
   {
@@ -412,7 +608,11 @@
     "description": "Anti-fungal weather proof exterior acrylic emulsion wall paint with sun-reflect tech.",
     "rating": 4.8,
     "ratingCount": 92,
-    "specs": { "Quantity": "20 Liters", "Finish": "Matte Exterior", "Brand": "Dulux" },
+    "specs": {
+      "Quantity": "20 Liters",
+      "Finish": "Matte Exterior",
+      "Brand": "Dulux"
+    },
     "imageSrc": "assets/paint_bucket.jpg"
   },
   {
@@ -428,7 +628,11 @@
     "description": "Heavy duty acrylic wall putty for smoothing interior wall surfaces before painting.",
     "rating": 4.6,
     "ratingCount": 87,
-    "specs": { "Quantity": "20 Liters", "Type": "Acrylic Putty", "Brand": "Shalimar" },
+    "specs": {
+      "Quantity": "20 Liters",
+      "Type": "Acrylic Putty",
+      "Brand": "Shalimar"
+    },
     "imageSrc": "assets/wall_putty.png"
   },
   {
@@ -444,7 +648,11 @@
     "description": "Acid curing transparent polyurethane wood finish polish for doors and wooden furniture.",
     "rating": 4.7,
     "ratingCount": 51,
-    "specs": { "Quantity": "4 Liters", "Finish": "High Gloss", "Brand": "Asian Paints" },
+    "specs": {
+      "Quantity": "4 Liters",
+      "Finish": "High Gloss",
+      "Brand": "Asian Paints"
+    },
     "imageSrc": "assets/paint_bucket.jpg"
   },
   {
@@ -460,7 +668,11 @@
     "description": "Keyless smart biometric door lock with fingerprint scanner, PIN keypad, RFID card & mobile app.",
     "rating": 4.9,
     "ratingCount": 40,
-    "specs": { "Access": "Fingerprint & PIN", "Finish": "Gold & Black", "Brand": "Kshema Technos" },
+    "specs": {
+      "Access": "Fingerprint & PIN",
+      "Finish": "Gold & Black",
+      "Brand": "Kshema Technos"
+    },
     "imageSrc": "assets/digital_lock.png"
   },
   {
@@ -476,7 +688,11 @@
     "description": "Heavy gauge SS 304 anti-rust ball bearing door hinges for main wooden doors.",
     "rating": 4.8,
     "ratingCount": 78,
-    "specs": { "Size": "4 Inches", "Material": "SS 304 Steel", "Brand": "Godrej" },
+    "specs": {
+      "Size": "4 Inches",
+      "Material": "SS 304 Steel",
+      "Brand": "Godrej"
+    },
     "imageSrc": "assets/door_hinge.jpg"
   },
   {
@@ -492,7 +708,11 @@
     "description": "Assorted zinc plated steel wood screws and wall anchor expansion bolts (Box of 200 pcs).",
     "rating": 4.6,
     "ratingCount": 65,
-    "specs": { "Quantity": "200 Pieces", "Material": "Zinc Plated Steel", "Brand": "Hilti" },
+    "specs": {
+      "Quantity": "200 Pieces",
+      "Material": "Zinc Plated Steel",
+      "Brand": "Hilti"
+    },
     "imageSrc": "assets/screws_bolts.jpg"
   },
   {
@@ -508,7 +728,11 @@
     "description": "Full extension soft-close ball bearing drawer runner channels for kitchen modular drawers.",
     "rating": 4.9,
     "ratingCount": 82,
-    "specs": { "Size": "18 Inches", "Load": "45 Kg", "Brand": "Hettich" },
+    "specs": {
+      "Size": "18 Inches",
+      "Load": "45 Kg",
+      "Brand": "Hettich"
+    },
     "imageSrc": "assets/screws_bolts.jpg"
   },
   {
@@ -524,7 +748,11 @@
     "description": "Ergonomic 3-seater plush velvet sofa with high-density foam cushioning for living rooms.",
     "rating": 4.8,
     "ratingCount": 42,
-    "specs": { "Material": "Velvet & Solid Wood", "Seating": "3 Seater", "Brand": "Urban Living" },
+    "specs": {
+      "Material": "Velvet & Solid Wood",
+      "Seating": "3 Seater",
+      "Brand": "Urban Living"
+    },
     "imageSrc": "assets/interior_sofa.jpg"
   },
   {
@@ -540,7 +768,11 @@
     "description": "Minimalist Scandinavian design coffee table with natural grain finish and scratch-resistant coat.",
     "rating": 4.7,
     "ratingCount": 38,
-    "specs": { "Size": "110x60 cm", "Material": "Solid Oak Wood", "Brand": "WoodCraft" },
+    "specs": {
+      "Size": "110x60 cm",
+      "Material": "Solid Oak Wood",
+      "Brand": "WoodCraft"
+    },
     "imageSrc": "assets/interior_table.jpg"
   },
   {
@@ -556,7 +788,11 @@
     "description": "Aesthetic metal pendant hanging lamp fixture with warm LED filament illumination.",
     "rating": 4.6,
     "ratingCount": 54,
-    "specs": { "Material": "Matte Black Metal", "Bulb": "E27 LED", "Brand": "Lumina" },
+    "specs": {
+      "Material": "Matte Black Metal",
+      "Bulb": "E27 LED",
+      "Brand": "Lumina"
+    },
     "imageSrc": "assets/interior_pendant_light.jpg"
   },
   {
@@ -572,7 +808,11 @@
     "description": "Comfortable lounge accent arm chair with brass metallic legs and soft upholstery.",
     "rating": 4.9,
     "ratingCount": 61,
-    "specs": { "Legs": "Gold Plated Brass", "Upholstery": "Velvet", "Brand": "Urban Living" },
+    "specs": {
+      "Legs": "Gold Plated Brass",
+      "Upholstery": "Velvet",
+      "Brand": "Urban Living"
+    },
     "imageSrc": "assets/interior_accent_chair.jpg"
   },
   {
@@ -588,7 +828,11 @@
     "description": "HD gallery wrap canvas prints with wooden inner frame for modern wall decor.",
     "rating": 4.8,
     "ratingCount": 29,
-    "specs": { "Size": "24x36 Inches Each", "Material": "Canvas", "Brand": "Artisan Gallery" },
+    "specs": {
+      "Size": "24x36 Inches Each",
+      "Material": "Canvas",
+      "Brand": "Artisan Gallery"
+    },
     "imageSrc": "assets/interior_wall_art.jpg"
   },
   {
@@ -604,7 +848,11 @@
     "description": "Ultra-soft micro-fiber handwoven carpet rug with anti-skid backing.",
     "rating": 4.7,
     "ratingCount": 46,
-    "specs": { "Size": "6x9 Feet", "Material": "Microfiber & Cotton", "Brand": "RugArt" },
+    "specs": {
+      "Size": "6x9 Feet",
+      "Material": "Microfiber & Cotton",
+      "Brand": "RugArt"
+    },
     "imageSrc": "assets/interior_area_rug.jpg"
   },
   {
@@ -620,7 +868,11 @@
     "description": "Multi-tier display open shelf cabinet for organizing books and planters.",
     "rating": 4.6,
     "ratingCount": 33,
-    "specs": { "Tiers": "5 Shelves", "Material": "Engineered Wood", "Brand": "WoodCraft" },
+    "specs": {
+      "Tiers": "5 Shelves",
+      "Material": "Engineered Wood",
+      "Brand": "WoodCraft"
+    },
     "imageSrc": "assets/interior_bookshelf.jpg"
   },
   {
@@ -636,15 +888,19 @@
     "description": "Set of 2 modern minimalist ceramic flower vases with matte finish.",
     "rating": 4.9,
     "ratingCount": 50,
-    "specs": { "Quantity": "2 Vases", "Material": "Ceramic", "Brand": "Artisan Gallery" },
+    "specs": {
+      "Quantity": "2 Vases",
+      "Material": "Ceramic",
+      "Brand": "Artisan Gallery"
+    },
     "imageSrc": "assets/interior_vase.jpg"
   },
   {
     "id": "h_lock1",
     "name": "Godrej Security Forte Pro Digital Electronic Locker (15L)",
     "brand": "Godrej",
-    "category": "hardware",
-    "subcategory": "lockers-safes",
+    "category": "lockers-safes",
+    "subcategory": "digital-lockers",
     "price": 7999,
     "originalPrice": 9999,
     "discountLabel": "20% OFF",
@@ -652,15 +908,19 @@
     "description": "Heavy gauge steel motorized shooting bolts with password access and emergency override keys for cash & jewelry.",
     "rating": 4.9,
     "ratingCount": 84,
-    "specs": { "Capacity": "15 Litres", "Lock Type": "Digital PIN + Key", "Brand": "Godrej Security" },
+    "specs": {
+      "Capacity": "15 Litres",
+      "Lock Type": "Digital PIN + Key",
+      "Brand": "Godrej Security"
+    },
     "imageSrc": "https://images.unsplash.com/photo-1584438784894-089d6a62b8fa?auto=format&fit=crop&w=600&q=80"
   },
   {
     "id": "h_lock2",
     "name": "Yale Touchscreen Biometric & Keypad Home Security Safe Locker",
     "brand": "Yale",
-    "category": "hardware",
-    "subcategory": "lockers-safes",
+    "category": "lockers-safes",
+    "subcategory": "biometric-lockers",
     "price": 14499,
     "originalPrice": 18999,
     "discountLabel": "24% OFF",
@@ -668,15 +928,59 @@
     "description": "Premium laser-cut door biometric fingerprint and digital keypad electronic locker with internal LED illumination.",
     "rating": 4.8,
     "ratingCount": 62,
-    "specs": { "Lock Type": "Fingerprint + PIN", "Material": "Reinforced Alloy Steel", "Brand": "Yale" },
+    "specs": {
+      "Lock Type": "Fingerprint + PIN",
+      "Material": "Reinforced Alloy Steel",
+      "Brand": "Yale"
+    },
+    "imageSrc": "https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&w=600&q=80"
+  },
+  {
+    "id": "h_lock3",
+    "name": "Ozone Fireproof Heavy Duty Commercial Cash Safe Locker",
+    "brand": "Ozone",
+    "category": "lockers-safes",
+    "subcategory": "fireproof-safes",
+    "price": 21999,
+    "originalPrice": 28500,
+    "discountLabel": "23% OFF",
+    "unit": "Piece",
+    "description": "Double-walled fire-resistant concrete insulation certified for 1 hour at 1000°C for documents and cash.",
+    "rating": 4.9,
+    "ratingCount": 45,
+    "specs": {
+      "Fire Resistance": "1 Hour at 1000°C",
+      "Lock Type": "Dual Key + PIN",
+      "Brand": "Ozone"
+    },
+    "imageSrc": "https://images.unsplash.com/photo-1584438784894-089d6a62b8fa?auto=format&fit=crop&w=600&q=80"
+  },
+  {
+    "id": "h_lock4",
+    "name": "Godrej Rhino Heavy Steel Commercial Cash Vault Safe",
+    "brand": "Godrej",
+    "category": "lockers-safes",
+    "subcategory": "heavy-vaults",
+    "price": 34500,
+    "originalPrice": 42000,
+    "discountLabel": "18% OFF",
+    "unit": "Piece",
+    "description": "High security reinforced solid steel vault safe (100x stronger) with multi-point active drill-proof locking bolts.",
+    "rating": 4.9,
+    "ratingCount": 39,
+    "specs": {
+      "Weight": "85 Kg",
+      "Material": "Armor Steel Plating",
+      "Brand": "Godrej Security"
+    },
     "imageSrc": "https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&w=600&q=80"
   },
   {
     "id": "pvc_p1",
     "name": "Eurostar 3D Charcoal Fluted Louver PVC Wall Panel (10ft x 5in)",
     "brand": "Eurostar",
-    "category": "interior",
-    "subcategory": "pvc-panels",
+    "category": "pvc-panels",
+    "subcategory": "3d-fluted-louvers",
     "price": 480,
     "originalPrice": 650,
     "discountLabel": "26% OFF",
@@ -684,15 +988,19 @@
     "description": "100% waterproof termite-proof acoustic fluted charcoal wall cladding panel for TV units and bed backdrops.",
     "rating": 4.9,
     "ratingCount": 73,
-    "specs": { "Dimensions": "10ft x 5inch", "Pattern": "3D Fluted Louver", "Material": "Polyvinyl Charcoal" },
+    "specs": {
+      "Dimensions": "10ft x 5inch",
+      "Pattern": "3D Fluted Louver",
+      "Material": "Polyvinyl Charcoal"
+    },
     "imageSrc": "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=600&q=80"
   },
   {
     "id": "pvc_p2",
     "name": "DecoTeak Natural Woodgrain Waterproof PVC Wall & Ceiling Panel",
     "brand": "DecoTeak",
-    "category": "interior",
-    "subcategory": "pvc-panels",
+    "category": "pvc-panels",
+    "subcategory": "waterproof-pvc-panels",
     "price": 320,
     "originalPrice": 450,
     "discountLabel": "29% OFF",
@@ -700,47 +1008,139 @@
     "description": "Interlocking tongue-and-groove PVC false ceiling and wall panel with natural matte teak wood texture.",
     "rating": 4.7,
     "ratingCount": 58,
-    "specs": { "Dimensions": "8ft x 10inch", "Finish": "Natural Teak Grain", "Features": "Waterproof & Fire Retardant" },
+    "specs": {
+      "Dimensions": "8ft x 10inch",
+      "Finish": "Natural Teak Grain",
+      "Features": "Waterproof & Fire Retardant"
+    },
     "imageSrc": "https://images.unsplash.com/photo-1615873968403-89e068629265?auto=format&fit=crop&w=600&q=80"
+  },
+  {
+    "id": "pvc_p3",
+    "name": "Royal Statuario High Gloss UV Marble Sheet PVC Wall Cladding (8ft x 4ft)",
+    "brand": "Eurostar",
+    "category": "pvc-panels",
+    "subcategory": "marble-finish-sheets",
+    "price": 1850,
+    "originalPrice": 2400,
+    "discountLabel": "23% OFF",
+    "unit": "Sheet",
+    "description": "Seamless lightweight UV marble sheet for luxury lobby walls, kitchen backsplashes, and bathroom feature walls.",
+    "rating": 4.8,
+    "ratingCount": 51,
+    "specs": {
+      "Size": "8ft x 4ft (3mm thickness)",
+      "Finish": "High Gloss UV Polish",
+      "Pattern": "Statuario Italian White"
+    },
+    "imageSrc": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=80"
+  },
+  {
+    "id": "pvc_p4",
+    "name": "Acoustic Slatted Charcoal & Oak Wood Sound-Absorbing Wall Panel",
+    "brand": "DecoTeak",
+    "category": "pvc-panels",
+    "subcategory": "acoustic-wall-slats",
+    "price": 1450,
+    "originalPrice": 1950,
+    "discountLabel": "26% OFF",
+    "unit": "Piece",
+    "description": "Felt backed sound-dampening acoustic wooden wall slats for home theatres, recording spaces, and living lounges.",
+    "rating": 4.9,
+    "ratingCount": 42,
+    "specs": {
+      "Size": "8ft x 2ft",
+      "Backing": "Sound Absorption Felt",
+      "Slats": "MDF Woodgrain Veneer"
+    },
+    "imageSrc": "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=600&q=80"
   },
   {
     "id": "wood_fl1",
     "name": "Action TESA AC4 HDF Interlocking Laminate Wooden Flooring (8mm)",
     "brand": "Action TESA",
-    "category": "tiles",
-    "subcategory": "wooden-flooring",
+    "category": "wooden-flooring",
+    "subcategory": "laminate-flooring",
     "price": 115,
     "originalPrice": 150,
     "discountLabel": "23% OFF",
-    "unit": "Sq.ft",
+    "unit": "sq.ft",
     "description": "High-density fiberboard (HDF) AC4 scratch-resistant German click-interlock wooden flooring planks.",
     "rating": 4.8,
     "ratingCount": 94,
-    "specs": { "Thickness": "8mm", "Grade": "AC4 Heavy Domestic", "Brand": "Action TESA" },
+    "specs": {
+      "Thickness": "8mm",
+      "Grade": "AC4 Heavy Domestic",
+      "Brand": "Action TESA"
+    },
     "imageSrc": "https://images.unsplash.com/photo-1581858726788-75bc0f6a952d?auto=format&fit=crop&w=600&q=80"
   },
   {
     "id": "wood_fl2",
     "name": "Pergo Original Natural Oak Moisture-Resistant Wooden Floor Planks",
     "brand": "Pergo",
-    "category": "interior",
-    "subcategory": "wooden-flooring",
+    "category": "wooden-flooring",
+    "subcategory": "engineered-hardwood",
     "price": 165,
     "originalPrice": 210,
     "discountLabel": "21% OFF",
-    "unit": "Sq.ft",
+    "unit": "sq.ft",
     "description": "Premium Scandinavian natural golden oak real-feel grain texture with AquaSafe water barrier technology.",
     "rating": 4.9,
     "ratingCount": 67,
-    "specs": { "Thickness": "8.5mm", "Finish": "Natural Oak Matte", "Brand": "Pergo" },
+    "specs": {
+      "Thickness": "8.5mm",
+      "Finish": "Natural Oak Matte",
+      "Brand": "Pergo"
+    },
+    "imageSrc": "https://images.unsplash.com/photo-1516455590571-18256e5bb9ff?auto=format&fit=crop&w=600&q=80"
+  },
+  {
+    "id": "wood_fl3",
+    "name": "Armstrong 100% Waterproof SPC Rigid Core Vinyl Wooden Planks",
+    "brand": "Armstrong",
+    "category": "wooden-flooring",
+    "subcategory": "spc-vinyl-flooring",
+    "price": 135,
+    "originalPrice": 175,
+    "discountLabel": "23% OFF",
+    "unit": "sq.ft",
+    "description": "Stone Polymer Composite (SPC) 100% waterproof flooring with acoustic IXPE underlayment.",
+    "rating": 4.8,
+    "ratingCount": 77,
+    "specs": {
+      "Thickness": "5.5mm + 1.5mm IXPE",
+      "Waterproof": "100% Guaranteed",
+      "Brand": "Armstrong"
+    },
+    "imageSrc": "https://images.unsplash.com/photo-1581858726788-75bc0f6a952d?auto=format&fit=crop&w=600&q=80"
+  },
+  {
+    "id": "wood_fl4",
+    "name": "Quick-Step Classic European Herringbone Parquet Wooden Flooring",
+    "brand": "Quick-Step",
+    "category": "wooden-flooring",
+    "subcategory": "herringbone-parquet",
+    "price": 240,
+    "originalPrice": 310,
+    "discountLabel": "23% OFF",
+    "unit": "sq.ft",
+    "description": "Royal herringbone chevron pattern real hardwood veneer planks with scratch guard top layer.",
+    "rating": 4.9,
+    "ratingCount": 38,
+    "specs": {
+      "Pattern": "Herringbone 90°",
+      "Grade": "AC5 Commercial",
+      "Brand": "Quick-Step"
+    },
     "imageSrc": "https://images.unsplash.com/photo-1516455590571-18256e5bb9ff?auto=format&fit=crop&w=600&q=80"
   },
   {
     "id": "wp_1",
     "name": "Asian Paints Nilaya Luxury Geometric Metallic Wallpaper Roll",
     "brand": "Asian Paints Nilaya",
-    "category": "interior",
-    "subcategory": "designer-wallpapers",
+    "category": "designer-wallpapers",
+    "subcategory": "3d-geometric-wallpapers",
     "price": 2850,
     "originalPrice": 3800,
     "discountLabel": "25% OFF",
@@ -748,15 +1148,19 @@
     "description": "Designer non-woven luxury metallic foil embossed wallpaper roll (57 sq.ft coverage per roll) for accent walls.",
     "rating": 4.9,
     "ratingCount": 112,
-    "specs": { "Coverage": "10m x 0.53m (57 sq.ft)", "Material": "Non-Woven Vinyl", "Brand": "Asian Paints Nilaya" },
+    "specs": {
+      "Coverage": "10m x 0.53m (57 sq.ft)",
+      "Material": "Non-Woven Vinyl",
+      "Brand": "Asian Paints Nilaya"
+    },
     "imageSrc": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=80"
   },
   {
     "id": "wp_2",
     "name": "Excel Modern 3D Botanical Embossed Living Room Wallpaper Roll",
     "brand": "Excel Wallpapers",
-    "category": "paints",
-    "subcategory": "designer-wallpapers",
+    "category": "designer-wallpapers",
+    "subcategory": "botanical-nature",
     "price": 1950,
     "originalPrice": 2600,
     "discountLabel": "25% OFF",
@@ -764,7 +1168,231 @@
     "description": "Washable deep embossed textured 3D tropical leaf design wallpaper with seamless pattern alignment.",
     "rating": 4.8,
     "ratingCount": 88,
-    "specs": { "Coverage": "10m x 0.53m (57 sq.ft)", "Finish": "Textured Matte", "Brand": "Excel Wallpapers" },
+    "specs": {
+      "Coverage": "10m x 0.53m (57 sq.ft)",
+      "Finish": "Textured Matte",
+      "Brand": "Excel Wallpapers"
+    },
     "imageSrc": "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=600&q=80"
+  },
+  {
+    "id": "wp_3",
+    "name": "Grand Versailles Royal Gold Textured Damask Wallpaper Roll",
+    "brand": "Excel Wallpapers",
+    "category": "designer-wallpapers",
+    "subcategory": "textured-damask",
+    "price": 3200,
+    "originalPrice": 4200,
+    "discountLabel": "24% OFF",
+    "unit": "Roll",
+    "description": "Classic Victorian embossed gold velvet texture damask wallpaper for luxury master bedrooms.",
+    "rating": 4.9,
+    "ratingCount": 64,
+    "specs": {
+      "Coverage": "57 sq.ft",
+      "Pattern": "Royal Damask",
+      "Brand": "Excel"
+    },
+    "imageSrc": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=80"
+  },
+  {
+    "id": "wp_4",
+    "name": "Raw Slate Stone 3D Textured Embossed Accent Wallpaper Roll",
+    "brand": "Asian Paints Nilaya",
+    "category": "designer-wallpapers",
+    "subcategory": "brick-stone-textures",
+    "price": 2150,
+    "originalPrice": 2900,
+    "discountLabel": "26% OFF",
+    "unit": "Roll",
+    "description": "Hyper-realistic stacked natural stone brick effect wallpaper with textured relief printing.",
+    "rating": 4.7,
+    "ratingCount": 52,
+    "specs": {
+      "Coverage": "57 sq.ft",
+      "Texture": "Stone Relief",
+      "Brand": "Asian Paints Nilaya"
+    },
+    "imageSrc": "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=600&q=80"
+  },
+  {
+    "id": "h5",
+    "name": "Godrej Duralock Stainless Steel Heavy Mortise Door Handle Lock Set",
+    "brand": "Godrej Hardware",
+    "category": "hardware",
+    "subcategory": "door-handles-locks",
+    "price": 1850,
+    "originalPrice": 2400,
+    "discountLabel": "23% OFF",
+    "unit": "Set",
+    "description": "High tensile anti-pick brass cylinder mortise lock with dual aesthetic satin steel lever handles.",
+    "rating": 4.8,
+    "ratingCount": 71,
+    "specs": {
+      "Finish": "Satin SS 304",
+      "Keys": "3 Brass Keys",
+      "Brand": "Godrej"
+    },
+    "imageSrc": "assets/door_hinge.jpg"
+  },
+  {
+    "id": "rmc_1",
+    "name": "UltraTech Ready Mix Concrete (RMC) M25 Grade",
+    "brand": "UltraTech RMC",
+    "category": "cement",
+    "subcategory": "rmc-concrete",
+    "price": 4200,
+    "originalPrice": 5100,
+    "discountLabel": "18% OFF",
+    "unit": "Cu.M",
+    "description": "Design mixed M25 grade high-performance concrete delivered via transit mixer trucks with slump retention.",
+    "rating": 4.9,
+    "ratingCount": 76,
+    "specs": {
+      "Grade": "M25 Mix (1:1:2)",
+      "Slump": "100-120mm",
+      "Delivery": "Direct Transit Mixer"
+    },
+    "imageSrc": "https://images.unsplash.com/photo-1590069261209-f8e9b8642343?auto=format&fit=crop&w=600&q=80"
+  },
+  {
+    "id": "wc_1",
+    "name": "Birla White WallCare Putty & White Cement (40 Kg)",
+    "brand": "Birla White",
+    "category": "cement",
+    "subcategory": "white-cement",
+    "price": 980,
+    "originalPrice": 1200,
+    "discountLabel": "18% OFF",
+    "unit": "Bag",
+    "description": "Premium white Portland cement based wall care putty offering maximum whiteness and damp protection.",
+    "rating": 4.8,
+    "ratingCount": 110,
+    "specs": {
+      "Weight": "40 Kg",
+      "Whiteness": "90%+ ISO",
+      "Brand": "Birla White"
+    },
+    "imageSrc": "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&w=600&q=80"
+  },
+  {
+    "id": "st_beam1",
+    "name": "SAIL ISMB Heavy Duty Structural Steel I-Beam (150x75mm)",
+    "brand": "SAIL",
+    "category": "steel",
+    "subcategory": "structural-steel",
+    "price": 64500,
+    "originalPrice": 75000,
+    "discountLabel": "14% OFF",
+    "unit": "Ton",
+    "description": "Hot rolled ISMB standard structural I-beams and C-channels for load-bearing framing and industrial sheds.",
+    "rating": 4.8,
+    "ratingCount": 48,
+    "specs": {
+      "Section": "ISMB 150x75mm",
+      "Standard": "IS 2062 Grade E250",
+      "Brand": "Steel Authority of India"
+    },
+    "imageSrc": "https://images.unsplash.com/photo-1504917599217-d4dc5ebe6122?auto=format&fit=crop&w=600&q=80"
+  },
+  {
+    "id": "st_wire1",
+    "name": "Tata Wiron GI Galvanized Rebar Binding Wire (18 Gauge, 25 Kg Bundle)",
+    "brand": "Tata Wiron",
+    "category": "steel",
+    "subcategory": "binding-wire",
+    "price": 2350,
+    "originalPrice": 2900,
+    "discountLabel": "19% OFF",
+    "unit": "Bundle",
+    "description": "Soft annealed flexible GI binding wire for tying TMT rebars, stirrups, and column links securely.",
+    "rating": 4.9,
+    "ratingCount": 134,
+    "specs": {
+      "Gauge": "18 SWG (1.2mm)",
+      "Weight": "25 Kg Bundle",
+      "Brand": "Tata Wiron"
+    },
+    "imageSrc": "https://images.unsplash.com/photo-1535813547-99c456a41d4a?auto=format&fit=crop&w=600&q=80"
+  },
+  {
+    "id": "tile_gran1",
+    "name": "Royal Black Galaxy Polished Granite Slab (18mm Thickness)",
+    "brand": "Natural Granite Quarries",
+    "category": "tiles",
+    "subcategory": "granite-marble",
+    "price": 195,
+    "originalPrice": 260,
+    "discountLabel": "25% OFF",
+    "unit": "sq.ft",
+    "description": "High gloss mirror-finish Black Galaxy granite stone with golden crystalline flecks for kitchen countertops.",
+    "rating": 4.9,
+    "ratingCount": 82,
+    "specs": {
+      "Thickness": "18mm",
+      "Finish": "Mirror Polish",
+      "Material": "Natural Granite"
+    },
+    "imageSrc": "https://images.unsplash.com/photo-1598880940371-c756e015fea1?auto=format&fit=crop&w=600&q=80"
+  },
+  {
+    "id": "tile_pvr1",
+    "name": "Johnson Endura Heavy Duty Anti-Skid Industrial Parking & Paver Tiles (16mm)",
+    "brand": "Johnson Endura",
+    "category": "tiles",
+    "subcategory": "parking-outdoor-tiles",
+    "price": 72,
+    "originalPrice": 95,
+    "discountLabel": "24% OFF",
+    "unit": "sq.ft",
+    "description": "16mm heavy-duty vitrified anti-skid parking paver tiles designed to withstand heavy vehicular traffic.",
+    "rating": 4.8,
+    "ratingCount": 56,
+    "specs": {
+      "Thickness": "16mm Extra Thick",
+      "Size": "300x300mm",
+      "Anti-Skid": "R11 Rating"
+    },
+    "imageSrc": "https://images.unsplash.com/photo-1584467735815-f778f274e296?auto=format&fit=crop&w=600&q=80"
+  },
+  {
+    "id": "plumb_san1",
+    "name": "Hindware Italian Collection One-Piece Rimless Floor-Mounted Western Toilet",
+    "brand": "Hindware",
+    "category": "plumbing",
+    "subcategory": "sanitaryware",
+    "price": 11999,
+    "originalPrice": 15999,
+    "discountLabel": "25% OFF",
+    "unit": "Piece",
+    "description": "Vitreous china ceramic rimless water closet with dual 3/6L tornado flush and soft-close hydraulic seat cover.",
+    "rating": 4.9,
+    "ratingCount": 65,
+    "specs": {
+      "Trap": "S-Trap 300mm",
+      "Flush": "Dual Tornado 3/6L",
+      "Brand": "Hindware"
+    },
+    "imageSrc": "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=600&q=80"
+  },
+  {
+    "id": "plumb_faucet1",
+    "name": "Jaquar Queen Series Chrome Solid Brass Single-Lever Basin Mixer Tap",
+    "brand": "Jaquar",
+    "category": "plumbing",
+    "subcategory": "faucets-taps",
+    "price": 3450,
+    "originalPrice": 4500,
+    "discountLabel": "23% OFF",
+    "unit": "Piece",
+    "description": "Solid forged brass basin mixer tap with 12-micron high sheen chrome plating and ceramic disc cartridge.",
+    "rating": 4.9,
+    "ratingCount": 92,
+    "specs": {
+      "Material": "Forged Brass",
+      "Finish": "High Sheen Chrome",
+      "Brand": "Jaquar"
+    },
+    "imageSrc": "https://images.unsplash.com/photo-1584622781564-1d987f7333c1?auto=format&fit=crop&w=600&q=80"
   }
 ]

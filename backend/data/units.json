@@ -32,35 +32,43 @@
     "name": "Kg (Hardware/Nails)"
   },
   {
-    "id": "MT",
-    "name": "MT (Metric Ton)"
-  },
-  {
-    "id": "Sq.ft",
-    "name": "Sq.ft (Tiles/Flooring)"
-  },
-  {
-    "id": "Set",
-    "name": "Set (Complete Sets)"
-  },
-  {
-    "id": "Box",
-    "name": "Box (Boxed Items)"
+    "id": "Nos",
+    "name": "Nos (Pieces/Numbers)"
   },
   {
     "id": "Tin",
     "name": "Tin (Paints/Polish)"
   },
   {
+    "id": "Set",
+    "name": "Set (Complete Sets)"
+  },
+  {
     "id": "Pair",
     "name": "Pair (Pairs)"
+  },
+  {
+    "id": "Box",
+    "name": "Box (Boxed Items)"
+  },
+  {
+    "id": "Sheet",
+    "name": "Sheet (Panels/Sheets)"
+  },
+  {
+    "id": "sq.ft",
+    "name": "sq.ft (Tiles/Flooring)"
   },
   {
     "id": "Roll",
     "name": "Roll (Rolls)"
   },
   {
-    "id": "Cu.m",
-    "name": "Cu.m (Cubic Metre)"
+    "id": "Cu.M",
+    "name": "Cu.M (Cubic Metre)"
+  },
+  {
+    "id": "Bundle",
+    "name": "Bundle (Steel Bundles)"
   }
 ]

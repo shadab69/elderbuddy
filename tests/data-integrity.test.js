@@ -115,7 +115,7 @@ checkCatalogue('JSON fallback seed files (backend/data/*.json)', {
   categories: readJson('categories.json'),
   units: readJson('units.json'),
   banners: readJson('banners.json')
-}, { products: 48, categories: 9, units: 16, banners: 3 });
+}, { products: 71, categories: 13, units: 18, banners: 3 });
 
 checkCatalogue('data.js seed arrays (INITIAL_*)', {
   products: parseJsArray('INITIAL_PRODUCTS'),
