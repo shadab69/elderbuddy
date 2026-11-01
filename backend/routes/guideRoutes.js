@@ -1,14 +1,15 @@
 const express = require('express');
 const router = express.Router();
+const adminAuth = require('../middleware/adminAuth');
 const guideController = require('../controllers/guideController');
 
 router.route('/')
     .get(guideController.getGuides)
-    .post(guideController.createGuide);
+    .post(adminAuth, guideController.createGuide);
 
 router.route('/:id')
     .get(guideController.getGuideById)
-    .put(guideController.updateGuide)
-    .delete(guideController.deleteGuide);
+    .put(adminAuth, guideController.updateGuide)
+    .delete(adminAuth, guideController.deleteGuide);
 
 module.exports = router;

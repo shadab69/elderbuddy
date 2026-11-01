@@ -1,14 +1,15 @@
 const express = require('express');
 const router = express.Router();
+const adminAuth = require('../middleware/adminAuth');
 const builderController = require('../controllers/builderController');
 
 router.route('/')
     .get(builderController.getBuilders)
-    .post(builderController.createBuilder);
+    .post(adminAuth, builderController.createBuilder);
 
 router.route('/:id')
     .get(builderController.getBuilderById)
-    .put(builderController.updateBuilder)
-    .delete(builderController.deleteBuilder);
+    .put(adminAuth, builderController.updateBuilder)
+    .delete(adminAuth, builderController.deleteBuilder);
 
 module.exports = router;
