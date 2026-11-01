@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect, Suspense, lazy } from 'react';
 import { HashRouter, Routes, Route } from 'react-router-dom';
 import axios from 'axios';
 
@@ -21,18 +21,23 @@ import MaterialEstimatorModal from './components/MaterialEstimatorModal.jsx';
 import InquiryModal from './components/InquiryModal.jsx';
 import AgenticAssistant from './components/AgenticAssistant.jsx';
 import MobileBottomNav from './components/MobileBottomNav.jsx';
-import Home from './pages/Home.jsx';
-import ProductList from './pages/ProductList.jsx';
-import ProductDetail from './pages/ProductDetail.jsx';
-import Checkout from './pages/Checkout.jsx';
-import Designers from './pages/Designers.jsx';
-import DesignerDetail from './pages/DesignerDetail.jsx';
-import Builders from './pages/Builders.jsx';
-import BuilderDetail from './pages/BuilderDetail.jsx';
-import Guides from './pages/Guides.jsx';
-import GuideDetail from './pages/GuideDetail.jsx';
-import BuildYourHome from './pages/BuildYourHome.jsx';
-import AdminConsole from './pages/AdminConsole.jsx';
+// Route-level code splitting: each page loads as its own chunk on demand
+// instead of shipping the whole app in one ~1.28 MB bundle.
+const Home = lazy(() => import('./pages/Home.jsx'));
+const ProductList = lazy(() => import('./pages/ProductList.jsx'));
+const ProductDetail = lazy(() => import('./pages/ProductDetail.jsx'));
+const Checkout = lazy(() => import('./pages/Checkout.jsx'));
+const Designers = lazy(() => import('./pages/Designers.jsx'));
+const DesignerDetail = lazy(() => import('./pages/DesignerDetail.jsx'));
+const Builders = lazy(() => import('./pages/Builders.jsx'));
+const BuilderDetail = lazy(() => import('./pages/BuilderDetail.jsx'));
+const Guides = lazy(() => import('./pages/Guides.jsx'));
+const GuideDetail = lazy(() => import('./pages/GuideDetail.jsx'));
+const BuildYourHome = lazy(() => import('./pages/BuildYourHome.jsx'));
+const AdminConsole = lazy(() => import('./pages/AdminConsole.jsx'));
+const PrivacyPolicy = lazy(() => import('./pages/LegalPages.jsx').then((m) => ({ default: m.PrivacyPolicy })));
+const TermsConditions = lazy(() => import('./pages/LegalPages.jsx').then((m) => ({ default: m.TermsConditions })));
+const RefundPolicy = lazy(() => import('./pages/LegalPages.jsx').then((m) => ({ default: m.RefundPolicy })));
 import ScrollToTop from './components/ScrollToTop.jsx';
 
 // Create Global Context
@@ -264,6 +269,7 @@ export default function App() {
             setMobileDrawerOpen={setMobileDrawerOpen} 
           />
           <main id="app">
+            <Suspense fallback={<div className="container" style={{ padding: '60px 20px', textAlign: 'center', color: 'var(--text-muted)' }}>Loading…</div>}>
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/products" element={<ProductList />} />
@@ -277,7 +283,11 @@ export default function App() {
               <Route path="/guides" element={<Guides />} />
               <Route path="/guide/:id" element={<GuideDetail />} />
               <Route path="/admin" element={<AdminConsole />} />
+              <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+              <Route path="/terms-and-conditions" element={<TermsConditions />} />
+              <Route path="/refund-policy" element={<RefundPolicy />} />
             </Routes>
+            </Suspense>
           </main>
           <Footer />
           <CartDrawer />
