@@ -1,4 +1,9 @@
 const mongoose = require('mongoose');
+
+// Fail fast instead of silently buffering queries for 10s when MongoDB is
+// unreachable; catalogue GET routes fall back to JSON seed data in that case
+// (see backend/utils/jsonFallback.js).
+mongoose.set('bufferCommands', false);
 const fs = require('fs');
 const path = require('path');
 
@@ -65,7 +70,7 @@ const connectDB = async () => {
             console.log(`[Database] Running in Vercel Serverless mode without local MongoDB.`);
             return;
         }
-        await mongoose.connect(MONGODB_URI, { serverSelectionTimeoutMS: 3000 });
+        await mongoose.connect(MONGODB_URI, { serverSelectionTimeoutMS: 3000, bufferCommands: false });
         console.log(`[Database] MongoDB Connected Successfully!`);
         
         // Run database seeding checks

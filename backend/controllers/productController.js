@@ -1,7 +1,11 @@
 const Product = require('../models/productModel');
+const { isDbConnected, getFallbackCollection, findFallbackById } = require('../utils/jsonFallback');
 
 exports.getProducts = async (req, res) => {
     try {
+        if (!isDbConnected()) {
+            return res.json(getFallbackCollection('products'));
+        }
         const products = await Product.find();
         res.json(products);
     } catch (e) {
@@ -11,6 +15,13 @@ exports.getProducts = async (req, res) => {
 
 exports.getProductById = async (req, res) => {
     try {
+        if (!isDbConnected()) {
+            const fallbackProduct = findFallbackById('products', req.params.id);
+            if (fallbackProduct) {
+                return res.json(fallbackProduct);
+            }
+            return res.status(404).json({ message: 'Product not found' });
+        }
         const product = await Product.findById(req.params.id);
         if (product) {
             res.json(product);

@@ -1,7 +1,11 @@
 const Builder = require('../models/builderModel');
+const { isDbConnected, getFallbackCollection, findFallbackById } = require('../utils/jsonFallback');
 
 exports.getBuilders = async (req, res) => {
     try {
+        if (!isDbConnected()) {
+            return res.json(getFallbackCollection('builders'));
+        }
         const builders = await Builder.find();
         res.json(builders);
     } catch (e) {
@@ -11,6 +15,13 @@ exports.getBuilders = async (req, res) => {
 
 exports.getBuilderById = async (req, res) => {
     try {
+        if (!isDbConnected()) {
+            const fallbackBuilder = findFallbackById('builders', req.params.id);
+            if (fallbackBuilder) {
+                return res.json(fallbackBuilder);
+            }
+            return res.status(404).json({ message: 'Builder not found' });
+        }
         const builder = await Builder.findById(req.params.id);
         if (builder) {
             res.json(builder);
