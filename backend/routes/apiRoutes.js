@@ -1,5 +1,16 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const router = express.Router();
+
+// Health check: reports whether the API is backed by MongoDB right now or
+// serving the JSON seed fallback (see backend/utils/jsonFallback.js).
+router.get('/health', (req, res) => {
+    res.json({
+        status: 'ok',
+        db: mongoose.connection.readyState === 1 ? 'connected' : 'fallback',
+        timestamp: new Date().toISOString()
+    });
+});
 
 const productRoutes = require('./productRoutes');
 const categoryRoutes = require('./categoryRoutes');
