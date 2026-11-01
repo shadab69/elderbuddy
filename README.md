@@ -54,6 +54,15 @@ Checkout abhi **Cash on Delivery / Cash on Site Delivery by design** hai — is 
 ### 7. Deployment (Vercel)
 Live deployment Vercel par hai: `api/index.js` Express app ko serverless function ke roop mein export karta hai aur `vercel.json` `/api/(.*)` ko usi par rewrite karta hai. Production env variables (upar wali table) Vercel project settings mein set karein — khaas taur par `ADMIN_TOKEN`, `ALLOWED_ORIGINS` (apni site ka origin), SMTP variables aur `MONGODB_URI`.
 
+### 8. Testing
+Backend ke liye Node ke built-in test runner par based test suite `tests/` folder mein hai (koi extra dependency nahi):
+
+```bash
+npm test
+```
+
+Yeh teen cheezein cover karta hai: seed catalogue ki data integrity (`backend/data/*.json` aur `data.js` ke `INITIAL_*` arrays — har product ki category/unit references valid hain, koi duplicate id nahi), admin-token guard ka behaviour (sahi token allow, galat/missing token 401), aur email config ki safety (API response mein password hamesha masked rehta hai, SMTP credentials API se change nahi ho sakte).
+
 ---
 
 ## Pure Project mai kiye gaye kaam (Key Achievements & Implemented Features)
