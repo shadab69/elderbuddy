@@ -798,7 +798,7 @@ const INITIAL_PRODUCTS = [
         category: 'tiles',
         subcategory: 'ceramic-tiles',
         price: 75,
-        unit: 'Sft',
+        unit: 'SqFt',
         description: 'Textured ceramic wall tiles suitable for kitchens and bathroom wall displays.',
         rating: 4.4,
         ratingCount: 48,
@@ -1536,7 +1536,17 @@ const INITIAL_UNITS = [
     { id: 'Coil', name: 'Coil (Electrical)' },
     { id: 'Bucket', name: 'Bucket (Paints)' },
     { id: 'Litre', name: 'Litre (Liquids)' },
-    { id: 'Kg', name: 'Kg (Hardware/Nails)' }
+    { id: 'Kg', name: 'Kg (Hardware/Nails)' },
+    { id: 'Nos', name: 'Nos (Pieces/Numbers)' },
+    { id: 'Tin', name: 'Tin (Paints/Polish)' },
+    { id: 'Set', name: 'Set (Complete Sets)' },
+    { id: 'Pair', name: 'Pair (Pairs)' },
+    { id: 'Box', name: 'Box (Boxed Items)' },
+    { id: 'Sheet', name: 'Sheet (Panels/Sheets)' },
+    { id: 'sq.ft', name: 'sq.ft (Tiles/Flooring)' },
+    { id: 'Roll', name: 'Roll (Rolls)' },
+    { id: 'Cu.M', name: 'Cu.M (Cubic Metre)' },
+    { id: 'Bundle', name: 'Bundle (Steel Bundles)' }
 ];
 
 const INITIAL_DESIGNERS = [
