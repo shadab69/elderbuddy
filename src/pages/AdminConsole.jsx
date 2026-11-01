@@ -26,6 +26,9 @@ import CategoryModal from '../components/admin/modals/CategoryModal.jsx';
 // Import upload helper
 import { compressAndUpload } from '../utils/upload.js';
 
+// Admin API token helpers (backend admin guard)
+import { getAdminToken, saveAdminToken, clearAdminToken } from '../utils/adminToken.js';
+
 export default function AdminConsole() {
   const {
     products,
@@ -41,6 +44,25 @@ export default function AdminConsole() {
   } = useContext(AppContext);
 
   const [activeTab, setActiveTab] = useState('products');
+
+  // Admin API token (stored in localStorage; sent as x-admin-token header)
+  const [adminTokenInput, setAdminTokenInput] = useState('');
+  const [adminTokenSet, setAdminTokenSet] = useState(() => !!getAdminToken());
+
+  const handleSaveAdminToken = async () => {
+    const token = adminTokenInput.trim();
+    if (!token) return;
+    saveAdminToken(token);
+    setAdminTokenSet(true);
+    setAdminTokenInput('');
+    await fetchData();
+  };
+
+  const handleClearAdminToken = () => {
+    clearAdminToken();
+    setAdminTokenSet(false);
+    setAdminTokenInput('');
+  };
 
   // Modal forms state
   const [productModal, setProductModal] = useState({ open: false, editId: null, data: { name: '', brand: '', category: '', price: '', unit: '', description: '', imageSrc: '', specGrade: 'Grade A', specSize: 'IS Certified' } });
@@ -378,6 +400,42 @@ export default function AdminConsole() {
       <p style={{ color: 'var(--text-muted)', marginBottom: '30px' }}>
         Manage material listings, add or delete products, and view received customer orders & service leads.
       </p>
+
+      {/* Admin API token — the secured backend requires it for saves/deletes and for Orders & Leads */}
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', alignItems: 'center', border: '1px solid var(--border-color, #e2e8f0)', borderRadius: '10px', padding: '12px 16px', marginBottom: '24px' }}>
+        <strong style={{ fontSize: '0.85rem' }}>Admin API Token</strong>
+        <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)', flex: '1 1 260px' }}>
+          {adminTokenSet
+            ? 'Token is set — admin actions will work against the secured API.'
+            : 'No token set — saves/deletes and Orders & Leads will fail (401) against the secured API.'}
+        </span>
+        <input
+          type="password"
+          value={adminTokenInput}
+          onChange={(e) => setAdminTokenInput(e.target.value)}
+          onKeyDown={(e) => { if (e.key === 'Enter') handleSaveAdminToken(); }}
+          placeholder={adminTokenSet ? 'Enter a new token to replace it' : 'Paste the ADMIN_TOKEN value'}
+          style={{ flex: '1 1 200px', padding: '8px 10px', borderRadius: '8px', border: '1px solid var(--border-color, #e2e8f0)', fontSize: '0.85rem' }}
+        />
+        <button
+          type="button"
+          className="btn-primary"
+          style={{ fontSize: '0.8rem', padding: '8px 16px' }}
+          onClick={handleSaveAdminToken}
+          disabled={!adminTokenInput.trim()}
+        >
+          Save token
+        </button>
+        {adminTokenSet && (
+          <button
+            type="button"
+            style={{ fontSize: '0.8rem', padding: '8px 16px', borderRadius: '8px', border: '1px solid var(--border-color, #e2e8f0)', background: 'transparent', cursor: 'pointer' }}
+            onClick={handleClearAdminToken}
+          >
+            Clear
+          </button>
+        )}
+      </div>
 
       <div className="admin-layout">
         {/* Admin Sidebar Navigation */}
