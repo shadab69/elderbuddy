@@ -23,8 +23,21 @@ const PORT = process.env.PORT || 3000;
 // Connect to MongoDB
 connectDB();
 
-// Enable CORS
-app.use(cors());
+// Enable CORS — restricted to the origins listed in ALLOWED_ORIGINS
+// (comma-separated). Defaults to the local dev origins. Requests without
+// an Origin header (curl, server-to-server, same-origin) are unaffected.
+const allowedOrigins = (process.env.ALLOWED_ORIGINS || 'http://localhost:5173,http://localhost:3000')
+    .split(',')
+    .map((o) => o.trim())
+    .filter(Boolean);
+app.use(cors({
+    origin(origin, callback) {
+        if (!origin || allowedOrigins.includes(origin)) {
+            return callback(null, true);
+        }
+        return callback(new Error(`Origin ${origin} is not allowed by CORS`));
+    }
+}));
 
 // Body Parsers
 app.use(express.json({ limit: '50mb' })); // Support Base64 payloads too
