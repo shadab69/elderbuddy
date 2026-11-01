@@ -16,6 +16,7 @@ require('./models/builderModel');
 
 const connectDB = require('./config/database');
 const apiRoutes = require('./routes/apiRoutes');
+const { apiNotFound, errorHandler } = require('./middleware/errorHandler');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -49,6 +50,9 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 // Serve API routes
 app.use('/api', apiRoutes);
 
+// Any /api/* request still unmatched gets a JSON 404 (not the SPA fallback)
+app.use('/api', apiNotFound);
+
 // Serve static frontend files (SPA)
 app.use(express.static(path.join(__dirname, '../dist')));
 
@@ -56,6 +60,9 @@ app.use(express.static(path.join(__dirname, '../dist')));
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../dist', 'index.html'));
 });
+
+// Central JSON error handler (must stay last)
+app.use(errorHandler);
 
 // Start the server if executed directly
 if (process.env.NODE_ENV !== 'production' || require.main === module) {
