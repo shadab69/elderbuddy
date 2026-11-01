@@ -1,14 +1,15 @@
 const express = require('express');
 const router = express.Router();
+const adminAuth = require('../middleware/adminAuth');
 const bannerController = require('../controllers/bannerController');
 
 router.route('/')
     .get(bannerController.getBanners)
-    .post(bannerController.createBanner);
+    .post(adminAuth, bannerController.createBanner);
 
 router.route('/:id')
     .get(bannerController.getBannerById)
-    .put(bannerController.updateBanner)
-    .delete(bannerController.deleteBanner);
+    .put(adminAuth, bannerController.updateBanner)
+    .delete(adminAuth, bannerController.deleteBanner);
 
 module.exports = router;
