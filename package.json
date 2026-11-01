@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Elder-O-Buddy - Building Materials & Turnkey Home Construction Marketplace",
   "main": "backend/server.js",
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "dev": "vite",
     "server": "node backend/server.js",
