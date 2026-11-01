@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Order = require('../models/orderModel');
 const emailService = require('../services/emailService');
+const { validateOrderPayload } = require('../utils/validate');
 
 exports.getOrders = async (req, res) => {
     try {
@@ -15,6 +16,11 @@ exports.getOrders = async (req, res) => {
 };
 
 exports.createOrder = async (req, res) => {
+    const validation = validateOrderPayload(req.body);
+    if (!validation.valid) {
+        return res.status(400).json({ message: 'Validation failed', errors: validation.errors });
+    }
+
     const orderData = req.body || {};
     if (!orderData.id) {
         orderData.id = 'ORD_' + Math.floor(100000 + Math.random() * 900000);

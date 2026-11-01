@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Lead = require('../models/leadModel');
 const emailService = require('../services/emailService');
+const { validateLeadPayload } = require('../utils/validate');
 
 exports.getLeads = async (req, res) => {
     try {
@@ -15,6 +16,11 @@ exports.getLeads = async (req, res) => {
 };
 
 exports.createLead = async (req, res) => {
+    const validation = validateLeadPayload(req.body);
+    if (!validation.valid) {
+        return res.status(400).json({ message: 'Validation failed', errors: validation.errors });
+    }
+
     const leadData = req.body || {};
     if (!leadData.id) {
         leadData.id = 'INQ_' + Math.floor(100000 + Math.random() * 900000);
