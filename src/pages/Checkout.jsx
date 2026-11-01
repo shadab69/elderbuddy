@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { AppContext } from '../App.jsx';
 import { ShoppingBasket, Check } from 'lucide-react';
 import axios from 'axios';
+import { findCartProduct } from '../utils/productLookup.js';
 
 export default function Checkout() {
   const { cart, products, clearCart, fetchData } = useContext(AppContext);
@@ -152,7 +153,7 @@ export default function Checkout() {
   // Totals calculations
   let subtotal = 0;
   cart.forEach((item) => {
-    const prod = products.find((p) => p.id === item.product.id || p.id === item.productId || p._id === item.product._id);
+    const prod = findCartProduct(products, item);
     if (prod) {
       subtotal += prod.price * item.quantity;
     } else {
@@ -175,7 +176,7 @@ export default function Checkout() {
 
     const generatedOrderId = 'ORD_' + Math.floor(100000 + Math.random() * 900000);
     const orderItems = cart.map((item) => {
-      const prod = products.find((p) => p.id === item.product.id || p._id === item.product._id);
+      const prod = findCartProduct(products, item);
       return {
         productId: prod ? prod.id : (item.product?.id || item.productId),
         name: prod ? prod.name : (item.product?.name || 'Unknown Material'),
@@ -392,7 +393,7 @@ export default function Checkout() {
             }}
           >
             {cart.map((item, idx) => {
-              const prod = products.find((p) => p.id === item.product.id || p.id === item.productId || p._id === item.product._id);
+              const prod = findCartProduct(products, item);
               const name = prod ? prod.name : (item.product?.name || 'Unknown Material');
               const price = prod ? prod.price : (item.product?.price || 0);
               return (

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { AppContext } from '../App.jsx';
 import { X, Trash2, ShoppingBag } from 'lucide-react';
 import { getCleanImage } from '../utils/imageHelper.js';
+import { findCartProduct } from '../utils/productLookup.js';
 
 export default function CartDrawer() {
   const { cart, products, updateCartQuantity, removeFromCart, clearCart } = useContext(AppContext);
@@ -22,7 +23,7 @@ export default function CartDrawer() {
   // Compute pricing
   let subtotal = 0;
   cart.forEach((item) => {
-    const prod = products.find((p) => p.id === item.product.id);
+    const prod = findCartProduct(products, item);
     if (prod) {
       subtotal += prod.price * item.quantity;
     }
@@ -71,7 +72,7 @@ export default function CartDrawer() {
             </div>
           ) : (
             cart.map((item) => {
-              const prod = products.find((p) => p.id === item.product.id) || item.product;
+              const prod = findCartProduct(products, item) || item.product;
               const itemSubtotal = prod.price * item.quantity;
               
               // Handle image renderer (which can be HTML raw string from backend, or a simple path)
