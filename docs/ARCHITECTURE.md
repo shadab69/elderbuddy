@@ -54,6 +54,12 @@ Express app  (backend/server.js)
   from `data.js` (`backend/utils/jsonFallback.js`). Mongoose command
   buffering is disabled so a down database fails instantly rather than
   hanging. Writes always require the database.
+- **Seed sync:** `data.js` is the canonical seed (the database seeder
+  and the frontend bundle both read it); the `backend/data/*.json`
+  files are a generated snapshot of it. After changing any `INITIAL_*`
+  catalogue array in `data.js`, regenerate the snapshot with
+  `node scripts/sync-seed-json.js` — `tests/seed-sync.test.js` fails
+  if the two sources drift apart.
 - **Uploads:** `POST /api/upload` (Multer, images only, 10 MB limit)
   stores files in `backend/uploads/`, served back under `/uploads/`.
 
