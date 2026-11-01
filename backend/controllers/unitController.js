@@ -1,7 +1,11 @@
 const Unit = require('../models/unitModel');
+const { isDbConnected, getFallbackCollection, findFallbackById } = require('../utils/jsonFallback');
 
 exports.getUnits = async (req, res) => {
     try {
+        if (!isDbConnected()) {
+            return res.json(getFallbackCollection('units'));
+        }
         const units = await Unit.find();
         res.json(units);
     } catch (e) {

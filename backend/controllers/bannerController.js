@@ -1,7 +1,11 @@
 const Banner = require('../models/bannerModel');
+const { isDbConnected, getFallbackCollection, findFallbackById } = require('../utils/jsonFallback');
 
 exports.getBanners = async (req, res) => {
     try {
+        if (!isDbConnected()) {
+            return res.json(getFallbackCollection('banners'));
+        }
         const banners = await Banner.find();
         res.json(banners);
     } catch (e) {
@@ -11,6 +15,13 @@ exports.getBanners = async (req, res) => {
 
 exports.getBannerById = async (req, res) => {
     try {
+        if (!isDbConnected()) {
+            const fallbackBanner = findFallbackById('banners', req.params.id);
+            if (fallbackBanner) {
+                return res.json(fallbackBanner);
+            }
+            return res.status(404).json({ message: 'Banner not found' });
+        }
         const banner = await Banner.findById(req.params.id);
         if (banner) {
             res.json(banner);

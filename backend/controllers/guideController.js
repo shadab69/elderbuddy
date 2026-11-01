@@ -1,7 +1,11 @@
 const Guide = require('../models/guideModel');
+const { isDbConnected, getFallbackCollection, findFallbackById } = require('../utils/jsonFallback');
 
 exports.getGuides = async (req, res) => {
     try {
+        if (!isDbConnected()) {
+            return res.json(getFallbackCollection('guides'));
+        }
         const guides = await Guide.find();
         res.json(guides);
     } catch (e) {
@@ -11,6 +15,13 @@ exports.getGuides = async (req, res) => {
 
 exports.getGuideById = async (req, res) => {
     try {
+        if (!isDbConnected()) {
+            const fallbackGuide = findFallbackById('guides', req.params.id);
+            if (fallbackGuide) {
+                return res.json(fallbackGuide);
+            }
+            return res.status(404).json({ message: 'Guide post not found' });
+        }
         const guide = await Guide.findById(req.params.id);
         if (guide) {
             res.json(guide);

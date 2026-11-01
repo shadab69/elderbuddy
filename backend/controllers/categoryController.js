@@ -1,7 +1,11 @@
 const Category = require('../models/categoryModel');
+const { isDbConnected, getFallbackCollection, findFallbackById } = require('../utils/jsonFallback');
 
 exports.getCategories = async (req, res) => {
     try {
+        if (!isDbConnected()) {
+            return res.json(getFallbackCollection('categories'));
+        }
         const categories = await Category.find();
         res.json(categories);
     } catch (e) {
