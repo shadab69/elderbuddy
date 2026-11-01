@@ -30,5 +30,37 @@
   {
     "id": "Kg",
     "name": "Kg (Hardware/Nails)"
+  },
+  {
+    "id": "MT",
+    "name": "MT (Metric Ton)"
+  },
+  {
+    "id": "Sq.ft",
+    "name": "Sq.ft (Tiles/Flooring)"
+  },
+  {
+    "id": "Set",
+    "name": "Set (Complete Sets)"
+  },
+  {
+    "id": "Box",
+    "name": "Box (Boxed Items)"
+  },
+  {
+    "id": "Tin",
+    "name": "Tin (Paints/Polish)"
+  },
+  {
+    "id": "Pair",
+    "name": "Pair (Pairs)"
+  },
+  {
+    "id": "Roll",
+    "name": "Roll (Rolls)"
+  },
+  {
+    "id": "Cu.m",
+    "name": "Cu.m (Cubic Metre)"
   }
 ]
