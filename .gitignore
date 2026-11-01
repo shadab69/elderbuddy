@@ -4,3 +4,13 @@ Thumbs.db
 plan
 dist/
 scratch/
+
+# Environment files & secrets — never commit (use .env.example as template)
+.env
+.env.*
+!.env.example
+backend/config/emailConfig.json
+
+# Runtime uploads (user files, not source code)
+backend/uploads/*
+!backend/uploads/.gitkeep

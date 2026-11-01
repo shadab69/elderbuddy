@@ -17,15 +17,12 @@ exports.getConfig = async (req, res) => {
 
 exports.updateConfig = async (req, res) => {
   try {
-    const updateData = { ...req.body };
-    // If password is still masked, keep the existing one
-    if (updateData.smtpPass === '********') {
-      const current = emailService.getEmailConfig();
-      updateData.smtpPass = current.smtpPass;
-    }
-    const updated = emailService.saveEmailConfig(updateData);
+    // Only non-secret preferences (admin email, notify flags) can be updated
+    // at runtime. SMTP credentials are environment-managed (SMTP_USER /
+    // SMTP_PASS) and are deliberately ignored here even if sent.
+    const updated = emailService.saveEmailConfig(req.body || {});
     res.json({
-      message: 'Email configuration saved successfully',
+      message: 'Email preferences saved. SMTP credentials are managed via environment variables and cannot be changed through the API.',
       config: {
         ...updated,
         smtpPass: updated.smtpPass ? '********' : '',
